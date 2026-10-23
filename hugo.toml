@@ -1,4 +1,4 @@
-﻿baseURL = 'https://example.org/'
+baseURL = 'blog.portaslab.com'
 locale = 'en-us'
 title = 'Portas'
 theme = 'hugo-book'
