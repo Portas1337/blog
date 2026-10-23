@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MonitorsThreeReconComeçamos com o IP 10.10.11.30. Mapeando a rede, encontramos 3 serviços rodando nas respectivas portas: 22, 80, 8084 (filtered):
+sudo nmap -sV -sS -Pn -O -oA nmap/monitorsthree -p22,80,8084 monitorsthree.htb Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-09-22 14:05 EDT Nmap scan report for monitorsthree.htb (10.10.11.30) Host is up (0.18s latency). PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; protocol 2.0) 80/tcp open http nginx 1.18.0 (Ubuntu) 8084/tcp filtered websnp Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Aggressive OS guesses: Linux 5.0 (96%), Linux 5.0 - 5.5 (96%), Linux 4.15 - 5.8 (95%), Linux 3.1 (95%), Linux 3.2 (95%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (95%), Linux 2.6.32 (94%), Linux 5.3 - 5.4 (94%), ASUS RT-N56U WA P (Linux 3.4) (93%), Linux 3.16 (93%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . Nmap done: 1 IP address (1 host up) scanned in 20.83 secondsAs únicas portas acessíveis publicamente são a 22 e a 80, vou começar analisando a aplicação web na porta 80.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/machines/monitorsthree/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Portas">
+	<meta property="og:description" content="MonitorsThreeReconComeçamos com o IP 10.10.11.30. Mapeando a rede, encontramos 3 serviços rodando nas respectivas portas: 22, 80, 8084 (filtered):
+sudo nmap -sV -sS -Pn -O -oA nmap/monitorsthree -p22,80,8084 monitorsthree.htb Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-09-22 14:05 EDT Nmap scan report for monitorsthree.htb (10.10.11.30) Host is up (0.18s latency). PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; protocol 2.0) 80/tcp open http nginx 1.18.0 (Ubuntu) 8084/tcp filtered websnp Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Aggressive OS guesses: Linux 5.0 (96%), Linux 5.0 - 5.5 (96%), Linux 4.15 - 5.8 (95%), Linux 3.1 (95%), Linux 3.2 (95%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (95%), Linux 2.6.32 (94%), Linux 5.3 - 5.4 (94%), ASUS RT-N56U WA P (Linux 3.4) (93%), Linux 3.16 (93%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . Nmap done: 1 IP address (1 host up) scanned in 20.83 secondsAs únicas portas acessíveis publicamente são a 22 e a 80, vou começar analisando a aplicação web na porta 80.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Portas">
+	<meta itemprop="description" content="MonitorsThreeReconComeçamos com o IP 10.10.11.30. Mapeando a rede, encontramos 3 serviços rodando nas respectivas portas: 22, 80, 8084 (filtered):
+sudo nmap -sV -sS -Pn -O -oA nmap/monitorsthree -p22,80,8084 monitorsthree.htb Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-09-22 14:05 EDT Nmap scan report for monitorsthree.htb (10.10.11.30) Host is up (0.18s latency). PORT STATE SERVICE VERSION 22/tcp open ssh OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; protocol 2.0) 80/tcp open http nginx 1.18.0 (Ubuntu) 8084/tcp filtered websnp Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Aggressive OS guesses: Linux 5.0 (96%), Linux 5.0 - 5.5 (96%), Linux 4.15 - 5.8 (95%), Linux 3.1 (95%), Linux 3.2 (95%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (95%), Linux 2.6.32 (94%), Linux 5.3 - 5.4 (94%), ASUS RT-N56U WA P (Linux 3.4) (93%), Linux 3.16 (93%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . Nmap done: 1 IP address (1 host up) scanned in 20.83 secondsAs únicas portas acessíveis publicamente são a 22 e a 80, vou começar analisando a aplicação web na porta 80.">
+	<meta itemprop="wordCount" content="1395">
+
+<title>Monitorsthree • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/machines/monitorsthree/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle"  />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle" checked />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="active">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      Cross Site Scriping</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="monitorsthree">MonitorsThree<a class="anchor" href="#monitorsthree" aria-label="Link"></a></h1>
+<figure><img src="/assets/image%20%28123%29.png">
+</figure>
+
+<h2 id="recon">Recon<a class="anchor" href="#recon" aria-label="Link"></a></h2>
+<p>Começamos com o IP <code>10.10.11.30</code>. Mapeando a rede, encontramos 3 serviços rodando nas respectivas portas: 22, 80, 8084 (filtered):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> sudo nmap -sV -sS -Pn -O -oA nmap/monitorsthree -p22,80,8084 monitorsthree.htb
+</span></span><span style="display:flex;"><span>Starting Nmap 7.94SVN <span style="color:#f92672">(</span> https://nmap.org <span style="color:#f92672">)</span> at 2024-09-22 14:05 EDT
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> monitorsthree.htb <span style="color:#f92672">(</span>10.10.11.30<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.18s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PORT     STATE    SERVICE VERSION
+</span></span><span style="display:flex;"><span>22/tcp   open     ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>80/tcp   open     http    nginx 1.18.0 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>8084/tcp filtered websnp
+</span></span><span style="display:flex;"><span>Warning: OSScan results may be unreliable because we could not find at least <span style="color:#ae81ff">1</span> open and <span style="color:#ae81ff">1</span> closed port
+</span></span><span style="display:flex;"><span>Aggressive OS guesses: Linux 5.0 <span style="color:#f92672">(</span>96%<span style="color:#f92672">)</span>, Linux 5.0 - 5.5 <span style="color:#f92672">(</span>96%<span style="color:#f92672">)</span>, Linux 4.15 - 5.8 <span style="color:#f92672">(</span>95%<span style="color:#f92672">)</span>, Linux 3.1 <span style="color:#f92672">(</span>95%<span style="color:#f92672">)</span>, Linux 3.2 <span style="color:#f92672">(</span>95%<span style="color:#f92672">)</span>, AXIS 210A or <span style="color:#ae81ff">211</span> Network Camera <span style="color:#f92672">(</span>Linux 2.6.17<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>95%<span style="color:#f92672">)</span>, Linux 2.6.32 <span style="color:#f92672">(</span>94%<span style="color:#f92672">)</span>, Linux 5.3 - 5.4 <span style="color:#f92672">(</span>94%<span style="color:#f92672">)</span>, ASUS RT-N56U WA
+</span></span><span style="display:flex;"><span>P <span style="color:#f92672">(</span>Linux 3.4<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>93%<span style="color:#f92672">)</span>, Linux 3.16 <span style="color:#f92672">(</span>93%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>No exact OS matches <span style="color:#66d9ef">for</span> host <span style="color:#f92672">(</span>test conditions non-ideal<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Network Distance: <span style="color:#ae81ff">2</span> hops
+</span></span><span style="display:flex;"><span>Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span>Nmap <span style="color:#66d9ef">done</span>: <span style="color:#ae81ff">1</span> IP address <span style="color:#f92672">(</span><span style="color:#ae81ff">1</span> host up<span style="color:#f92672">)</span> scanned in 20.83 seconds</span></span></code></pre></div><p>As únicas portas acessíveis publicamente são a 22 e a 80, vou começar analisando a aplicação web na porta 80.</p>
+<p>Entrando no IP <code>10.10.11.30</code>, somos redirecionados para o domínio <code>monitorsthree.htb</code> e, adicionando o mesmo ao arquivo <code>/etc/hosts</code>, conseguimos acessar o site:</p>
+<figure><img src="/assets/image%20%28125%29.png">
+</figure>
+
+<p>O site não tem muitas interações, apenas a página de login e recuperação de senha. Em paralelo, rodo um fuzzing para descobrir possíveis subdomínios, encontro o <code>cacti</code> e também o adiciono ao arquivo <code>/etc/hosts</code> :</p>
+<figure><img src="/assets/image%20%28126%29.png">
+</figure>
+
+<h3 id="cactimonitorsthreehtb">cacti.monitorsthree.htb<a class="anchor" href="#cactimonitorsthreehtb" aria-label="Link"></a></h3>
+<figure><img src="/assets/image%20%28127%29.png">
+</figure>
+
+<p>Se trata do software Cacti (<a href="https://www.cacti.net/">https://www.cacti.net/</a>) na versão 1.2.26, cujo tem uma CVE de RCE, porém, somente autenticado que conseguimos explorar e no momento não temos credenciais, e as padrões/fracas não são válidas aqui.</p>
+<h3 id="monitorthreehtb">monitorthree.htb<a class="anchor" href="#monitorthreehtb" aria-label="Link"></a></h3>
+<p>Voltando ao site principal, começo a interagir com os endpoints disponíveis junto de uma proxy para analisar seu comportamento.</p>
+<p>Analisando o endpoint <code>forgot_password.php</code>, enviamos o input <code>username</code> e o nos informa que nos enviará um email:</p>
+<figure><img src="/assets/image%20%28128%29.png">
+</figure>
+
+<p>Para esse endpoint funcionar uma possível implementação seria resgatar o Email desse <code>username</code> através de uma query SQL e enviar esse email para o serviço de mensageria. <br>
+Se o sistema confia no nosso input para montar a query, podemos ter um <code>SQL Injection</code>.</p>
+<p>Adicionando uma aspas simples no formulário já gera um erro nos dando detalhes da implementação no server-side e confirma nosso SQL injection em um banco de dados <code>MariaDB</code>:</p>
+<figure><img src="/assets/image%20%28129%29.png">
+</figure>
+
+<h2 id="exploração">Exploração<a class="anchor" href="#explora%c3%a7%c3%a3o" aria-label="Link"></a></h2>
+<p>O erro não nos da o resultado da query, então temos um blind SQL Injection, possuo um script para explorar esse tipo de SQL Injection (<a href="https://github.com/Arthur-Juan/blind-sqli-script">https://github.com/Arthur-Juan/blind-sqli-script</a>), porém, ele é bastante lento comparado ao SQLMap que é preferível nessa situação. Salvamos a request do burp em um arquivo de texto para importar no SQLMap.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> sqlmap -r req.req --dbs</span></span></code></pre></div><figure><img src="/assets/image%20%28130%29.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sqlmap -r req.req --dbs -D monitorsthree_db --tables</span></span></code></pre></div><figure><img src="/assets/image%20%28132%29.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> sqlmap -r req.req --dbs -D monitorsthree_db -T users --dump</span></span></code></pre></div><figure><img src="/assets/image%20%28134%29.png">
+</figure>
+
+<p>Com o dump feito da tabela de users do banco de dados, podemos tentar quebrar essas hashes:</p>
+<figure><img src="/assets/image%20%28135%29.png">
+</figure>
+
+<p>Agora temos uma credencial para usar: <code>admin:greencacti2001</code> (Marcus Higgins).<br>
+Tento usar essa credencial para logar via SSH, mas sem sucesso. O servidor permite apenas login via public key.<br></p>
+<figure><img src="/assets/image%20%28136%29.png">
+</figure>
+
+<h3 id="login-em-cactimonitorsthreehtb">Login em cacti.monitorsthree.htb<a class="anchor" href="#login-em-cactimonitorsthreehtb" aria-label="Link"></a></h3>
+<p>Com as credenciais obtidas na etapa anterior podemos logar na plataforma <code>Cacti</code>:</p>
+<figure><img src="/assets/image%20%28137%29.png">
+</figure>
+
+<p>Agora com credenciais válidas, posso abusar da CVE disponível para essa versão do Cacti utilizando alguma POC como essa: <a href="https://github.com/5ma1l/CVE-2024-25641">https://github.com/5ma1l/CVE-2024-25641</a></p>
+<p>No repositório, edito o arquivo <code>php/monkey.php</code> para colocar o IP e a Porta para receber a shell</p>
+<figure><img src="/assets/image%20%28138%29.png">
+</figure>
+
+<p>Executamos o exploit e temos Shell :)</p>
+<figure><img src="/assets/image%20%28140%29.png">
+</figure>
+
+<p>Antes de continuar, faço um upgrade na shell para melhorar o uso:</p>
+<figure><img src="/assets/image%20%28142%29.png">
+</figure>
+
+<h2 id="escalação-de-privilégio">Escalação de privilégio<a class="anchor" href="#escala%c3%a7%c3%a3o-de-privil%c3%a9gio" aria-label="Link"></a></h2>
+<h3 id="marcus">marcus<a class="anchor" href="#marcus" aria-label="Link"></a></h3>
+<p>O usuário da shell é o <code>www-data</code>, rapidamente listo a pasta <code>/home</code> para ver se encontro algum usuário nessa máquina, encontro Marcus, tento listar a home de Marcus, mas não tenho permissão:</p>
+<figure><img src="/assets/image%20%28143%29.png">
+</figure>
+
+<p>Em <code>/etc/passwd</code> só nos mostra o usuário Marcus e root, não temos outros na máquina:</p>
+<figure><img src="/assets/image%20%28144%29.png">
+</figure>
+
+<p>Temos duas aplicações rodando nesse servidor, o Cacti, e o site principal, podemos olhar os arquivos de configuração em busca de informações importantes.<br>
+No site principal, tem um arquivo de conexão com o banco de dados, mas é o mesmo banco que foi dumpado com o SQL Injection, então nada de novo, vou olhar o cacti.<br>
+No código fonte do cacti, temos o arquivo <code>/includes/config.php</code>, onde temos informações importantes, como credenciais de banco de dados:</p>
+<figure><img src="/assets/image%20%28145%29.png">
+</figure>
+
+<p>Podemos então logar no banco de dados com essas credenciais adquiridas.</p>
+<p>Dentro do banco de dados, temos o banco Cacti com várias tabelas, porém, a mais interessante é a <code>user_auth</code>, vamos ver o que tem:</p>
+<figure><img src="/assets/image%20%28146%29.png">
+</figure>
+
+<p>Temos usuários e senhas, fora o guest, ambos os usuários pertencem a marcus, vamos tentar quebrar essa hash. <br>
+Salvo a hash em um arquivo e tento quebrar com <code>John</code>, consegui apenas a da linha de username marcus:<br></p>
+<figure><img src="/assets/image%20%28147%29.png">
+</figure>
+
+<p>Agora é possível logar como marcus no servidor.</p>
+<figure><img src="/assets/image%20%28148%29.png">
+</figure>
+
+<p>Agora posso tentar roubar a private_key do servidor e ter acesso SSH ao sistema.<br>
+Eu simplesmente copio e colo o arquivo de <code>~/.ssh/id_rsa</code> para um arquivo <code>id_rsa</code> em meu host:<br></p>
+<figure><img src="/assets/image%20%28149%29.png">
+</figure>
+
+<p>E agora, é possível logar facilmente como marcos via SSH:<br></p>
+<figure><img src="/assets/image%20%28150%29.png">
+</figure>
+
+<h3 id="root-flag">Root flag<a class="anchor" href="#root-flag" aria-label="Link"></a></h3>
+<p>Se lembrar do mapeamento de rede inicial, temos uma porta 8084 Filtered que, talvez, dentro do servidor ela esteja acessível, vamos ver as postas abertas no servidor:</p>
+<figure><img src="/assets/image%20%28152%29.png">
+</figure>
+
+<p>Tentando me conectar com a porta 8084 não recebo nenhuma resposta, porém, tentando na porta 8200 recebo uma resposta de um <code>webserver</code> me redirecionando para a rota <code>/login.html</code> e, fazendo uma chamada para essa rota, vejo que se trata de um sistema chamado <code>Duplicati</code>:</p>
+<figure><img src="/assets/image%20%28153%29.png">
+</figure>
+
+<p>Fazendo algumas pesquisas, descubro que se trata de um sistema de backup. Esse sistema só está disponível internamente no server, para poder interagir com ele pelo browser pode ser feito um <code>port fowarding</code> usando o próprio SSH:</p>
+<figure><img src="/assets/image%20%28154%29.png">
+</figure>
+
+<p>Agora, o conteúdo da porta 8200 do servidor fica disponível na minha máquina:</p>
+<figure><img src="/assets/image%20%28155%29.png">
+</figure>
+
+<p>As credencias obtidas até aqui não funcionam nesse formulário, porém, esse sistema possui uma falha documentada, onde é possível bypassar a autenticação, seguindo os passos descritos aqui: <a href="https://medium.com/@STarXT/duplicati-bypassing-login-authentication-with-server-passphrase-024d6991e9ee">https://medium.com/@STarXT/duplicati-bypassing-login-authentication-with-server-passphrase-024d6991e9ee</a><br>
+Os passos estão bem descritos nesse link, então não vou detalhar muito aqui.<br>
+Subindo um servidor simples no server com <code>python3 -m http.server em /opt/duplicati/config</code> (pasta com o banco de dados SQLite do duplicati), consigo baixar o banco para minha máquina para ir atrás de informações específicas para o ataque, especialmente o <code>server-passphrase</code>.</p>
+<figure><img src="/assets/image%20%28156%29.png">
+</figure>
+
+<p>Com os passos do artigo, consigo gerar uma senha válida:</p>
+<figure><img src="/assets/image%20%28157%29.png">
+</figure>
+
+<p>E logar com sucesso na aplicação:</p>
+<figure><img src="/assets/image%20%28158%29.png">
+</figure>
+
+<p>Para essa aplicação, não temos nenhum outro exploit conhecido que nos ajude a escalar privilégio ou algo assim, mas isso não indica que seja seguro, portanto, posso fazer uma auditoria nessa aplicação para procurar por outros pontos fracos.</p>
+<p>Vou começar interagindo com o sistema e enumerando suas funcionalidades, e consigo verificar algumas como trocar configurações da conta, de backup e etc, mas a principal funcionalidade do sistema é criar um backup e restaurar um backup.</p>
+<p>Vamos debugar essa funcionalidade para poder entender melhor:</p>
+<ul>
+<li>É possível criar um backup, passando algumas especificações como diretório de origem, diretório de destino, senha, tipo de criptografia, entre outros inputs.</li>
+<li>É possível restituir o backup, passando o diretório do backup, o diretório onde o backup será restituído, a senha configurada, entre outros inputs.</li>
+</ul>
+<p>Podemos notar que temos o controle de um diretório ou arquivo de origem qualquer para um local de destino qualquer, então se o sistema confia nesses inputs, podemos mover arquivos de locais ou para locais que não temos permissão, e podemos abusar disso.</p>
+<h4 id="criando-o-backup">Criando o backup<a class="anchor" href="#criando-o-backup" aria-label="Link"></a></h4>
+<p>Primeiro, vamos configurar um backup para direcionar um arquivo para uma pasta destino, sem encriptação:<br></p>
+<figure><img src="/assets/image%20%28159%29.png">
+</figure>
+
+<p>Escolhemos a pasta de destino:</p>
+<figure><img src="/assets/image%20%28160%29.png">
+</figure>
+
+<p>O arquivo de origem (root.txt :hushed:) </p>
+<figure><img src="/assets/image%20%28161%29.png">
+</figure>
+
+<p>As outras opção apenas avançamos, e temos nosso backup configurado.</p>
+<figure><img src="/assets/image%20%28163%29.png">
+</figure>
+
+<p>E então, podes executar o backup clicando em &lsquo;Run Now&rsquo;</p>
+<h4 id="restaurando-o-backup">Restaurando o backup<a class="anchor" href="#restaurando-o-backup" aria-label="Link"></a></h4>
+<p>Agora, vamos restaurar o arquivo para sua versão original, escolhendo uma pasta em que temos acesso. Aqui pode ser escolhido o arquivo que será restaurado:<br></p>
+<figure><img src="/assets/image%20%28164%29.png">
+</figure>
+
+<p>E agora a pasta onde ele será restaurado:</p>
+<figure><img src="/assets/image%20%28165%29.png">
+</figure>
+
+<p>E clique em restaurar o arquivo, com isso, na pasta selecionada terá o conteúdo de root.txt de forma que possamos ler.</p>
+<figure><img src="/assets/image%20%28166%29.png">
+</figure>
+
+<h3 id=""><a class="anchor" href="#" aria-label="Link"></a></h3>
+<p>Obviamente, com a possibilidade de controlar o envio de arquivos de um lugar para o outro no file system do servidor, pode ser feito muito mais além de ler arquivos sensíveis, e uma dessas possibilidades é criar uma chave SSH e enviar a public key para root/.ssh, e com isso, poderíamos entrar no servidor como root.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/machines/cicada/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Cicada</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="flex align-center">
+        <span>Cross Site Scriping</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#cactimonitorsthreehtb">cacti.monitorsthree.htb</a></li>
+        <li><a href="#monitorthreehtb">monitorthree.htb</a></li>
+      </ul>
+    </li>
+    <li><a href="#exploração">Exploração</a>
+      <ul>
+        <li><a href="#login-em-cactimonitorsthreehtb">Login em cacti.monitorsthree.htb</a></li>
+      </ul>
+    </li>
+    <li><a href="#escalação-de-privilégio">Escalação de privilégio</a>
+      <ul>
+        <li><a href="#marcus">marcus</a></li>
+        <li><a href="#root-flag">Root flag</a></li>
+        <li></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

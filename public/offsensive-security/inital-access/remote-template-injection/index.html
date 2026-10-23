@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Remote Template Injection | My New Hugo Project</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="A técica de Remote Template Injection permite a execução de macros em arquivos .docx sem que a macro seja carregada e enviada junto ao arquivo. Ao invés disso, o documento aberto baixa um template específico que contém a macro que queremos que seja executado.
+A criação do documento malicioso acontece dessa forma:
+
+Criação de um arquivo .dotm com a macro para ser executada e hospede em um servidor;
+Crie um arquivo .docx qualquer;
+Renomeie o arquivo de .docx para .zip, e extraia o arquivo .zip ;
+Edite o parâmetro Target em ./world/_rels/settins.xml.rels e coloque o endereço onde se encontra o template com a macro;
+Compacte todos os arquivos para um .zip novamente (todos os arquivos, não a pasta raiz) e renomeie para .docx novamente
+
+Exemplo Prático
+Criação do template
+Crie um documento word comum:">
+    <meta name="generator" content="Hugo 0.168.0">
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+    
+
+    <link rel="stylesheet" href="/ananke/css/main.css">
+    <script>
+  (function () {
+    "use strict";
+
+    
+    
+    function revealButtons() {
+      var buttons = document.querySelectorAll(".code-block .code-copy[hidden]");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].hidden = false;
+      }
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", revealButtons);
+    } else {
+      revealButtons();
+    }
+
+    function flash(button) {
+      var label = button.querySelector(".code-copy-label");
+      var previous = label ? label.textContent : null;
+      button.classList.add("is-copied");
+      if (label) label.textContent = "Copied";
+      window.setTimeout(function () {
+        button.classList.remove("is-copied");
+        if (label && previous !== null) label.textContent = previous;
+      }, 2000);
+    }
+
+    function legacyCopy(text) {
+      var area = document.createElement("textarea");
+      area.value = text;
+      area.setAttribute("readonly", "");
+      area.style.position = "absolute";
+      area.style.left = "-9999px";
+      document.body.appendChild(area);
+      area.select();
+      var ok = false;
+      try {
+        ok = document.execCommand("copy");
+      } catch (e) {
+        ok = false;
+      }
+      document.body.removeChild(area);
+      return ok;
+    }
+
+    function copyFrom(button) {
+      var container = button.closest(".code-block");
+      if (!container) return;
+      var pre = container.querySelector("pre");
+      if (!pre) return;
+      var source = pre.querySelector("code") || pre;
+      var text = source.innerText;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { flash(button); },
+          function () { if (legacyCopy(text)) flash(button); }
+        );
+      } else if (legacyCopy(text)) {
+        flash(button);
+      }
+    }
+
+    document.addEventListener("click", function (event) {
+      var button = event.target.closest(".code-copy");
+      if (button) copyFrom(button);
+    });
+  })();
+</script>
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="http://localhost:1313/offsensive-security/inital-access/remote-template-injection/">
+    
+
+    
+    
+    <meta property="og:url" content="http://localhost:1313/offsensive-security/inital-access/remote-template-injection/">
+	<meta property="og:site_name" content="My New Hugo Project">
+	<meta property="og:title" content="Remote Template Injection">
+	<meta property="og:description" content="A técica de Remote Template Injection permite a execução de macros em arquivos .docx sem que a macro seja carregada e enviada junto ao arquivo. Ao invés disso, o documento aberto baixa um template específico que contém a macro que queremos que seja executado.
+A criação do documento malicioso acontece dessa forma:
+Criação de um arquivo .dotm com a macro para ser executada e hospede em um servidor; Crie um arquivo .docx qualquer; Renomeie o arquivo de .docx para .zip, e extraia o arquivo .zip ; Edite o parâmetro Target em ./world/_rels/settins.xml.rels e coloque o endereço onde se encontra o template com a macro; Compacte todos os arquivos para um .zip novamente (todos os arquivos, não a pasta raiz) e renomeie para .docx novamente Exemplo Prático Criação do template Crie um documento word comum:">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="offsensive-security">
+		<meta property="article:published_time" content="2024-01-14T07:07:07+01:00">
+		<meta property="article:modified_time" content="2024-01-14T07:07:07+01:00">
+
+	<meta itemprop="name" content="Remote Template Injection">
+	<meta itemprop="description" content="A técica de Remote Template Injection permite a execução de macros em arquivos .docx sem que a macro seja carregada e enviada junto ao arquivo. Ao invés disso, o documento aberto baixa um template específico que contém a macro que queremos que seja executado.
+A criação do documento malicioso acontece dessa forma:
+Criação de um arquivo .dotm com a macro para ser executada e hospede em um servidor; Crie um arquivo .docx qualquer; Renomeie o arquivo de .docx para .zip, e extraia o arquivo .zip ; Edite o parâmetro Target em ./world/_rels/settins.xml.rels e coloque o endereço onde se encontra o template com a macro; Compacte todos os arquivos para um .zip novamente (todos os arquivos, não a pasta raiz) e renomeie para .docx novamente Exemplo Prático Criação do template Crie um documento word comum:">
+	<meta itemprop="datePublished" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="dateModified" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="wordCount" content="566">
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Remote Template Injection">
+	<meta name="twitter:description" content="A técica de Remote Template Injection permite a execução de macros em arquivos .docx sem que a macro seja carregada e enviada junto ao arquivo. Ao invés disso, o documento aberto baixa um template específico que contém a macro que queremos que seja executado.
+A criação do documento malicioso acontece dessa forma:
+Criação de um arquivo .dotm com a macro para ser executada e hospede em um servidor; Crie um arquivo .docx qualquer; Renomeie o arquivo de .docx para .zip, e extraia o arquivo .zip ; Edite o parâmetro Target em ./world/_rels/settins.xml.rels e coloque o endereço onde se encontra o template com a macro; Compacte todos os arquivos para um .zip novamente (todos os arquivos, não a pasta raiz) e renomeie para .docx novamente Exemplo Prático Criação do template Crie um documento word comum:">
+
+	
+  </head><body class="ma0 avenir bg-near-white development is-page is-page page-Remote Template Injection">
+   
+  
+
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l center items-center justify-between">
+    <a href="/" class="f3 fw2 hover-white white-90 dib no-underline">
+      
+        My New Hugo Project
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      <div class="ananke-socials"></div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+<main class="pb7" role="main">
+  
+
+  <article class="page-Remote Template Injection flex-l mw7 center ph3 flex-wrap justify-between">
+    <header class="mt4 w-100"><aside class="instapaper_ignoref b helvetica tracked ttu">
+    <a class="link dim" href="http://localhost:1313/offsensive-security/">Offsensive Securities</a>
+  </aside><div id="sharing" class="mt3 ananke-socials"></div>
+<h1 class="f1 athelas mt3 mb1">Remote Template Injection</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2024-01-14T07:07:07+01:00">January 14, 2024</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-100-l"><p>A técica de Remote Template Injection permite a execução de macros em arquivos <code>.docx</code> sem que a macro seja carregada e enviada junto ao arquivo. Ao invés disso, o documento aberto baixa um template específico que contém a macro que queremos que seja executado.</p>
+<p>A criação do documento malicioso acontece dessa forma:</p>
+<ul>
+<li>Criação de um arquivo <code>.dotm</code> com a macro para ser executada e hospede em um servidor;</li>
+<li>Crie um arquivo <code>.docx</code> qualquer;</li>
+<li>Renomeie o arquivo de <code>.docx</code> para <code>.zip</code>, e extraia o arquivo <code>.zip</code> ;</li>
+<li>Edite o parâmetro <code>Target</code> em <code>./world/_rels/settins.xml.rels</code> e coloque o endereço onde se encontra o template com a macro;</li>
+<li>Compacte todos os arquivos para um <code>.zip</code> novamente (todos os arquivos, não a pasta raiz) e renomeie para <code>.docx</code> novamente</li>
+</ul>
+<h2 id="exemplo-prático">Exemplo Prático</h2>
+<h3 id="criação-do-template">Criação do template</h3>
+<p>Crie um documento <code>word</code> comum:</p>
+<figure><img src="/assets/image%20%2828%29.png">
+</figure>
+
+<p>Vá em <code>Exibir &gt; Macros &gt; Exibir Macros</code>, ou aperte <code>Alt + F8</code> para abrir o editor de macros:</p>
+<figure><img src="/assets/image%20%2829%29.png">
+</figure>
+
+<p>Importante a configuração ser de Macros em apenas esse documento:</p>
+<figure><img src="/assets/image%20%2830%29.png">
+</figure>
+
+<p>De um nome qualquer a sua macro e clique em criar, onde seremos enviados para o editor da macro.<br>
+Para testar se a macro irá funcionar, a primeira payload pode ser algo simples, como abrir uma calculadora ou notepad, com um código dessa forma:</p>
+<div class="code-block">
+    <button class="code-copy" type="button" hidden aria-label="Copy code to clipboard">
+      <span class="code-copy-label" aria-hidden="true">Copy</span>
+    </button>
+    <pre tabindex="0"><code class="language-vba" data-lang="vba">Set objShell = CreateObject(&#34;Wscript.Shell&#34;)
+objShell.Run &#34;calc&#34;</code></pre>
+  </div><p>Podemos criar duas funções com que farão que nossa macro seja executada assim que o arquivo for aberto, sendo essas funções <code>Document_Open()</code> e <code>AutoOpen()</code>, nossa macro final ficaria parecida com isso:</p>
+<figure><img src="/assets/image%20%2831%29.png">
+</figure>
+
+<p>Podemos clicar no botão de play ou apertar <code>F5</code> para testar nossa macro, se a calculadora abrir, é por que está funcionando: </p>
+<figure><img src="/assets/image%20%2832%29.png">
+</figure>
+
+<p>Agora podemos salvar o arquivo em uma pasta de sua preferência, com a extensão <code>.dotm</code>:</p>
+<figure><img src="/assets/image%20%2833%29.png">
+</figure>
+
+<p>Agora equipados com o template, vamos hospedar em um webserver.</p>
+<h3 id="servindo-o-template">Servindo o template</h3>
+<p>Várias maneiras podem ser utilizadas para disponibilizar esse template para download, como Ngrok, um servidor dedicado, uma VPS e etc. No caso desse laboratório, estou utilizando o servidor HTTP do python na minha máquina Linux para servir o arquivo que está na mesma rede do Windows. Envie seu template para seu servidor e o deixe disponível:</p>
+<figure><img src="/assets/image%20%2834%29.png">
+</figure>
+
+<p>Com isso, o template está pronto para ser baixado, vamos criar o arquivo docx.</p>
+<h3 id="criação-do-arquivo-docx">Criação do arquivo docx</h3>
+<p>Para isso, crie um documento word escolhendo um template qualquer, nesse exemplo, escolhi o currículo, em cenários reais é importante editar o documento para ser convincente o suficiente, no laboratório isso não importa tanto.</p>
+<figure><img src="/assets/image%20%2836%29.png">
+</figure>
+
+<p>E somente isso, já podemos salvar o arquivo como arquivo <code>.docx</code> para continuar com as outras etapas. Mude o arquivo de .docx para .zip e descompacte:</p>
+<figure><img src="/assets/image%20%2837%29.png">
+</figure>
+
+<p>Entre na pasta <code>./word/_rels</code> e edite o arquivo <code>settings.xml.rels</code>, nele, procure pelo parâmetro Target e coloque o endereço do servidor que está hospedando seu template malicioso:</p>
+<figure><img src="/assets/image%20%2838%29.png">
+</figure>
+
+<p>Agora só salvar esse arquivo e zipar todos os arquivos dentro da raiz novamente:</p>
+<figure><img src="/assets/image%20%2839%29.png">
+</figure>
+
+<p>Renomeie o .zip para .docx e teremos um arquivo Word válido que carregará nossa macro.</p>
+<h3 id="executando-a-prova-de-conceito">Executando a prova de conceito</h3>
+<p>Chegou a hora de testar nosso projeto, comece abrindo o documento, isso deverá baixar nosso template no servidor linux:</p>
+<figure><img src="/assets/image%20%2840%29.png">
+</figure>
+
+<p>O documento foi aberto com um aviso de macro a ser executada, e se olharmos no nosso servidor linux, poderemos ver os logs do download do template:</p>
+<figure><img src="/assets/image%20%2841%29.png">
+</figure>
+
+<p>Confirmamos então que essa etapa funcionou, vamos permitir a macro e conferir se a calculadora será aberta:</p>
+<figure><img src="/assets/image%20%2842%29.png">
+</figure>
+
+<p>E nossa macro funcionou! A prova de conceito funcionou, então podemos evoluir.</p>
+<h3 id="reverse-shell">Reverse Shell</h3>
+<ul class="pa0">
+  
+</ul><ul class="pa0">
+  
+</ul>
+
+      
+    </div></article>
+</main><footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white white-70 dn dib-ns pv2 ph3 no-underline" href="http://localhost:1313/" >
+    &copy;  My New Hugo Project 2026 
+  </a>
+    <div><div class="ananke-socials"></div>
+</div>
+  </div>
+</footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

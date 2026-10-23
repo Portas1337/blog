@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Initial Access on Portas</title>
+		<link>http://localhost:1313/docs/offsensive-security/inital-access/</link>
+		<description>Recent content in Initial Access on Portas</description>
+		<generator>Hugo</generator>
+		<language>en-us</language>
+		
+		
+		
+		
+			<lastBuildDate>Sun, 14 Jan 2024 07:07:07 +0100</lastBuildDate>
+		
+			<atom:link href="http://localhost:1313/docs/offsensive-security/inital-access/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Remote Template Injection</title>
+				<link>http://localhost:1313/docs/offsensive-security/inital-access/remote-template-injection/</link>
+				<pubDate>Sun, 14 Jan 2024 07:07:07 +0100</pubDate>
+				<guid>http://localhost:1313/docs/offsensive-security/inital-access/remote-template-injection/</guid>
+				<description>&lt;h1 id=&#34;remote-template-injection&#34;&gt;Remote Template Injection&lt;a class=&#34;anchor&#34; href=&#34;#remote-template-injection&#34; aria-label=&#34;Link&#34;&gt;&lt;/a&gt;&lt;/h1&gt;&#xD;&#xA;&lt;p&gt;A técica de Remote Template Injection permite a execução de macros em arquivos &lt;code&gt;.docx&lt;/code&gt; sem que a macro seja carregada e enviada junto ao arquivo. Ao invés disso, o documento aberto baixa um template específico que contém a macro que queremos que seja executado.&lt;/p&gt;&#xA;&lt;p&gt;A criação do documento malicioso acontece dessa forma:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Criação de um arquivo &lt;code&gt;.dotm&lt;/code&gt; com a macro para ser executada e hospede em um servidor;&lt;/li&gt;&#xA;&lt;li&gt;Crie um arquivo &lt;code&gt;.docx&lt;/code&gt; qualquer;&lt;/li&gt;&#xA;&lt;li&gt;Renomeie o arquivo de &lt;code&gt;.docx&lt;/code&gt; para &lt;code&gt;.zip&lt;/code&gt;, e extraia o arquivo &lt;code&gt;.zip&lt;/code&gt; ;&lt;/li&gt;&#xA;&lt;li&gt;Edite o parâmetro &lt;code&gt;Target&lt;/code&gt; em &lt;code&gt;./world/_rels/settins.xml.rels&lt;/code&gt; e coloque o endereço onde se encontra o template com a macro;&lt;/li&gt;&#xA;&lt;li&gt;Compacte todos os arquivos para um &lt;code&gt;.zip&lt;/code&gt; novamente (todos os arquivos, não a pasta raiz) e renomeie para &lt;code&gt;.docx&lt;/code&gt; novamente&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;exemplo-prático&#34;&gt;Exemplo Prático&lt;a class=&#34;anchor&#34; href=&#34;#exemplo-pr%c3%a1tico&#34; aria-label=&#34;Link&#34;&gt;&lt;/a&gt;&lt;/h2&gt;&#xD;&#xA;&lt;h3 id=&#34;criação-do-template&#34;&gt;Criação do template&lt;a class=&#34;anchor&#34; href=&#34;#cria%c3%a7%c3%a3o-do-template&#34; aria-label=&#34;Link&#34;&gt;&lt;/a&gt;&lt;/h3&gt;&#xD;&#xA;&lt;p&gt;Crie um documento &lt;code&gt;word&lt;/code&gt; comum:&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

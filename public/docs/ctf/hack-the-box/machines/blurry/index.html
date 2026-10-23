@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="BlurryReconComeçamos a máquina apenas com um IP, então podemos mapear o que temos nesse IP usando o nmap:
+Com apenas duas portas abertas, podemos acessar a porta 80 e ver o que temos se serviço web. Fazendo isso, o navegador redireciona para `app.blurry.htb`, então vamos adicionar esse domínio ao arquivo /etc/hosts para termos acesso, e assim conseguimos visualizar a página:
+Web Page
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/machines/blurry/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Portas">
+	<meta property="og:description" content="BlurryReconComeçamos a máquina apenas com um IP, então podemos mapear o que temos nesse IP usando o nmap:
+Com apenas duas portas abertas, podemos acessar a porta 80 e ver o que temos se serviço web. Fazendo isso, o navegador redireciona para `app.blurry.htb`, então vamos adicionar esse domínio ao arquivo /etc/hosts para termos acesso, e assim conseguimos visualizar a página:
+Web Page">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Portas">
+	<meta itemprop="description" content="BlurryReconComeçamos a máquina apenas com um IP, então podemos mapear o que temos nesse IP usando o nmap:
+Com apenas duas portas abertas, podemos acessar a porta 80 e ver o que temos se serviço web. Fazendo isso, o navegador redireciona para `app.blurry.htb`, então vamos adicionar esse domínio ao arquivo /etc/hosts para termos acesso, e assim conseguimos visualizar a página:
+Web Page">
+	<meta itemprop="wordCount" content="1038">
+
+<title>Blurry • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/machines/blurry/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle"  />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle" checked />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="active">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      Cross Site Scriping</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="blurry">Blurry<a class="anchor" href="#blurry" aria-label="Link"></a></h1>
+<figure><img src="/assets/image%20%28167%29.png">
+</figure>
+
+<h2 id="recon">Recon<a class="anchor" href="#recon" aria-label="Link"></a></h2>
+<p>Começamos a máquina apenas com um IP, então podemos mapear o que temos nesse IP usando o nmap:</p>
+<figure><img src="/assets/image%20%28168%29.png">
+</figure>
+
+<p>Com apenas duas portas abertas, podemos acessar a porta 80 e ver o que temos se serviço web. Fazendo isso, o navegador redireciona para `app.blurry.htb`, então vamos adicionar esse domínio ao arquivo /etc/hosts para termos acesso, e assim conseguimos visualizar a página:</p>
+<p><figure><img src="/assets/image%20%28169%29.png">
+</figure>
+<figcaption><p>Web Page</p></figcaption></figure></p>
+<p>Temos uma aplicação chamada ClearML, enquanto estudamos o que é essa aplicação, podemos deixar um fuzzing procurando por outros subdomínios.<br>
+Voltando para o clearML e fazendo uma pesquisa, descobrimos que é uma plataforma para criação de inteligência artificial, onde é possível construir, treinar e dar deploy de uma IA.</p>
+<p>{% embed url=&ldquo;<a href="https://clear.ml/?gad_source=1&amp;gclid=EAIaIQobChMIh8D8j5-FiQMVjSitBh1TVCfPEAAYASAAEgJXd_D_BwE&amp;hsa_acc=4043203093&amp;hsa_ad=636186176607&amp;hsa_cam=16563267736&amp;hsa_grp=134088880946&amp;hsa_kw=clearml&amp;hsa_mt=e&amp;hsa_net=adwords&amp;hsa_src=g&amp;hsa_tgt=kwd-784171082579&amp;hsa_ver=3&amp;utm_campaign=Search&#43;">https://clear.ml/?gad_source=1&gclid=EAIaIQobChMIh8D8j5-FiQMVjSitBh1TVCfPEAAYASAAEgJXd_D_BwE&hsa_acc=4043203093&hsa_ad=636186176607&hsa_cam=16563267736&hsa_grp=134088880946&hsa_kw=clearml&hsa_mt=e&hsa_net=adwords&hsa_src=g&hsa_tgt=kwd-784171082579&hsa_ver=3&utm_campaign=Search+</a>|+Brand&amp;utm_device=c&amp;utm_feeditemid=&amp;utm_medium=ppc&amp;utm_source=adwords&amp;utm_term=clearml&rdquo; %}</p>
+<h2 id="exploit">Exploit<a class="anchor" href="#exploit" aria-label="Link"></a></h2>
+<p>Fazendo uma outra pesquisa, podemos descobrir que o ClearML possui uma vulnerabilidade de RCE (<a href="https://github.com/xffsec/CVE-2024-24590-ClearML-RCE-Exploit">https://github.com/xffsec/CVE-2024-24590-ClearML-RCE-Exploit</a>), então podemos tentar abusar dessa CVE para conseguir uma shell no servidor.</p>
+<p>O Exploit foi escrito em python, então eu gosto de criar um ambiente virtual para isolar as dependências usando `python -m venv venv; source venv/bin/activate`.<br>
+Instalando as dependências e executando o script,  temos algumas opções, sendo a primeira de inicializar o ClearML para conectar nosso CLI ao web app em que achamos no alvo:</p>
+<figure><img src="/assets/image%20%28170%29.png">
+</figure>
+
+<p>Podemos criar um nome de usuário qualquer na tela inicial, e navegar até a rota indicada pelo script (/settings/workspace-configuration) onde seremos capazes de gerar uma credencial para estabelecer uma comunicação entre o web app e o CLI:</p>
+<figure><img src="/assets/image%20%28172%29.png">
+</figure>
+
+<p>Agora, precisamos apenas copiar e colar esse JSON no terminal, e podemos ir para a segunda opção, porém teremos um erro indicando que o script não conseguiu se conectar com api.blurry.htb:<br></p>
+<figure><img src="/assets/image%20%28173%29.png">
+</figure>
+
+<p>Então vamos colocar esse domínio e os outros que foram encontrados no fuzzing em /etc/hosts:<br></p>
+<figure><img src="/assets/image%20%28174%29.png">
+</figure>
+
+<p>Agora, vamos para a opção 2 do Script que é rodar o exploit, para isso vamos deixar o netcat ouvindo na porta 1337, e preencher os dados que o script solicita, sendo um deles o nome de um projeto, então vamos procurar ou criar um projeto no web app, e achamos um chamado Black Swan:<br></p>
+<figure><img src="/assets/image%20%28176%29.png">
+</figure>
+
+<p>Preenchemos então com esse nome e executamos o exploit, note que ele pode demorar a acontecer ou até mesmo não funcionar precisando ser executado mais de uma vez, porém conseguimos uma reverse shell:</p>
+<figure><img src="/assets/image%20%28177%29.png">
+</figure>
+
+<h2 id="privilege-escalation">Privilege Escalation<a class="anchor" href="#privilege-escalation" aria-label="Link"></a></h2>
+<p>Para termos uma shell melhor, podemos ou fazer o upgrade dessa shell, ou então pegar as chaves SSH e conectar via SSH na máquina,  vou com a opção do SSH:</p>
+<figure><img src="/assets/image%20%28178%29.png">
+</figure>
+
+<p>Agora temos uma shell completa, e maneiras de retornar ao servidor sem precisar executar o exploit novamente. <br>
+Algo interessando que podemos analisar quando estamos logados como algum usuário em uma máquina linux é saber quais comandos esse usuários pode executar com permissão de root usando o `sudo -l`:<br></p>
+<figure><img src="/assets/image%20%28179%29.png">
+</figure>
+
+<p>Podemos notar que nosso usuário consegue executar um programa chamado <code>evaluate_model</code> com permissão de root, então vamos analisar e estudar o que esse programa faz para procurarmos por algum ponto fraco que possa ser explorado. <br>
+O arquivo se trata de um shell script, então baixo ele para minha máquina para poder estudar o que ele faz:</p>
+<figure><img src="/assets/image%20%2843%29.png">
+</figure>
+
+<p>Observando o script, podemos ver que ele chama outro programa depois, o <code>evaluate_model.py</code>, que também vou baixar para a minha máquina para poder entender também, da mesma forma que baixei o shell script.<br>
+Olhando o script, o funcionamento é o seguinte:</p>
+<ul>
+<li>Descompacta o arquivo enviado como parâmetro baseado no tipo do arquivo (ZIP ou TAR)</li>
+<li>Verifica se é um arquivo extraído Picke malicioso, utilizando a ferramenta fickling
+<ul>
+<li>Caso seja, deleta o arquivo</li>
+<li>Caso seja considerado seguro, envia para o programa evaluate_model.py</li>
+</ul>
+</li>
+</ul>
+<figure><img src="/assets/image%20%2844%29.png">
+</figure>
+
+<p>Então, vamos entender o evaluate_model.py</p>
+<p>O script usa a biblioteca <code>Torch</code> para processar arquivos de modelo de inteligência artificial. Eu não entendo muito bem como funciona esse tipo de programação, então é preciso ir lendo e entendendo o programa aos poucos, e tento manter em mente em quais partes do programa ele confia no meu input para fazer algum processamento, pois nesses pontos que podem existir as vulnerabilidades.<br>
+Primeiro ele confere se recebeu algum arquivo, envia para uma função chamada <code>load_model</code>, que usa a função da biblioteca <code>torch.load(model_path)</code> , e sendo o <code>model_path</code> um valor que podemos controlar, então é uma boa função para pesquisar o que faz e como foi implementada.<br>
+Lendo a documentação, vemos que essa função utiliza a biblioteca <code>pickle</code> do python para deserializar o arquivo com um <code>unpickle</code> , que é bem conhecido por ser inseguro caso use dados não confiáveis, e um dado em que podemos controlar é um dado não confiável para o programa.<br></p>
+<figure><img src="/assets/image%20%2845%29.png">
+</figure>
+
+<figure><img src="/assets/image%20%2846%29.png">
+</figure>
+
+<p>Com essas informações, já temos um possível plano de ataque, onde enviamos um arquivo arquivo malicioso para o <code>toch.load</code> para conseguirmos um RCE, porém, temos que bypassar o shell script que provavelmente vai bloquear nossa payload. Então, com o arquivo na nossa máquina, podemos estudar e pesquisar formas de bypassar esse script.<br>
+Para testar localmente, primeiro precisamos instalar as bibliotecas usadas pelo programa, pode ser feito apenas lendo o código fonte e ir instalando, ou executando o programa, lendo o log de erro e instalar a biblioteca que ele indicou que falta. Após isso, temos a simulação do ambiente do servidor em nossa máquina, o que torna perfeito para fazermos testes para conseguir explorar uma vulnerabilidade crítica de forma precisa. <br>
+Primeiro, eu crio uma payload em python, porém usando a biblioteca <code>torch</code>, pois ele gera o tipo de arquivo que a função <code>Torch.load()</code> consegue entender para processar, para poder explorar a deserialização insegura que apenas vai executar o comando <code>whoami</code>, como uma prova de conceito de que a falha foi explorada. A payload será salva em um arquivo <code>model.pth</code>:</p>
+<figure><img src="/assets/image%20%28183%29.png">
+</figure>
+
+<p><br>
+Executando o shell <code>evaluate_model.sh</code> (modificado para identificar o <code>evalute_model.py</code> da minha máquina que está na mesma pasta, ao invés de procurar em /models) para analisar se ele passa ou não pelo <code>fickling</code>, e a payload passou:</p>
+<figure><img src="/assets/image%20%28185%29.png">
+</figure>
+
+<p>Agora, eu executo o <code>evaluate_model.py</code> passando o <code>model.pth</code>, para simular o final do comportamento do script, e ele executa o comando <code>whoami</code>:</p>
+<figure><img src="/assets/image%20%28182%29.png">
+</figure>
+
+<p>Sabendo que a payload funciona, posso trocar o <code>whoami</code> para um comando <code>bash</code>, para executar uma shell com as permissões do programa (no servidor, root):</p>
+<figure><img src="/assets/image%20%28181%29.png">
+</figure>
+
+<p>Executando esse arquivo na minha máquina e enviado o <code>model.pth</code> enviando e executando no servidor, ele executa o <code>bash</code> com permissão de root:</p>
+<figure><img src="/assets/image%20%28180%29.png">
+</figure>
+
+<p>E com isso, finalizamos a máquina.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Toxic</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/machines/certified/" class="flex align-center">
+        <span>Certified</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#recon">Recon</a></li>
+    <li><a href="#exploit">Exploit</a></li>
+    <li><a href="#privilege-escalation">Privilege Escalation</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

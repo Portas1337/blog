@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ToxicToxic é um desafio easy do hack the box da categoria web.
+Esse é um desafio onde temos o código fonte disponível e um docker para subir a aplicação, então, começo os testes em um ambiente local.
+EnumerationAnalisando a aplicação, temos apenas uma página e nenhuma funcionalidade:
+Com fuzzing não acho nenhum outro endpoint, vou olhar o código fonte da aplicação.
+Temos arquivos docker, configuração de nginx e essa página HTML que vemos na web. Os principais arquivos são index.php e PageModel.php
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/toxic/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Portas">
+	<meta property="og:description" content="ToxicToxic é um desafio easy do hack the box da categoria web.
+Esse é um desafio onde temos o código fonte disponível e um docker para subir a aplicação, então, começo os testes em um ambiente local.
+EnumerationAnalisando a aplicação, temos apenas uma página e nenhuma funcionalidade:
+Com fuzzing não acho nenhum outro endpoint, vou olhar o código fonte da aplicação.
+Temos arquivos docker, configuração de nginx e essa página HTML que vemos na web. Os principais arquivos são index.php e PageModel.php">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Portas">
+	<meta itemprop="description" content="ToxicToxic é um desafio easy do hack the box da categoria web.
+Esse é um desafio onde temos o código fonte disponível e um docker para subir a aplicação, então, começo os testes em um ambiente local.
+EnumerationAnalisando a aplicação, temos apenas uma página e nenhuma funcionalidade:
+Com fuzzing não acho nenhum outro endpoint, vou olhar o código fonte da aplicação.
+Temos arquivos docker, configuração de nginx e essa página HTML que vemos na web. Os principais arquivos são index.php e PageModel.php">
+	<meta itemprop="wordCount" content="1034">
+
+<title>Toxic • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/toxic/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle" checked />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="active">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle"  />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      Cross Site Scriping</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="toxic">Toxic<a class="anchor" href="#toxic" aria-label="Link"></a></h1>
+<p>Toxic é um desafio easy do hack the box da categoria web.</p>
+<p>Esse é um desafio onde temos o código fonte disponível e um docker para subir a aplicação, então, começo os testes em um ambiente local.</p>
+<h2 id="enumeration">Enumeration<a class="anchor" href="#enumeration" aria-label="Link"></a></h2>
+<p>Analisando a aplicação, temos apenas uma página e nenhuma funcionalidade:<br></p>
+<figure><img src="/assets/image%20%2886%29.png">
+</figure>
+
+<p>Com fuzzing não acho nenhum outro endpoint, vou olhar o código fonte da aplicação.</p>
+<p>Temos arquivos docker, configuração de nginx e essa página HTML que vemos na web. Os principais arquivos são index.php e PageModel.php</p>
+<p>Vamos olhar o arquivo index.php<br></p>
+<figure><img src="/assets/image%20%2887%29.png">
+</figure>
+
+<p>Agora, entender o PageModel.php<br></p>
+<figure><img src="/assets/image%20%2888%29.png">
+</figure>
+
+<p>Os outros arquivos são os arquivos HTML e de configuração<br></p>
+<figure><img src="/assets/image%20%2889%29.png">
+</figure>
+
+<p>Temos um código fonte pequeno, assim, fica fácil entender o quadro geral da aplicação e os mecanismos dela. Nesse caso, o cookie controla a página que será exibida, já que, o index.php recupera a classe PageModel vindo do cookie e deserializa ela e, no final, PageModel faz um include nesse arquivo especificado.<br>
+ </p>
+<figure><img src="/assets/image%20%2890%29.png">
+</figure>
+
+<p>Cookie que nosso browser envia para o backend</p>
+<p><figure><img src="/assets/image%20%2892%29.png">
+</figure>
+<figcaption><p>Cookie decodificado em base64</p></figcaption></figure></p>
+<h2 id="exploit">Exploit<a class="anchor" href="#exploit" aria-label="Link"></a></h2>
+<p>Como vimos no comportamento na aplicação, o PHP faz um include no parâmetro <code>$file</code>, que pertence ao objeto PageModel que enviamos serializado via cookie, com isso, podemos controlar o include feito pelo PHP.</p>
+<p>Para me auxiliar nesse processo programei um pequeno script em PHP para simular o comportamento do backend do nosso alvo e ser mais certeiro nos exploits, sendo esse código aqui:</p>
+<pre class="language-php"><code class="lang-php"><strong>&#x3C;?php
+</strong>class PageModel
+{
+    public $file;
+
+    public function __destruct() 
+    {
+        include($this->file); 
+    }
+}
+$model = new PageModel();
+$model->file = /* insira payload aqui */
+$serialize = serialize($model);
+
+$base64 = base64_encode($serialize);
+echo "$base64\n";
+</code></pre>
+<p>Nesse código, podemos inserir nossa payload em $model-&gt;file e ela será serializada e encodada para base64, podendo assim, colocarmos no cookie para a aplicação processar nossa payload.</p>
+<h3 id="php-filter-chain">PHP Filter Chain<a class="anchor" href="#php-filter-chain" aria-label="Link"></a></h3>
+<p>A primeira ideia que eu tive com o cenário atual, foi uma técnica de PHP Filter chain, onde a função <code>include()</code> do PHP aceita alguns protocolos diferentes de arquivos, onde, em uma pesquisa, conseguiram usar helper de filtros do PHP para levar a um RCE.</p>
+<p>Aqui você pode acessar o link da pesquisa: <a href="https://www.synacktiv.com/publications/php-filters-chain-what-is-it-and-how-to-use-it.html">https://www.synacktiv.com/publications/php-filters-chain-what-is-it-and-how-to-use-it.html</a>, e aqui um repositório com um gerador de payload para essa técnica: <a href="https://github.com/synacktiv/php_filter_chain_generator">https://github.com/synacktiv/php_filter_chain_generator</a></p>
+<p>Com essa ferramenta, gerei uma payload que fizesse um <code>system('ls -la')</code>; e pude rodar no meu script, no qual pude ver que funciona:<br></p>
+<figure><img src="/assets/image%20%2893%29.png">
+</figure>
+
+<p>Podemos testar agora a aplicação com esse base64:<br></p>
+<figure><img src="/assets/image%20%2894%29.png">
+</figure>
+
+<p>Na imagem podemos ver o cookie contento o base64 criado pelo script, mas a payload não foi executada pelo backend e no terminal onde está o docker com a aplicação existem vários logs de erro. Essa ideia parece não dar certo.<br>
+<figure><img src="/assets/image%20%2895%29.png">
+</figure>
+</p>
+<h3 id="rfi">RFI<a class="anchor" href="#rfi" aria-label="Link"></a></h3>
+<p>Lendo a documentação da função <code>include()</code>, pude tirar algumas conclusões:<br></p>
+<ul>
+<li>A função executa scripts PHP, logo se passarmos um arquivo PHP para ele, ele vai executar os comandos do PHP</li>
+<li>A função aceita URLs como parâmetro (e nós controlamos esse parâmetro)</li>
+</ul>
+<p><figure><img src="/assets/image%20%28110%29.png" width="563">
+</figure>
+<figcaption><p>Documentação do PHP</p></figcaption></figure></p>
+<p><figure><img src="/assets/image%20%28109%29.png">
+</figure>
+<figcaption><p>Documentação do PHP</p></figcaption></figure></p>
+<p>Com isso, a ideia é fazer ele incluir um arquivo PHP remoto e executar os comandos feitos por ele.<br>
+Criei um simples arquivo PHP para fazer o backend da aplicação alvo consumir:<br></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">system</span>(<span style="color:#e6db74">&#34;ls -la&#34;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">?&gt;</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>Subi o arquivo usando um servidor python e gerei o objeto serializado com o script auxiliar que temos usado:<br></p>
+<p><figure><img src="/assets/image%20%2896%29.png">
+</figure>
+<figcaption><p>Tentativa de execução</p></figcaption></figure></p>
+<p>No script de teste, a payload deu erro, pois a função include() não está aceitando URLs como parâmetro, é uma configuração do PHP que pode ser mudada, então podemos ver se o servidor alvo está aceitando URLs:<br>
+<img src="/assets/image%20%2897%29.png" alt="" /><img src="/assets/image%20%2898%29.png" alt="" /></p>
+<p>Então não, o backend está recusando URLs também e essa é outra ideia que não deu certo.</p>
+<h3 id="wrappers">Wrappers<a class="anchor" href="#wrappers" aria-label="Link"></a></h3>
+<p>Como dito na descrição da ideia de ataque anterior, o PHP aceita alguns parâmetros diferentes nas suas funções de leitura de dados, conhecidos como PHP Wrappers.</p>
+<p>Com alguns deles, podemos encodar e zipar arquivos e etc. Nem todos são muito úteis para o nosso cenário atual, pois como não sabemos o nome e nem onde está a flag, não conseguimos a encontrar para ler (mesmo sem os wrappers, isso seria possível com o LFI normal que temos nesse backend). Porém, alguns deles podem ser úteis para conseguir algum RCE.</p>
+<p>Temos uma lista desse no hacktricks (<a href="https://book.hacktricks.xyz/pentesting-web/file-inclusion#input">https://book.hacktricks.xyz/pentesting-web/file-inclusion#input</a>), tentei usar o input para tentar um RCE, mas já aviso aqui que foi outra ideia que não deu certo.  :cry:   </p>
+<h3 id="log-poisoning">Log Poisoning<a class="anchor" href="#log-poisoning" aria-label="Link"></a></h3>
+<p>Voltando para o código fonte do arquivo, olho na configuração do nginx o caminho do arquivo de logs:<br></p>
+<figure><img src="/assets/image%20%2899%29.png">
+</figure>
+
+<p>Isso brilha os olhos de qualquer hacker que está nesse contexto atual! A ideia por trás da minha tentativa de RFI foi fazer o include executar um código PHP, porém, de uma URL externa que ele não esta aceitando. Porém, com os logs, nós podemos fazer ele puxar um arquivo interno e não de uma URL externa. <br>
+O workflow desse ataque se consiste em envenenar o arquivo de log com algum código PHP e fazer o include chamar esse arquivo e executar a parte em PHP. Isso é log poisoning!</p>
+<p>Entrando no container que está executando a aplicação, podemos ler os logs e vê que ele guarda o user-agent da requisição:<br></p>
+<figure><img src="/assets/image%20%28100%29.png">
+</figure>
+
+<p>Com isso, podemos escrever um trecho PHP nesse user-agent e usar do LFI para ler esse arquivo e executar.<br>
+Usei o próprio DevTools do firefox para editar uma request HTTP, mas isso, também, poderia ser feito com o CURL ou alguma proxy como o Burp Suite:</p>
+<figure><img src="/assets/image%20%28101%29.png">
+</figure>
+
+<p>Mudamos a payload para ser o arquivo de logs:<br></p>
+<p>{% code title=&ldquo;index.php&rdquo; overflow=&ldquo;wrap&rdquo; lineNumbers=&ldquo;true&rdquo; %}</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#f92672">&lt;?</span><span style="color:#a6e22e">php</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PageModel</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> $file;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">__destruct</span>() 
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">include</span>($this<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">file</span>); 
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>$model <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">PageModel</span>();
+</span></span><span style="display:flex;"><span>$model<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">file</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;/var/log/nginx/access.log&#34;</span>
+</span></span><span style="display:flex;"><span>$serialize <span style="color:#f92672">=</span> <span style="color:#a6e22e">serialize</span>($model);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$base64 <span style="color:#f92672">=</span> <span style="color:#a6e22e">base64_encode</span>($serialize);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">$base64</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>;</span></span></code></pre></div><p>{% endcode %}</p>
+<p>Executando o script, temos o base64 para inserir no cookie.<br>
+Trocando o cookie e recarregando a página:<br></p>
+<figure><img src="/assets/image%20%28103%29.png">
+</figure>
+
+<p>Temos ai o nosso RCE!!<br>
+Podemos fazer uma simples webshell para interagir diretamente com o servidor:<br></p>
+<figure><img src="/assets/image%20%28104%29.png">
+</figure>
+
+<figure><img src="/assets/image%20%28105%29.png">
+</figure>
+
+<figure><img src="/assets/image%20%28106%29.png">
+</figure>
+
+<p>Conseguimos o nome da flag!!<br>
+Agora podemos apenas ler o conteúdo:<br></p>
+<figure><img src="/assets/image%20%28107%29.png">
+</figure>
+
+<p>O exploit deu certo! Agora podemos reproduzir os mesmos passos no desafio de produção (não o que está local no nosso docker)</p>
+<figure><img src="/assets/image%20%28108%29.png">
+</figure>
+
+<p>Apesar de ser da categoria easy, eu adorei o desafio, pois no processo tive muitas ideias diferentes de como tentar resolver e algumas pesquisas que foram me dando outras ideias de ataques, eu amo esse processo!</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Templated</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/machines/blurry/" class="flex align-center">
+        <span>Blurry</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#exploit">Exploit</a>
+      <ul>
+        <li><a href="#php-filter-chain">PHP Filter Chain</a></li>
+        <li><a href="#rfi">RFI</a></li>
+        <li><a href="#wrappers">Wrappers</a></li>
+        <li><a href="#log-poisoning">Log Poisoning</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

