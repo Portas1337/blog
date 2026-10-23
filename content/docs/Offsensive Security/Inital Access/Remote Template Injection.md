@@ -1,7 +1,7 @@
 +++
 title = 'Remote Template Injection'
 date = 2024-01-14T07:07:07+01:00
-draft = true
+draft = false
 +++
 
 # Remote Template Injection
