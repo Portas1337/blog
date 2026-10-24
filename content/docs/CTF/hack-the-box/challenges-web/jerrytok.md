@@ -1,3 +1,9 @@
++++
+title = 'Jerrytok'
+date = 2024-01-14T07:07:07+01:00
+draft = true
++++
+
 ---
 description: >-
   obs: Em algumas evidências o IP fica diferente, pois a instância tem limite

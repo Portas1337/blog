@@ -18,19 +18,23 @@
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
 <meta name="color-scheme" content="light dark">
-<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/machines/certified/">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="//localhost:1313/docs/ctf/hack-the-box/machines/certified/">
 	<meta property="og:site_name" content="Portas">
-	<meta property="og:title" content="Portas">
+	<meta property="og:title" content="Certified">
 	<meta property="og:description" content="CertifiedReconNessa máquina começamos com o IP 10.10.11.41 e com as credenciais judith.mader:judith09 . Vamos começar mapeando a rede com nmap:
 # Nmap 7.94SVN scan initiated Sun Nov 10 17:03:33 2024 as: /usr/lib/nmap/nmap --privileged --min-rate=10000 -p- -A -oA nmap/certified 10.10.11.41 Nmap scan report for 10.10.11.41 Host is up (0.19s latency). Not shown: 65515 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-11-11 05:03:55Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 389/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 593/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 636/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 9389/tcp open mc-nmf .NET Message Framing 49666/tcp open msrpc Microsoft Windows RPC 49668/tcp open msrpc Microsoft Windows RPC 49669/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 49670/tcp open msrpc Microsoft Windows RPC 49677/tcp open msrpc Microsoft Windows RPC 49708/tcp open msrpc Microsoft Windows RPC 49732/tcp open msrpc Microsoft Windows RPC 50720/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2019 (89%) Aggressive OS guesses: Microsoft Windows Server 2019 (89%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-11-11T05:04:55 |_ start_date: N/A |_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m59s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 53/tcp) HOP RTT ADDRESS 1 192.70 ms 10.10.14.1 2 193.69 ms 10.10.11.41 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Sun Nov 10 17:05:33 2024 -- 1 IP address (1 host up) scanned in 120.32 secondsSabemos agora que temos um servidor Windows com Active Directory operando, e podemos começar a testar a credencial que temos disponível.">
 	<meta property="og:locale" content="en_us">
 	<meta property="og:type" content="article">
 		<meta property="article:section" content="docs">
+		<meta property="article:published_time" content="2024-01-14T07:07:07+01:00">
+		<meta property="article:modified_time" content="2024-01-14T07:07:07+01:00">
 
 
-	<meta itemprop="name" content="Portas">
+	<meta itemprop="name" content="Certified">
 	<meta itemprop="description" content="CertifiedReconNessa máquina começamos com o IP 10.10.11.41 e com as credenciais judith.mader:judith09 . Vamos começar mapeando a rede com nmap:
 # Nmap 7.94SVN scan initiated Sun Nov 10 17:03:33 2024 as: /usr/lib/nmap/nmap --privileged --min-rate=10000 -p- -A -oA nmap/certified 10.10.11.41 Nmap scan report for 10.10.11.41 Host is up (0.19s latency). Not shown: 65515 filtered tcp ports (no-response) PORT STATE SERVICE VERSION 53/tcp open domain Simple DNS Plus 88/tcp open kerberos-sec Microsoft Windows Kerberos (server time: 2024-11-11 05:03:55Z) 135/tcp open msrpc Microsoft Windows RPC 139/tcp open netbios-ssn Microsoft Windows netbios-ssn 389/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 445/tcp open microsoft-ds? 464/tcp open kpasswd5? 593/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 636/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. 3268/tcp open ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 |_ssl-date: 2024-11-11T05:05:33&#43;00:00; &#43;7h00m00s from scanner time. 3269/tcp open ssl/ldap Microsoft Windows Active Directory LDAP (Domain: certified.htb0., Site: Default-First-Site-Name) |_ssl-date: 2024-11-11T05:05:31&#43;00:00; &#43;7h00m00s from scanner time. | ssl-cert: Subject: commonName=DC01.certified.htb | Subject Alternative Name: othername: 1.3.6.1.4.1.311.25.1::&lt;unsupported&gt;, DNS:DC01.certified.htb | Not valid before: 2024-05-13T15:49:36 |_Not valid after: 2025-05-13T15:49:36 9389/tcp open mc-nmf .NET Message Framing 49666/tcp open msrpc Microsoft Windows RPC 49668/tcp open msrpc Microsoft Windows RPC 49669/tcp open ncacn_http Microsoft Windows RPC over HTTP 1.0 49670/tcp open msrpc Microsoft Windows RPC 49677/tcp open msrpc Microsoft Windows RPC 49708/tcp open msrpc Microsoft Windows RPC 49732/tcp open msrpc Microsoft Windows RPC 50720/tcp open msrpc Microsoft Windows RPC Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port Device type: general purpose Running (JUST GUESSING): Microsoft Windows 2019 (89%) Aggressive OS guesses: Microsoft Windows Server 2019 (89%) No exact OS matches for host (test conditions non-ideal). Network Distance: 2 hops Service Info: Host: DC01; OS: Windows; CPE: cpe:/o:microsoft:windows Host script results: | smb2-time: | date: 2024-11-11T05:04:55 |_ start_date: N/A |_clock-skew: mean: 6h59m59s, deviation: 0s, median: 6h59m59s | smb2-security-mode: | 3:1:1: |_ Message signing enabled and required TRACEROUTE (using port 53/tcp) HOP RTT ADDRESS 1 192.70 ms 10.10.14.1 2 193.69 ms 10.10.11.41 OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ . # Nmap done at Sun Nov 10 17:05:33 2024 -- 1 IP address (1 host up) scanned in 120.32 secondsSabemos agora que temos um servidor Windows com Active Directory operando, e podemos começar a testar a credencial que temos disponível.">
+	<meta itemprop="datePublished" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="dateModified" content="2024-01-14T07:07:07+01:00">
 	<meta itemprop="wordCount" content="2479">
 
 <title>Certified • Portas</title>
@@ -39,11 +43,11 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/machines/certified/">
+<link rel="canonical" href="//localhost:1313/docs/ctf/hack-the-box/machines/certified/">
 <link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
 
 
-<script type="module" src="/en.search.min.5d7d2e44f776c41b94da5c54f7df9ffe0ff698ce88fe3f1b3bd9e7b1f82ccae2.js" integrity="sha256-XX0uRPd2xBuU2lxU99&#43;f/g/2mM6I/j8bO9nnsfgsyuI=" crossorigin="anonymous"></script>
+<script type="module" src="/en.search.min.9b35be230184439742bf457c1001d827b3c47983242b86467107c93f4cf30415.js" integrity="sha256-mzW&#43;IwGEQ5dCv0V8EAHYJ7PEeYMkK4ZGcQfJP0zzBBU=" crossorigin="anonymous"></script>
   
 </head>
 
@@ -79,66 +83,6 @@
 
   
   <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
-    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
-      <a role="button" class="">
-        Offensive Security</a>
-      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
-    </label>
-  
-
-          
-  <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
-    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
-      <a role="button" class="">
-        Initial Access</a>
-      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
-    </label>
-  
-
-          
-  <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
-      Remote Template Injection</a>
-  
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
-    
-  </ul>
-
-        </li>
-      
     
       
         <li>
@@ -217,6 +161,20 @@
   
     <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
       Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/nomad-notes/" class="">
+      Nomad Notes</a>
   
 
         </li>
@@ -364,20 +322,6 @@
   
 
   
-    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
-      Cross Site Scriping</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
     <a href="/docs/ctf/juice-shop/injection/" class="">
       Injection</a>
   
@@ -392,8 +336,82 @@
   
 
   
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      XSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
     <a href="/docs/ctf/juice-shop/readme/" class="">
       Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
   
 
         </li>

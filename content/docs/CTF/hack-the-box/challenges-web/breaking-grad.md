@@ -1,6 +1,11 @@
++++
+title = 'Breaking Grad'
+date = 2024-01-14T07:07:07+01:00
+draft = true
++++
+
 # Breaking Grad
 
-## Breaking grad
 
 Breaking grad é uma challenge medium, da categoria web do hackthe box​
 

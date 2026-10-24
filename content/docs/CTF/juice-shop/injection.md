@@ -1,14 +1,20 @@
++++
+title = 'Injection'
+date = 2024-01-14T07:07:07+01:00
+draft = true
++++
+
 # Injection
 
 Utilizando do sistema e analisando como posso interagir com ele, comecei interagindo com uma funcionalidade de busca.
 
 Ao carregar a página principal, o client faz uma request para `/rest/products/search?q=`, que traz um JSON de todos os produtos:
 
-<figure><img src="../../.gitbook/assets/image (111).png" >}}
+<figure><img src="../../.gitbook/assets/image (111).png" alt=""><figcaption></figcaption></figure>
 
 Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:
 
-<figure><img src="../../.gitbook/assets/image (112).png" >}}
+<figure><img src="../../.gitbook/assets/image (112).png" alt=""><figcaption></figcaption></figure>
 
 Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro `?q` na consulta para o backend, aqui nos surge algumas possibilidades:
 
@@ -19,11 +25,11 @@ Podemos reparar também que nossa busca é refletida no frontend, temos controle
 
 Ainda temos o endoint `/rest/products/search?q=` para testar, e começar a manipular esse input `?q`. Fazendo uma busca por "Apple", me retorna apenas os itens com Apple no nome no JSON:
 
-<figure><img src="../../.gitbook/assets/image (114).png" >}}
+<figure><img src="../../.gitbook/assets/image (114).png" alt=""><figcaption></figcaption></figure>
 
 Provavelmente, esse input que controlamos é usado em uma query sql, podemos manipular então manipular essa query. Fazendo essa request `GET /rest/products/search?q=xxdd%27%20or%20apple`, temos uma exception na tela que nos mostra a query utilizada, nos ajudando a craftar uma payload melhor para esse ataque:
 
-<figure><img src="../../.gitbook/assets/image (115).png" >}}
+<figure><img src="../../.gitbook/assets/image (115).png" alt=""><figcaption></figcaption></figure>
 
 Com isso, podemos ver que a query utilizada é:
 
@@ -36,7 +42,7 @@ e que input é utilizado diretamente na URL, então de fatos temos controle sobr
 \
 usando order by consegui identificar que existem 9 colunas na tabela, e com union all select: `aaaaa%' )) UNION ALL SELECT 1, 2, 3, 4, 5, 6, 7, 8, 9 -- -` <br>
 
-<figure><img src="../../.gitbook/assets/image (116).png" >}}
+<figure><img src="../../.gitbook/assets/image (116).png" alt=""><figcaption></figcaption></figure>
 
 ```json
 {
@@ -200,11 +206,11 @@ input: `aaaaa%' )) UNION ALL SELECT id , username, email, password, role, deluxe
 
 Com isso, um dos desafios e logar como administrador do sistema, podemos tentar quebrar a Hash da senha dele (usando Hashcat ou similar) e tentar logar, vamos tentar primeiro no Crackstation:
 
-<figure><img src="../../.gitbook/assets/image (117).png" >}}
+<figure><img src="../../.gitbook/assets/image (117).png" alt=""><figcaption></figcaption></figure>
 
 Então podemos logar com admin@juice-sh.op:admin124
 
-<figure><img src="../../.gitbook/assets/image (118).png" >}}
+<figure><img src="../../.gitbook/assets/image (118).png" alt=""><figcaption></figcaption></figure>
 
 ### Logando como Jim
 
@@ -216,19 +222,19 @@ O próximo relacionado ao login, é logar como bender, porém dessa vez, a hash 
 
 Podemos ver que é bem simples, mandamos as credenciais de login e senha, e ele nos devolve um token JWT e alguns meta-dados
 
-<figure><img src="../../.gitbook/assets/image (119).png" >}}
+<figure><img src="../../.gitbook/assets/image (119).png" alt=""><figcaption></figcaption></figure>
 
 Testando esses inputs, facilmente conseguimos triggar outra exception que nos revela mais um sql injection
 
-<figure><img src="../../.gitbook/assets/image (120).png" >}}
+<figure><img src="../../.gitbook/assets/image (120).png" alt=""><figcaption></figcaption></figure>
 
 Podemos criar então outra payload de SQL Injection para bypassar esse mecanismo de login, colocando um breaking point nesse endpoint, assim que meu client enviar a request, a proxy irá interceptar para que eu altere antes de enviar para o server, com isso posso injetar a payload \`bender@juice-sh.op' -- - \` para controlar a query fazendo com que, assim que ela pegue os dados do email inserido, o resto seja comentado e não tenha verificação pela senha, e assim o server irá concluir a autenticação com os dados do Bender:
 
-<figure><img src="../../.gitbook/assets/image (121).png" >}}
+<figure><img src="../../.gitbook/assets/image (121).png" alt=""><figcaption></figcaption></figure>
 
 Executando a request:
 
-<figure><img src="../../.gitbook/assets/image (122).png" >}}
+<figure><img src="../../.gitbook/assets/image (122).png" alt=""><figcaption></figcaption></figure>
 
 Estou agora logado como Bender, e mais um desafio foi concluído.
 
@@ -244,7 +250,7 @@ Usando union select, posso fazer uma tabela virtual que preencha os campos da ta
 'union select 1337 as 'id', 'account' as 'username', 'acc0unt4nt@juice-sh.op' as 'email', '1337' as 'password', 'customer' as 'role', 'token1222' as 'deluxeToken', '0.0.0.0' as 'lastLoginIp', '/assets/public/images/uploads/default.svg' as 'profileImage', '' as 'totpSecret', 1 as 'isActive', DATE('now') as 'createdAt', DATE('now') as 'updateAt',NULL as 'deletedAt' -- -`
 ```
 
-<figure><img src="../../.gitbook/assets/image (62).png" >}}
+<figure><img src="../../.gitbook/assets/image (62).png" alt=""><figcaption></figcaption></figure>
 
 Temos o seguinte erro: `SQLITE_CONSTRAINT: FOREIGN KEY constraint failed`
 
@@ -256,13 +262,13 @@ Parece que em alguma parte do processo o Id é usado para recuperar a tabela Bas
 
 e deu certo:
 
-<figure><img src="../../.gitbook/assets/image (63).png" >}}
+<figure><img src="../../.gitbook/assets/image (63).png" alt=""><figcaption></figcaption></figure>
 
 Com isso, posso fazer um breakingpoint na hora do login, e passar essa request que cria uma conta virtualmente na base de dados:
 
-<figure><img src="../../.gitbook/assets/image (64).png" >}}
+<figure><img src="../../.gitbook/assets/image (64).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (65).png" >}}
+<figure><img src="../../.gitbook/assets/image (65).png" alt=""><figcaption></figcaption></figure>
 
 Com isso logamos com a conta inexistente e fechando os desafios da parte de autenticação, podemos começar a explorar melhor agora a área logada do sistema e ver as novas interações que temos dessa forma.
 
@@ -274,33 +280,33 @@ Um desafio da plataforma é comprar um produto que não está mais disponível, 
 
 Na resposta, podemos ver que temos um registro com `deletedAt` diferente de null, então é o produto deletado que devemos comprar:
 
-<figure><img src="../../.gitbook/assets/image (59).png" >}}
+<figure><img src="../../.gitbook/assets/image (59).png" alt=""><figcaption></figcaption></figure>
 
 Agora, vou ver como é a interação do client com o server para adicionar um produto ao carrinho:
 
-<figure><img src="../../.gitbook/assets/image (60).png" >}}
+<figure><img src="../../.gitbook/assets/image (60).png" alt=""><figcaption></figcaption></figure>
 
 Basicamente enviamos o ID do produto, o ID do carrinho e a quantidade. Como controlamos o produto e o carrinho, e sabendo que o ID do produto do desafio é 10, podemos apenas tentar adicionar ao carrinho o produto de ID 10 (e futuramente, tentar adicionar um produto em um carrinho que não seja nosso, mas fica para outro post). Usando minha proxy, fiz uma request trocando o ID do produto para 10, e funcionou, ele adicionou o produto deletado em meu carrinho:
 
-<figure><img src="../../.gitbook/assets/image (61).png" >}}
+<figure><img src="../../.gitbook/assets/image (61).png" alt=""><figcaption></figcaption></figure>
 
 Agora, vou excluir o Apple Juice que adicionei apenas para para entender como funciona o processo de adicionar item ao carrinho, e finalizar a compra com do Christmas Super-Surprise-Box (2014 Edition) Precisamos adicionar o endereço:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211123.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211123.png" alt=""><figcaption></figcaption></figure>
 
 Escolher um tipo de entrega:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211200.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211200.png" alt=""><figcaption></figcaption></figure>
 
 Adicionar um cartão e continuar a compra:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211239.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211239.png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211325.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211325.png" alt=""><figcaption></figcaption></figure>
 
 E finalmente, efetuar a compra:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240512211346.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512211346.png" alt=""><figcaption></figcaption></figure>
 
 E com isso, foi concluído o desafio de comprar um produto já deletado, através de SQL Injection (e da falta de validação do back-end, que deveria verificar se o produto está disponível antes de adicionar ao carrinho, mas não o fez).
 
@@ -310,11 +316,11 @@ E com isso, foi concluído o desafio de comprar um produto já deletado, atravé
 
 Quando estamos autenticado, podemos deixar uma avaliação em um produto, usando uma proxy, podemos ver a interação entre o client e o server:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240509170453.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509170453.png" alt=""><figcaption></figcaption></figure>
 
 E na hora de ler as avaliações, podemos ver também com qual endpoint o client interage, e nele podemos ver que se trata de um schema de mongodb (caso não saiba o motivo, o campo \_\_ id normalmente pertence ao mongodb):
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240509170800.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509170800.png" alt=""><figcaption></figcaption></figure>
 
 Analisando o endpoint usado para criar o comentário, podemos tirar algumas hipóteses pela request:
 
@@ -350,18 +356,18 @@ ao invés de buscar o produto pelo ID, podemos tentar usar um query operator no 
 
 Tentando injetar query operator na URL:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171009.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171009.png" alt=""><figcaption></figcaption></figure>
 
 Porém não funcionou, tentei a mesma ideia de outras formas e também não obtive resultado, então é provável que o servidor apenas crie um novo registro no mongodb, com um campo `product_id` que vem da URL, independe se o produto existe ou não, e então não buscar por um produto existente primeiro.
 
 Função de editar review:\
 Continuando a análise, ainda na parte de avaliação temos uma funcionalidade para editar uma avaliação, e com a proxy podemos ver como o client interage com o endpoint de edição:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171045.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171045.png" alt=""><figcaption></figcaption></figure>
 
 Com essa request, podemos notar que um dos inputs de o ID do documento editado:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171138.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171138.png" alt=""><figcaption></figcaption></figure>
 
 Depois de buscar no google por exemplos de update usando mongodb, podemos imaginar um pseudo-código parecido com isso para editar uma review:
 
@@ -388,19 +394,19 @@ Onde dessa vez, tempos mais certeza de que o servidor primeiro busca por uma rev
 A ideia então é tentar usar outro query operator já que temos maiores certezas de um filtro sendo utilizado, então, ao invés do servidor buscar por uma review especifica, ele vai fazer uma query que pode trazer diversos reviews.\
 Ataque:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171356.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171356.png" alt=""><figcaption></figcaption></figure>
 
 Com essa request, o servidor no momento de buscar um produto pelo ID, vai fazer uma query `"$ne": null`, que buscar por todos os produtos onde o ID é diferente de null (ne = not equal. https://www.mongodb.com/docs/manual/reference/operator/query/ne/ ). Então irá nos trazer todas as reviews, e depois editar com o nosso comentário.\
 Resultado:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240509171435.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240509171435.png" alt=""><figcaption></figcaption></figure>
 
 Podemos ver mais abaixo na response os diversos itens com o valor que editamos:
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240518165600.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240518165600.png" alt=""><figcaption></figcaption></figure>
 
 Editamos todas as reviews de produtos salvas no banco e fechamos mais um desafio.
 
 Com esse, concluímos todos os desafios do módulo de injection (disponíveis em docker):
 
-<figure><img src="../../.gitbook/assets/Pasted image 20240512212917.png" >}}
+<figure><img src="../../.gitbook/assets/Pasted image 20240512212917.png" alt=""><figcaption></figcaption></figure>
