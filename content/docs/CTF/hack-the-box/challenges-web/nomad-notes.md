@@ -229,7 +229,13 @@ By reading the documentation for the `include` function, one can identify the po
 
 {{< figure src="/assets/nomad-notes/replace-docs.png" >}}
 
-By conducting small tests with each of these potential values, an interesting behavior was identified for the value `` $` ``: the entire line preceding the match is repeated before the replacement value. This creates an opportunity to copy the `nonce` value into our script, thereby generating a valid script tag that satisfies the application's CORS policy and allows for the execution of JavaScript.
+By conducting small tests with each of these potential values, an interesting behavior was identified for the value `` $` ``: the entire line preceding the match is repeated before the replacement value, as in this example:
+
+```js
+"hello".replace("ell", "$`") // result -> "hho"
+```
+
+ This creates an opportunity to copy the `nonce` value into our script, thereby generating a valid script tag that satisfies the application's CORS policy and allows for the execution of JavaScript.
 
 ```html
 <!-- postcard.html -->
@@ -251,7 +257,13 @@ For this page, there is no script with a valid `nonce` that we could copy via th
 
 One weakness of this route is the absence of the `escape` method; while XSS is not a viable vector here, the injection of HTML code is still possible.
 
-In this article, we can find techniques for extracting user information using only HTML tags—without the need for JavaScript—which fits perfectly with the remaining problem: https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html
+In this article, we can find techniques for extracting user information using only HTML tags, without the need for JavaScript, which fits perfectly with the remaining problem: https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html
+
+Therefore, it is possible to inject a `meta` tag into the `destinations` page, which will cause the browser to be redirected to the URL specified in the `content` attribute, while also sending the URL of the `destinations` page as the `referrer`, as shown in the example below:
+
+{{< figure src="/assets/nomad-notes/meta-tag.png" >}}
+
+{{< figure src="/assets/nomad-notes/meta-redirect.png" >}}
 
 So, the final attack plan is:
 1. Leverage the `include` sink to achieve a valid XSS, forcing the bot's browser to access the `/reports` route from a local origin; this, in turn, triggers a request to the `/destinations` route with the flag included in the query string.

@@ -41,7 +41,7 @@ First, I make a few minor modifications to the container startup process to allo
 Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.">
 	<meta itemprop="datePublished" content="2024-01-14T07:07:07+01:00">
 	<meta itemprop="dateModified" content="2024-01-14T07:07:07+01:00">
-	<meta itemprop="wordCount" content="1461">
+	<meta itemprop="wordCount" content="1520">
 
 <title>Nomad Notes • Portas</title>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -53,7 +53,7 @@ Following this, a proxy and a browser were configured for testing, thereby compl
 <link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
 
 
-<script type="module" src="/en.search.min.9b35be230184439742bf457c1001d827b3c47983242b86467107c93f4cf30415.js" integrity="sha256-mzW&#43;IwGEQ5dCv0V8EAHYJ7PEeYMkK4ZGcQfJP0zzBBU=" crossorigin="anonymous"></script>
+<script type="module" src="/en.search.min.fe9e00133198941b2602ec1da9ca65a8145f312d9c4239463a187bb35de9277c.js" integrity="sha256-/p4AEzGYlBsmAuwdqcplqBRfMS2cQjlGOhh7s13pJ3w=" crossorigin="anonymous"></script>
   
 </head>
 
@@ -151,64 +151,8 @@ Following this, a proxy and a browser were configured for testing, thereby compl
   
 
   
-    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
-      Breaking Grad</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
-      Jerrytok</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
     <a href="/docs/ctf/hack-the-box/challenges-web/nomad-notes/" class="active">
       Nomad Notes</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
-      Templated</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
-      Toxic</a>
   
 
         </li>
@@ -237,62 +181,6 @@ Following this, a proxy and a browser were configured for testing, thereby compl
           
   <ul>
     
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
-      Blurry</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
-      Certified</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
-      Cicada</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
-      Monitorsthree</a>
-  
-
-        </li>
-      
-    
   </ul>
 
         </li>
@@ -320,34 +208,6 @@ Following this, a proxy and a browser were configured for testing, thereby compl
 
           
   <ul>
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/juice-shop/injection/" class="">
-      Injection</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
-      XSS</a>
-  
-
-        </li>
-      
     
       
         <li>
@@ -663,7 +523,9 @@ Following this, a proxy and a browser were configured for testing, thereby compl
 <figure><img src="/assets/nomad-notes/replace-docs.png">
 </figure>
 
-<p>By conducting small tests with each of these potential values, an interesting behavior was identified for the value <code>$`</code>: the entire line preceding the match is repeated before the replacement value. This creates an opportunity to copy the <code>nonce</code> value into our script, thereby generating a valid script tag that satisfies the application&rsquo;s CORS policy and allows for the execution of JavaScript.</p>
+<p>By conducting small tests with each of these potential values, an interesting behavior was identified for the value <code>$`</code>: the entire line preceding the match is repeated before the replacement value, as in this example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#e6db74">&#34;hello&#34;</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#34;ell&#34;</span>, <span style="color:#e6db74">&#34;$`&#34;</span>) <span style="color:#75715e">// result -&gt; &#34;hho&#34;
+</span></span></span></code></pre></div><p>This creates an opportunity to copy the <code>nonce</code> value into our script, thereby generating a valid script tag that satisfies the application&rsquo;s CORS policy and allows for the execution of JavaScript.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#75715e">&lt;!-- postcard.html --&gt;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span> &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">nonce</span><span style="color:#f92672">=</span><span style="color:#e6db74">{{</span> <span style="color:#a6e22e">nonce</span> <span style="color:#960050;background-color:#1e0010">}}</span>&gt;<span style="color:#66d9ef">let</span> <span style="color:#a6e22e">secret</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;{{ secret }}&#34;</span>;&lt;/<span style="color:#f92672">script</span>&gt;</span></span></code></pre></div><figure><img src="/assets/nomad-notes/replace-test-abc.png">
@@ -677,7 +539,14 @@ Following this, a proxy and a browser were configured for testing, thereby compl
 <p>With this vulnerability, it is possible to send the bot to a page containing our XSS payload and control the browser to perform a <code>fetch</code> request to <code>/report</code>. This satisfies the origin requirements, causing the browser to access the <code>/destinations</code> route with the flag included in the query string. However, a second issue must be addressed: how to retrieve the value of the flag without requiring a new XSS injection on the <code>/destinations</code> page.</p>
 <p>For this page, there is no script with a valid <code>nonce</code> that we could copy via the <code>include</code> sink. Consequently, CORS will block any XSS attempt.</p>
 <p>One weakness of this route is the absence of the <code>escape</code> method; while XSS is not a viable vector here, the injection of HTML code is still possible.</p>
-<p>In this article, we can find techniques for extracting user information using only HTML tags—without the need for JavaScript—which fits perfectly with the remaining problem: <a href="https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html">https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html</a></p>
+<p>In this article, we can find techniques for extracting user information using only HTML tags, without the need for JavaScript, which fits perfectly with the remaining problem: <a href="https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html">https://hacktricks.alquymia.com.br/pentesting-web/dangling-markup-html-scriptless-injection/index.html</a></p>
+<p>Therefore, it is possible to inject a <code>meta</code> tag into the <code>destinations</code> page, which will cause the browser to be redirected to the URL specified in the <code>content</code> attribute, while also sending the URL of the <code>destinations</code> page as the <code>referrer</code>, as shown in the example below:</p>
+<figure><img src="/assets/nomad-notes/meta-tag.png">
+</figure>
+
+<figure><img src="/assets/nomad-notes/meta-redirect.png">
+</figure>
+
 <p>So, the final attack plan is:</p>
 <ol>
 <li>Leverage the <code>include</code> sink to achieve a valid XSS, forcing the bot&rsquo;s browser to access the <code>/reports</code> route from a local origin; this, in turn, triggers a request to the <code>/destinations</code> route with the flag included in the query string.</li>
@@ -719,16 +588,16 @@ Following this, a proxy and a browser were configured for testing, thereby compl
 <div class="flex flex-wrap justify-between">
     <span>
     
-      <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="flex align-center">
+      <a href="/docs/" class="flex align-center">
         <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
-        <span>Jerrytok</span>
+        <span>Docs</span>
       </a>
     
     </span>
     <span>
     
-      <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="flex align-center">
-        <span>Templated</span>
+      <a href="/docs/ctf/juice-shop/readme/" class="flex align-center">
+        <span>Readme</span>
         <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
       </a>
     

@@ -12,7 +12,7 @@ Iniciei minha aplicação usando docker-container, que pode ser feito seguindo a
 
 Quando entramos na aplicação, vamos para a homepage:
 
-<figure><img src="../../.gitbook/assets/image (66).png" >}}
+<figure><img src="../../.gitbook/assets/image (66).png" alt=""><figcaption></figcaption></figure>
 
 O primeiro desafio apresentado pelo Juice Shop (assim que entramos a primeira vez) é encontrar o scoreboard das vulnerabilidades, podemos fazer isso de duas formas:
 
@@ -21,15 +21,15 @@ O primeiro desafio apresentado pelo Juice Shop (assim que entramos a primeira ve
 
 Com a ajuda de uma proxy, consigo fazer uma busca por todos os dados trafegados entre o client e o server, inclusive javascript e HTML:
 
-<figure><img src="../../.gitbook/assets/image (67).png" >}}
+<figure><img src="../../.gitbook/assets/image (67).png" alt=""><figcaption></figcaption></figure>
 
 Entrando nesse arquivo, conseguimos achar a URL /#/score-board:
 
-<figure><img src="../../.gitbook/assets/image (68).png" >}}
+<figure><img src="../../.gitbook/assets/image (68).png" alt=""><figcaption></figcaption></figure>
 
 Nesse scoreboard, temos um card para cada vulnerabilidade e para desafios de exploração de cada um, que pode é dividido em módulos, além disso, um aviso que que 16 desafios não estão disponíveis na versão do docker (então não farei esses desafios no momento)
 
-<figure><img src="../../.gitbook/assets/image (69).png" >}}
+<figure><img src="../../.gitbook/assets/image (69).png" alt=""><figcaption></figcaption></figure>
 
 A resolução de cada módulo estarão nas páginas a seguir.
 

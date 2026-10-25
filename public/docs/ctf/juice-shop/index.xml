@@ -13,20 +13,6 @@
 			<atom:link href="//localhost:1313/docs/ctf/juice-shop/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title></title>
-				<link>//localhost:1313/docs/ctf/juice-shop/cross-site-scriping/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>//localhost:1313/docs/ctf/juice-shop/cross-site-scriping/</guid>
-				<description>&lt;h1 id=&#34;cross-site-scriping&#34;&gt;Cross Site Scriping&lt;a class=&#34;anchor&#34; href=&#34;#cross-site-scriping&#34; aria-label=&#34;Link&#34;&gt;&lt;/a&gt;&lt;/h1&gt;</description>
-			</item>
-			<item>
-				<title></title>
-				<link>//localhost:1313/docs/ctf/juice-shop/injection/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>//localhost:1313/docs/ctf/juice-shop/injection/</guid>
-				<description>&lt;h1 id=&#34;injection&#34;&gt;Injection&lt;a class=&#34;anchor&#34; href=&#34;#injection&#34; aria-label=&#34;Link&#34;&gt;&lt;/a&gt;&lt;/h1&gt;&#xD;&#xA;&lt;p&gt;Utilizando do sistema e analisando como posso interagir com ele, comecei interagindo com uma funcionalidade de busca.&lt;/p&gt;&#xA;&lt;p&gt;Ao carregar a página principal, o client faz uma request para &lt;code&gt;/rest/products/search?q=&lt;/code&gt;, que traz um JSON de todos os produtos:&lt;/p&gt;&#xA;&lt;figure&gt;&lt;img src=&#34;../../.gitbook/assets/image (111).png&#34; &gt;}}&#xA;&lt;p&gt;Fazendo uma busca por Apple, nenhuma outra comunicação é feita para o backend, parece que o filtro é feito totalmente pelo client:&lt;/p&gt;&#xA;&lt;figure&gt;&lt;img src=&#34;../../.gitbook/assets/image (112).png&#34; &gt;}}&#xA;&lt;p&gt;Podemos reparar também que nossa busca é refletida no frontend, temos controle sobre elementos HTML renderizados no browser, além de reparar uma parâmetro &lt;code&gt;?q&lt;/code&gt; na consulta para o backend, aqui nos surge algumas possibilidades:&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title></title>
 				<link>//localhost:1313/docs/ctf/juice-shop/readme/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 				<guid>//localhost:1313/docs/ctf/juice-shop/readme/</guid>
