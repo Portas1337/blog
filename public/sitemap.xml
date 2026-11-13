@@ -2,41 +2,73 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:1313/docs/ctf/hack-the-box/challenges-web/</loc>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/challenges-web/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/ctf/</loc>
+    <loc>http://localhost:1313/docs/ctf/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/ctf/hack-the-box/</loc>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/offsensive-security/inital-access/</loc>
+    <loc>http://localhost:1313/docs/offsensive-security/inital-access/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/offsensive-security/</loc>
+    <loc>http://localhost:1313/docs/ctf/juice-shop/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/ctf/juice-shop/</loc>
-  </url><url>
-    <loc>//localhost:1313/docs/ctf/hack-the-box/machines/</loc>
-  </url><url>
-    <loc>//localhost:1313/docs/</loc>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/machines/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/ctf/hack-the-box/challenges-web/nomad-notes/</loc>
+    <loc>http://localhost:1313/docs/offsensive-security/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/</loc>
+    <loc>http://localhost:1313/docs/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/offsensive-security/inital-access/remote-template-injection/</loc>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/machines/blurry/</loc>
     <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/docs/ctf/juice-shop/readme/</loc>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/challenges-web/breaking-grad/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/categories/</loc>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/machines/certified/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
   </url><url>
-    <loc>//localhost:1313/tags/</loc>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/machines/cicada/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/juice-shop/injection/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/challenges-web/jerrytok/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/machines/monitorsthree/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/challenges-web/nomad-notes/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/offsensive-security/inital-access/remote-template-injection/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/challenges-web/templated/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/hack-the-box/challenges-web/toxic/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/juice-shop/cross-site-scriping/</loc>
+    <lastmod>2024-01-14T07:07:07+01:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/docs/ctf/juice-shop/readme/</loc>
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
   </url>
 </urlset>

