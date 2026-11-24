@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr"
+    data-theme="dark"
+    data-layout="centered">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  <meta name="generator-theme" content="Book Theme: https://github.com/alex-shpak/hugo-book">
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="InterstellarInterstellar is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+Simply spinning up Docker is enough to have a functional environment running.
+Taint AnalisysIn the current phase, the objective is to use the application to identify its functionalities and endpoints, as well as to leverage the source code to examine the implementation of these endpoints and search for potential attack vectors, thereby identifying the application’s attack surface. Caido will be used as a proxy to record the endpoints identified during interaction with the system and to create a sitemap.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no"><meta property="og:url" content="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/interstellar/">
+	<meta property="og:site_name" content="Portas">
+	<meta property="og:title" content="Interstellar">
+	<meta property="og:description" content="InterstellarInterstellar is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+Simply spinning up Docker is enough to have a functional environment running.
+Taint AnalisysIn the current phase, the objective is to use the application to identify its functionalities and endpoints, as well as to leverage the source code to examine the implementation of these endpoints and search for potential attack vectors, thereby identifying the application’s attack surface. Caido will be used as a proxy to record the endpoints identified during interaction with the system and to create a sitemap.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="docs">
+		<meta property="article:published_time" content="2024-01-14T07:07:07+01:00">
+		<meta property="article:modified_time" content="2024-01-14T07:07:07+01:00">
+
+
+	<meta itemprop="name" content="Interstellar">
+	<meta itemprop="description" content="InterstellarInterstellar is a medium-level web challenge from Hack The Box.
+Setup test environmentFor the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.
+Simply spinning up Docker is enough to have a functional environment running.
+Taint AnalisysIn the current phase, the objective is to use the application to identify its functionalities and endpoints, as well as to leverage the source code to examine the implementation of these endpoints and search for potential attack vectors, thereby identifying the application’s attack surface. Caido will be used as a proxy to record the endpoints identified during interaction with the system and to create a sitemap.">
+	<meta itemprop="datePublished" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="dateModified" content="2024-01-14T07:07:07+01:00">
+	<meta itemprop="wordCount" content="924">
+
+<title>Interstellar • Portas</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/ctf/hack-the-box/challenges-web/interstellar/">
+<link rel="stylesheet" href="/book.min.d2a63061af208ea46d4a5088bdb2c8d297df14bbb9064b630ae0b63dcb664760.css" integrity="sha256-0qYwYa8gjqRtSlCIvbLI0pffFLu5BktjCuC2PctmR2A=" crossorigin="anonymous">
+
+
+<script type="module" src="/en.search.min.79452c4e5ddb05a7be88f6ff1bf84b7595a83f1fcae486efac55a08d778ebc37.js" integrity="sha256-eUUsTl3bBae&#43;iPb/G/hLdZWoPx/K5IbvrFWgjXeOvDc=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <div class="book-container flex">
+    
+<aside class="book-menu" aria-label="Menu">
+  <div class="book-menu-content">
+    
+  <nav>
+<div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" role="searchbox" enterkeyhint="search"
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results" aria-live="polite"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-6652e0280f4a0b30fa40b02437030f68" class="toggle" checked />
+    <label for="section-6652e0280f4a0b30fa40b02437030f68" class="flex">
+      <a role="button" class="">
+        CTF</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-58e18b116dcb674821e213ec0945416f" class="toggle" checked />
+    <label for="section-58e18b116dcb674821e213ec0945416f" class="flex">
+      <a role="button" class="">
+        Hack the Box</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-494dc92d9104717a20a45ff4de94fed4" class="toggle" checked />
+    <label for="section-494dc92d9104717a20a45ff4de94fed4" class="flex">
+      <a role="button" class="">
+        Challenges (web)</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/bobbys-bistro/" class="">
+      Bobby&#39;s Bistro</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/interstellar/" class="active">
+      Interstellar</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/hack-the-box/challenges-web/nomad-notes/" class="">
+      Nomad Notes</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b358f1a871f27b6123c59716f1b3428c" class="toggle"  />
+    <label for="section-b358f1a871f27b6123c59716f1b3428c" class="flex">
+      <a role="button" class="">
+        Machines</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-c7059daadfdbaf53fa1366c3499caad7" class="toggle"  />
+    <label for="section-c7059daadfdbaf53fa1366c3499caad7" class="flex">
+      <a role="button" class="">
+        Juice Shop</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/ctf/juice-shop/readme/" class="">
+      Readme</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-fd1b80fe704649033173072830dbda4c" class="toggle"  />
+    <label for="section-fd1b80fe704649033173072830dbda4c" class="flex">
+      <a role="button" class="">
+        Offensive Security</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-b78b49e6983b03c601585815216f03c4" class="toggle"  />
+    <label for="section-b78b49e6983b03c601585815216f03c4" class="flex">
+      <a role="button" class="">
+        Initial Access</a>
+      <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#chevron-right"></use></svg>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/offsensive-security/inital-access/remote-template-injection/" class="">
+      Remote Template Injection</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <header class="book-header hidden">
+      
+  <div class="flex align-center justify-between gap">
+  <input type="checkbox" class="toggle" id="menu-control" />
+  <label for="menu-control" aria-label="Menu">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#menu"></use></svg>
+  </label>
+
+  <div class="book-brand">
+  <a class="flex align-center" href="/"><span>Portas</span>
+  </a>
+</div>
+
+
+  
+  <input type="checkbox" class="toggle" id="toc-control" />
+  <label for="toc-control" aria-label="Table of Contents">
+    <svg class="book-icon"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#toc"></use></svg>
+  </label>
+  
+</div>
+
+ 
+    </header>
+
+    <main class="book-page">
+      
+      
+  
+
+      
+  <article class="markdown book-article"><h1 id="interstellar">Interstellar<a class="anchor" href="#interstellar" aria-label="Link"></a></h1>
+<figure><img src="/assets/interstellar/banner.png">
+</figure>
+
+<p>Interstellar is a medium-level web challenge from Hack The Box.</p>
+<h2 id="setup-test-environment">Setup test environment<a class="anchor" href="#setup-test-environment" aria-label="Link"></a></h2>
+<p>For the challenge, the source code is provided along with Docker configuration files, allowing us to easily set up the environment for the application.</p>
+<p>Simply spinning up Docker is enough to have a functional environment running.</p>
+<figure><img src="/assets/interstellar/app-running.png">
+</figure>
+
+<h2 id="taint-analisys">Taint Analisys<a class="anchor" href="#taint-analisys" aria-label="Link"></a></h2>
+<p>In the current phase, the objective is to use the application to identify its functionalities and endpoints, as well as to leverage the source code to examine the implementation of these endpoints and search for potential attack vectors, thereby identifying the application&rsquo;s attack surface. Caido will be used as a proxy to record the endpoints identified during interaction with the system and to create a sitemap.</p>
+<figure><img src="/assets/interstellar/proxy-sitemap.png">
+</figure>
+
+<p>Through interaction with the system, the following functionalities were identified: account registration, login, edit name and communication device.</p>
+<p>The name-change functionality only works if the request originates from localhost.</p>
+<figure><img src="/assets/interstellar/change-name-interface.png">
+</figure>
+
+<figure><img src="/assets/interstellar/change-name-proxy.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span><span style="color:#66d9ef">elseif</span>($action <span style="color:#f92672">==</span><span style="color:#e6db74">&#34;edit&#34;</span>){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> ($_SERVER[<span style="color:#e6db74">&#39;REQUEST_METHOD&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;POST&#39;</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> ($_SERVER[<span style="color:#e6db74">&#39;REMOTE_ADDR&#39;</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;127.0.0.1&#39;</span>) {
+</span></span><span style="display:flex;"><span>                $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;error&#39;</span>, <span style="color:#e6db74">&#34;Only localhost can use this function!&#34;</span>);
+</span></span><span style="display:flex;"><span>                $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;index.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">exit</span>();
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            $new_name <span style="color:#f92672">=</span> $_REQUEST[<span style="color:#e6db74">&#39;new_name&#39;</span>] <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                $query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CALL editName(?, ?)&#34;</span>;
+</span></span><span style="display:flex;"><span>                $stmt <span style="color:#f92672">=</span> $conn<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">prepare</span>($query);
+</span></span><span style="display:flex;"><span>                $stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">bind_param</span>(<span style="color:#e6db74">&#34;is&#34;</span>, $id, $new_name);
+</span></span><span style="display:flex;"><span>                $stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">execute</span>();
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">if</span> ($stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">affected_rows</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>                    $_SESSION[<span style="color:#e6db74">&#39;name&#39;</span>] <span style="color:#f92672">=</span> $new_name;
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;message&#39;</span>, <span style="color:#e6db74">&#34;Done!&#34;</span>);
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;index.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">exit</span>();
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;error&#39;</span>, <span style="color:#e6db74">&#34;Failed!&#34;</span>);
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;index.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">exit</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                $stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">close</span>();
+</span></span><span style="display:flex;"><span>            } 
+</span></span></code></pre></div><p>The communication functionality uses a URL as a parameter, but it only accepts URLs for motherland.com.</p>
+<figure><img src="/assets/interstellar/communicate-interface.png">
+</figure>
+
+<figure><img src="/assets/interstellar/communicate-proxy.png">
+</figure>
+
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> ($_SERVER[<span style="color:#e6db74">&#39;REQUEST_METHOD&#39;</span>] <span style="color:#f92672">===</span> <span style="color:#e6db74">&#39;POST&#39;</span>) {
+</span></span><span style="display:flex;"><span>        $url <span style="color:#f92672">=</span> $_POST[<span style="color:#e6db74">&#39;url&#39;</span>];
+</span></span><span style="display:flex;"><span>        $data <span style="color:#f92672">=</span> $_POST[<span style="color:#e6db74">&#39;data&#39;</span>] <span style="color:#f92672">??</span> [];
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">filter_var</span>($url, <span style="color:#a6e22e">FILTER_VALIDATE_URL</span>)) {
+</span></span><span style="display:flex;"><span>            $parsedUrl<span style="color:#f92672">=</span> <span style="color:#a6e22e">parse_url</span>($url);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">preg_match</span>(<span style="color:#e6db74">&#39;/motherland\.com$/&#39;</span>, $parsedUrl[<span style="color:#e6db74">&#39;host&#39;</span>])) {    <span style="color:#75715e">//currently just support call to your mother land 
+</span></span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    $ch <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_init</span>();
+</span></span><span style="display:flex;"><span>                    $sessCookie <span style="color:#f92672">=</span> <span style="color:#a6e22e">isset</span>($_COOKIE[<span style="color:#e6db74">&#39;PHPSESSID&#39;</span>]) <span style="color:#f92672">?</span> $_COOKIE[<span style="color:#e6db74">&#39;PHPSESSID&#39;</span>] <span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;&#39;</span>;
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_URL</span>, $parsedUrl[<span style="color:#e6db74">&#39;host&#39;</span>]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_POST</span>, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_POSTFIELDS</span>, <span style="color:#a6e22e">http_build_query</span>($data));
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_RETURNTRANSFER</span>, <span style="color:#66d9ef">true</span>);
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_HTTPHEADER</span>, [
+</span></span><span style="display:flex;"><span>                        <span style="color:#e6db74">&#34;Cookie: PHPSESSID=</span><span style="color:#e6db74">$sessCookie</span><span style="color:#e6db74">;&#34;</span>
+</span></span><span style="display:flex;"><span>                    ]);
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">curl_setopt</span>($ch, <span style="color:#a6e22e">CURLOPT_TIMEOUT</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>                    $response <span style="color:#f92672">=</span> <span style="color:#a6e22e">curl_exec</span>($ch);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>                    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">curl_errno</span>($ch)) {
+</span></span><span style="display:flex;"><span>                        $error <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;cURL Error: &#39;</span> <span style="color:#f92672">.</span> <span style="color:#a6e22e">curl_error</span>($ch);
+</span></span><span style="display:flex;"><span>                    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>                        $error <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>                    }
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>                    <span style="color:#a6e22e">curl_close</span>($ch);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;response&#39;</span>, $response <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;error&#39;</span>, $error <span style="color:#f92672">??</span> <span style="color:#e6db74">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;communicate.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">Exception</span> $e) {
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;error&#39;</span>, <span style="color:#e6db74">&#39;An error occurred: &#39;</span> <span style="color:#f92672">.</span> $e<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>                    $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;communicate.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }<span style="color:#66d9ef">else</span>{
+</span></span><span style="display:flex;"><span>                $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;error&#39;</span>,<span style="color:#e6db74">&#39;Wrong URL!&#39;</span>);
+</span></span><span style="display:flex;"><span>                $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;communicate.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }<span style="color:#66d9ef">else</span>{
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;error&#39;</span>,<span style="color:#e6db74">&#39;Failed when parsing URL!&#39;</span>);
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;communicate.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>        }</span></span></code></pre></div><h2 id="ssrf">SSRF<a class="anchor" href="#ssrf" aria-label="Link"></a></h2>
+<p>By examining the <code>communicate</code> function, it can be seen that validation is performed using <code>parse_url</code> and regex. If the host extracted via <code>parse_url</code> passes validation, it is used as a parameter for cURL, acting as a sink for SSRF.  It is worth noting that, due to the cURL configuration, this SSRF triggers a POST request containing attacker-controlled parameters in the body, along with the session cookie.</p>
+<p>The only barrier to this SSRF is the aforementioned validation, so the current objective is to find ways to bypass this validation.</p>
+<p>This article demonstrates some ways to bypass <code>parse_url</code> using regex, which is useful for the current scenario: <a href="https://medium.com/@themiddleblue/php-ssrf-techniques-9d422cb28d51">https://medium.com/@themiddleblue/php-ssrf-techniques-9d422cb28d51</a>.</p>
+<p>By using one of the techniques from the article along with a webhook to receive the request, it was possible to confirm the SSRF.</p>
+<figure><img src="/assets/interstellar/ssrf-poc-proxy.png">
+</figure>
+
+<figure><img src="/assets/interstellar/ssrf-canary.png">
+</figure>
+
+<p>This makes it possible to access the edit-name function, which was previously only accessible via localhost.</p>
+<figure><img src="/assets/interstellar/ssrf-edit-name.png">
+</figure>
+
+<figure><img src="/assets/interstellar/edited-name.png">
+</figure>
+
+<h2 id="sql-injection">SQL Injection<a class="anchor" href="#sql-injection" aria-label="Link"></a></h2>
+<p>The remaining features operate using bind_params and stored procedures.</p>
+<p>Bind parameters typically neutralize SQL injection vectors; however, an analysis of the stored procedures reveals that the <code>searchUser</code> procedure follows a different pattern.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">PROCEDURE</span> searchUser(<span style="color:#66d9ef">IN</span> name VARCHAR(<span style="color:#ae81ff">255</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">BEGIN</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">SET</span> <span style="color:#f92672">@</span><span style="color:#66d9ef">sql</span> <span style="color:#f92672">=</span> CONCAT(<span style="color:#e6db74">&#39;SELECT * FROM users WHERE name = \&#39;&#39;, name, &#39;</span><span style="color:#960050;background-color:#1e0010">\</span><span style="color:#e6db74">&#39;&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">PREPARE</span> stmt <span style="color:#66d9ef">FROM</span> <span style="color:#f92672">@</span><span style="color:#66d9ef">sql</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">EXECUTE</span> stmt;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">DEALLOCATE</span> <span style="color:#66d9ef">PREPARE</span> stmt;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">END</span> <span style="color:#f92672">//</span></span></span></code></pre></div><p>The value received via a parameter in the procedure, which, despite being validated as a string by <code>bind_param</code>, is concatenated into the SQL query, grants us control over the query and renders the sink exploitable.</p>
+<p>Now, it is necessary to identify where the <code>searchUser</code> procedure is called.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-php" data-lang="php"><span style="display:flex;"><span>$name <span style="color:#f92672">=</span> <span style="color:#a6e22e">isset</span>($_SESSION[<span style="color:#e6db74">&#39;name&#39;</span>]) <span style="color:#f92672">?</span> $_SESSION[<span style="color:#e6db74">&#39;name&#39;</span>] <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>$id <span style="color:#f92672">=</span> <span style="color:#a6e22e">isset</span>($_SESSION[<span style="color:#e6db74">&#39;id&#39;</span>]) <span style="color:#f92672">?</span> $_SESSION[<span style="color:#e6db74">&#39;id&#39;</span>] <span style="color:#f92672">:</span> <span style="color:#66d9ef">null</span>;
+</span></span><span style="display:flex;"><span>$action <span style="color:#f92672">=</span> $_REQUEST[<span style="color:#e6db74">&#39;action&#39;</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>$smarty <span style="color:#f92672">=</span> <span style="color:#a6e22e">getSmarty</span>();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ($id) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">empty</span>($action)){
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            $query <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;CALL searchUser(?)&#34;</span>;
+</span></span><span style="display:flex;"><span>            $stmt <span style="color:#f92672">=</span> $conn<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">prepare</span>($query);
+</span></span><span style="display:flex;"><span>            $stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">bind_param</span>(<span style="color:#e6db74">&#34;s&#34;</span>, $name);
+</span></span><span style="display:flex;"><span>            $stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">execute</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> ($stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">errno</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">http_response_code</span>(<span style="color:#ae81ff">500</span>);
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">echo</span> <span style="color:#e6db74">&#34;SQL Error: &#34;</span> <span style="color:#f92672">.</span> $stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">error</span>;
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">exit</span>;
+</span></span><span style="display:flex;"><span>            }     
+</span></span><span style="display:flex;"><span>            $result <span style="color:#f92672">=</span> $stmt<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">get_result</span>();
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>            $user <span style="color:#f92672">=</span> $result<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">fetch_object</span>();
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>$user) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;No user found.&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            $planet<span style="color:#f92672">=</span>$user<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">planet</span>;
+</span></span><span style="display:flex;"><span>            $planet_emoji <span style="color:#f92672">=</span> <span style="color:#a6e22e">pick_emoji</span>($planet);
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;planet&#39;</span>, $planet_emoji);
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;name&#39;</span>, $name);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;index.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (<span style="color:#a6e22e">Exception</span> $e) {
+</span></span><span style="display:flex;"><span>            
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;message&#39;</span>, <span style="color:#e6db74">&#39;An error occurred: &#39;</span> <span style="color:#f92672">.</span> $e<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">getMessage</span>());
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">assign</span>(<span style="color:#e6db74">&#39;name&#39;</span>, $name);
+</span></span><span style="display:flex;"><span>            $smarty<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">display</span>(<span style="color:#e6db74">&#39;index.tpl&#39;</span>);
+</span></span><span style="display:flex;"><span>        }</span></span></code></pre></div><p>The main route, index.php, is what calls the <code>searchUser</code> procedure. It is important to note, however, that the value of the <code>name</code> parameter is derived from the session, rather than from a user-controlled parameter. Nevertheless, the previously discovered SSRF serves as the vector that allows us to change the <code>name</code> value to a payload designed to exploit the identified SQL injection sink.</p>
+<p>The flag is located in the system root with a random filename, not in the database, so the objective is RCE (Remote Code Execution) rather than data exfiltration via SQL injection.</p>
+<figure><img src="/assets/interstellar/flag-system.png">
+</figure>
+
+<p>The most direct way to exploit an SQL injection to achieve command execution is to write a webshell into the application&rsquo;s webroot.</p>
+<figure><img src="/assets/interstellar/injecting-web-shell.png">
+</figure>
+
+<p>When accessing the index.php route, an error is visible on the screen instead of the standard response.</p>
+<figure><img src="/assets/interstellar/index-error.png">
+</figure>
+
+<p>This indicates that the injected payload interfered with the executed query, meaning the web shell must have been written.
+By accessing <code>/shell.php?cmd=id</code>, the command output appears on the screen, RCE successful.</p>
+<figure><img src="/assets/interstellar/webshell-id.png">
+</figure>
+
+<h2 id="exploit-chain">Exploit Chain<a class="anchor" href="#exploit-chain" aria-label="Link"></a></h2>
+<p>With the vulnerabilities identified, they can be combined to read the flag.
+The attack plan is as follows:</p>
+<ol>
+<li>Use SSRF to access the restricted name-change functionality.</li>
+<li>Change the name to an SQL injection payload that will write a webshell to the application&rsquo;s webroot.</li>
+<li>Use the webshell to read the flag.</li>
+</ol>
+<p>Replacing the name with the SQLi payload:</p>
+<figure><img src="/assets/interstellar/prod-ssrf.png">
+</figure>
+
+<p>Using a webshell to list the system root and identify the flag:</p>
+<figure><img src="/assets/interstellar/webshell-ls.png">
+</figure>
+
+<p>Reading the flag:</p>
+<figure><img src="/assets/interstellar/webshell-cat.png">
+</figure>
+
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/bobbys-bistro/" class="flex align-center">
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#backward"></use></svg>
+        <span>Bobby&#39;s Bistro</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/docs/ctf/hack-the-box/challenges-web/nomad-notes/" class="flex align-center">
+        <span>Nomad Notes</span>
+        <svg class="book-icon" aria-hidden="true"><use href="/iconset.min.90a7fd302dc1b9bc3c291688faee66a3e60a9209f59b89fa00669e35d6907b3f.svg#forward"></use></svg>
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){document.querySelectorAll("pre:has(code)").forEach(e=>{e.addEventListener("click",e.focus),e.addEventListener("copy",function(t){if(t.preventDefault(),navigator.clipboard){const t=window.getSelection().toString()||e.textContent;navigator.clipboard.writeText(t)}})})})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay" aria-hidden="true"></label>
+    </main>
+
+    
+  
+  <aside class="book-toc" aria-label="Table of Contents">
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#setup-test-environment">Setup test environment</a></li>
+    <li><a href="#taint-analisys">Taint Analisys</a></li>
+    <li><a href="#ssrf">SSRF</a></li>
+    <li><a href="#sql-injection">SQL Injection</a></li>
+    <li><a href="#exploit-chain">Exploit Chain</a></li>
+  </ul>
+</nav>
+
+
+
+
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </div>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
